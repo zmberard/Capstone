@@ -8,7 +8,7 @@ After project completion, it will be maintained by CIS faculty and staff.
 
 For the front end, we will be using React JS, as the previously built parts of the project already use that library. For the back end, we will be working with NodeJS and SQL (PostgreSQL) to interact with KSIS and organize the students’ data. 
 
-For additional diagrams (when they are complete) check the diagrams folder in the repo
+For additional diagrams check the diagrams folder in the repo
 
 ## Contributing
 
