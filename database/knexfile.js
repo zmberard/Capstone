@@ -6,9 +6,11 @@
 module.exports = {
 
   development: {
-    client: 'sqlite3',
+    client: 'postgresql',
     connection: {
-      filename: './dev.sqlite3'
+      database: 'my_db',
+      user:     'username',
+      password: 'password'
     }
   },
 
@@ -24,7 +26,7 @@ module.exports = {
       max: 10
     },
     migrations: {
-      tableName: 'knex_migrations'
+      tableName: 'migrations'
     }
   },
 
@@ -40,7 +42,7 @@ module.exports = {
       max: 10
     },
     migrations: {
-      tableName: 'knex_migrations'
+      tableName: 'migrations'
     }
   }
 
