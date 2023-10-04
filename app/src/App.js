@@ -5,7 +5,8 @@ function App() {
   return (
     <div className="App">
       <banner className="App-banner">
-          <p>   CS Applications</p>
+          <p> CS Applications</p>
+          <p> Apply </p>
       </banner>
       <header className="App-header">
         
