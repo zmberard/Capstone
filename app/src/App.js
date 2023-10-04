@@ -1,14 +1,18 @@
-import logo from "./logo.svg";
+//import logo from "./logo.svg";
 import "./App.css";
   
 function App() {
   return (
     <div className="App">
+      <banner className="App-banner">
+          <p> CS Applications</p>
+          <p> Apply </p>
+      </banner>
       <header className="App-header">
-        <img src={logo} className="App-logo" 
-             alt="logo" />
+        
+        
           
-<p>A simple React app.....</p>
+<p>CS Applications</p>
   
         <a
           className="App-link"
