@@ -1,8 +1,9 @@
 // Copyright 2023 under MIT License
  
-/*
- * Currently all migrations, but will be split amongst more migration files after we plot a distribution for it
- */
+    /*
+    * Currently all migrations, but will be split amongst more migration files after we plot a distribution for it
+    * This migration just covers the initial DB schema
+    */
 
 /**
  * @param { import("knex").Knex } knex
@@ -48,7 +49,24 @@ exports.up = function(knex) {
         })
         .createTable("templates", function(table){
             table.increments("id", { primaryKey: true }).unsigned().notNullable();
-            table.string("name").collate("utf8mb4_unicode_ci");
+            table.string("name").collate("utf8mb4_unicode_ci").notNullable();
+            table.text("content").collate("utf8mb4_unicode_ci").notNullable();
+            table.timestamp("created_at").nullable().useNullAsDefault();
+            table.timestamp("updated_at").nullable().useNullAsDefault();
+        })
+        .createTable("users", function(table){
+            table.increments("id", { primaryKey: true }).unsigned().notNullable();
+            table.string("eid", 191).collate("utf8mb4_unicode_ci").notNullable().unique();
+            table.string("wid", 191).collate("utf8mb4_unicode_ci").notNullable();
+            table.string("remember_token", 100).collate("utf8mb4_unicode_ci").nullable().useNullAsDefault();
+            table.tinyint("admin", 1).notNullable().defaultTo(0);
+            table.tinyint("update_profile", 1).notNullable().defaultTo(0);
+            table.string("first_name", 191).collate("utf8mb4_unicode_ci").notNullable();
+            table.string("last_name", 191).collate("utf8mb4_unicode_ci").notNullable();
+            table.string("email", 191).collate("utf8mb4_unicode_ci").notNullable();
+            table.timestamp("deleted_at").nullable().useNullAsDefault();
+            table.timestamp("created_at").nullable().useNullAsDefault();
+            table.timestamp("updated_at").nullable().useNullAsDefault();
         });
 };
 
@@ -57,5 +75,11 @@ exports.up = function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = function(knex) {
-  
+  return knex.schema
+    .dropTable("applications")
+    .dropTable("migrations")
+    .dropTable("sentmails")
+    .dropTable("settings")
+    .dropTable("templates")
+    .dropTable("users");
 };
