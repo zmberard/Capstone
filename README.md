@@ -24,6 +24,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
+The routes of this project are heavily influenced from Russell Feldhausen. Mr. Feldhausen allowed us to use inspiration from 'officehours-node' program to complete with the routes.
+
 ## License
 
 Copyright © Microsoft Corporation All rights reserved.<br />
