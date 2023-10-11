@@ -26,5 +26,17 @@ function App() {
     </div>
   );
 }
+
+App.get('/apply', require('./endpoints/showApplication'))
+App.post('/apply', require('./endpoints/processApplication'))
   
+App.get('/email', require('./endpoints/sendEmail'))
+App.post('/email', require('./endpoints/processEmail'))
+
+App.get('/login', require('./endpoints/showLogin'))
+App.post('/login', require('./endpoints/processLogin'))
+
+App.get('/profile', require('./endpoints/studentProfile'))
+App.post('/profile', require('./endpoints/processProfile'))
+
 export default App;
