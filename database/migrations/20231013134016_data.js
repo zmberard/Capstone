@@ -18,7 +18,6 @@ exports.up = function(knex) {
             table.timestamp("deleted_at").nullable().useNullAsDefault();
             table.timestamp("created_at").nullable().useNullAsDefault();
             table.timestamp("updated_at").nullable().useNullAsDefault();
-            table.text("dars").collate("utf8mb4_unicode_ci");
             table.foreign("user_id").references("users").inTable("id");
         });
 };
