@@ -39,7 +39,5 @@ App.post('/login', require('./endpoints/processLogin'))
 App.get('/profile', require('./endpoints/studentProfile'))
 App.post('/profile', require('./endpoints/processProfile'))
 
-App.get('/404-error', require('./endpoints/error404'))
-App.post('/404-error', require('./endpoints/processError'))
 
 export default App;
