@@ -8,7 +8,7 @@ After project completion, it will be maintained by CIS faculty and staff.
 
 For the front end, we will be using React JS, as the previously built parts of the project already use that library. For the back end, we will be working with NodeJS and SQL (PostgreSQL) to interact with KSIS and organize the students’ data. 
 
-For additional diagrams (when they are complete) check the diagrams folder in the repo
+For additional diagrams check the diagrams folder in the repo
 
 ## Contributing
 
@@ -23,6 +23,8 @@ provided by the bot. You will only need to do this once across all repos using o
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+The routes of this project are heavily influenced from Russell Feldhausen. Mr. Feldhausen allowed us to use inspiration from 'officehours-node' program to complete with the routes.
 
 ## License
 
