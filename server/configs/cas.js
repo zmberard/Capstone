@@ -4,7 +4,7 @@ var cas = new CASAuthentication({
     // anything that is in all caps looks like it is to test
     // cas_url: process.env.CAS_URL,
     // service_url: process.env.CAS_SERVICE_URL,
-    // cas_version: '3.0',
+    // cas_version: '4.2.1',
     // renew: false,
     // is_dev_mode: process.env.CAS_DEV_MODE === 'true',
     // dev_mode_user: process.env.CAS_DEV_USER,

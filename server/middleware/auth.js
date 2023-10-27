@@ -1,6 +1,33 @@
+
+const jwt = require("jsonwebtoken")
+
+const jwtSecret = process.env.CIS_APP_JWT_SECRET
+
+function auth(req, res, next){
+    const token = req.headers.token
+
+    if (!token) res.sendStatus(403)
+
+    else jwt.verify(token, jwtSecret, (err, object) => {
+        if (err) {
+            console.error(err)
+            res.sendStatus(403)
+            return
+        }
+
+        req.session = {
+            
+        }
+    })
+}
+
+module.exports = auth;
+
+
+/*
 // Load libraries
 const express = require('express');
-const cas = require('../configs/cas');
+var cas = require('../configs/cas');
 const router = express.Router();
 // const jwt or cookie = require('jsonwebtoken') or the cookie one
 
@@ -25,7 +52,7 @@ router.get('/login', async function (req, res, next){
         } else {
             // put below just if and else statements in here
         }
-        */
+        
         if(req.session[cas.session_name] === undefined){
             // CAS is not authenticated, so redirect
 
@@ -48,4 +75,19 @@ router.get('/login', async function (req, res, next){
     res.redirect('/')
 })
 
+router.get('/logout', async function(req, res, next){
+    // not sure if needed depending on if we use cookies or tokens
+    //if(req.session.user_id){
+    //    await User.clearRefreshToken(req.session.user_id)
+    //}
+    if(req.session[cas.session_name]){
+        cas.logout(req,res,next)
+    } else{
+        req.session.destroy()
+        res.redirect('/')
+    }
+})
+
 module.exports = router
+
+*/

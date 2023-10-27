@@ -19,3 +19,17 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);
+
+
+
+app.get('/apply', require('./endpoints/showApplication'))
+app.post('/apply', require('./endpoints/processApplication'))
+  
+app.get('/email', require('./endpoints/sendEmail'))
+app.post('/email', require('./endpoints/processEmail'))
+
+app.get('/login', require('./endpoints/showLogin'))
+app.post('/login', require('./endpoints/processLogin'))
+
+app.get('/profile', require('./endpoints/studentProfile'))
+app.post('/profile', require('./endpoints/processProfile'))
