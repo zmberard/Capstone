@@ -1,5 +1,5 @@
 // Load Libraries
-const express = require('express')
+const express = require("express")
 const router = express.Router();
 
 // Load Middleware
@@ -7,7 +7,7 @@ const router = express.Router();
 // const requestLogger = require('../../..')
 
 // Load Routers
-const applyRouter = require('./api/apply')
+const applyRouter = require('./apply')
 const emailRouter = require('./api/email')
 const profileRouter = require('./api/profile')
 const loginRouter = require('./api/login')
@@ -21,9 +21,9 @@ const loginRouter = require('./api/login')
 router.use('/apply', applyRouter)
 router.use('/email', emailRouter)
 router.use('/profile', profileRouter)
-router.use('login', loginRouter)
+router.use('/login', loginRouter)
 
-// GET API Version and User Details?
+// GET API Version and User Details
 // May need to be changed to fit our project, taken from Russ' officehours-node in routes/api.js
 router.get('/', function (req, res, next){
     res.json({
