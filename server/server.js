@@ -20,6 +20,8 @@ app.get('/', (req, res) => {
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);
 
+
+
 app.get('/apply', require('./endpoints/showApplication'))
 app.post('/apply', require('./endpoints/processApplication'))
   
