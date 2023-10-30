@@ -1,51 +1,24 @@
-
-const jwt = require("jsonwebtoken")
-
-const jwtSecret = process.env.CIS_APP_JWT_SECRET
-
-function auth(req, res, next){
-    const token = req.headers.token
-
-    if (!token) res.sendStatus(403)
-
-    else jwt.verify(token, jwtSecret, (err, object) => {
-        if (err) {
-            console.error(err)
-            res.sendStatus(403)
-            return
-        }
-
-        req.session = {
-            
-        }
-    })
-}
-
-module.exports = auth;
-
-
-/*
 // Load libraries
-const express = require('express');
-var cas = require('../configs/cas');
-const router = express.Router();
-// const jwt or cookie = require('jsonwebtoken') or the cookie one
+const express = require('express')
+const router = express.Router()
+const jwt = require('jsonwebtoken')
 
 // Load Configurations
+var cas = require('../configs/cas')
 // const token = require('../.../...')
-// const requestLogger = require('../.../...')
+const requestLogger = require('../middlewares/request-logger') // need to create the request logger
 
 // Load Models
 // const User = require('../../..')
 
 // Configure Logging
-// router.use(requestLogger)
+router.use(requestLogger)
 
 // Handle Logins
 router.get('/login', async function (req, res, next){
     if (!req.session.user_id){
         let eid = ''
-        /*
+        
         if(req.query.eid && process.env.FORCE_AUTH === 'true'){
             // force authentication enabled, use eID from query
             eid = req.query.eid
@@ -90,4 +63,3 @@ router.get('/logout', async function(req, res, next){
 
 module.exports = router
 
-*/
