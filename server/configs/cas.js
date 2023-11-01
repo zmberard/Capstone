@@ -1,3 +1,4 @@
+// https://github.com/russfeld/officehours-node/blob/main/configs/cas.js
 var CASAuthentication = require('node-cas-authentication')
 
 var cas = new CASAuthentication({
