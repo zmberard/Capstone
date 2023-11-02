@@ -1,37 +1,60 @@
 /* Run migrations and seeds
  * Wipe db after
- * Based on starter code here:
- * https://docs.github.com/en/actions/using-containerized-services/creating-postgresql-service-containers
+ * Based on repo code here:
+ * https://github.com/alt-cs-lab/coding-exam/blob/main/server/serverTestEntry.js
  * 
  * Copyright 2023 under MIT License 
+ * 
 */
 
-const { Client } = require('pg');
+// Create the app
+const app = require( "./app" )
+const knex = require( "knex" )
 
-const pgclient = new Client({
-    host: process.env.POSTGRES_HOST,
-    port: process.env.POSTGRES_PORT,
-    user: 'postgres',
-    password: 'postgres',
-    database: 'postgres'
-});
+// Custom knexConfig for the test database
+const knexConfig = {
+	client: "pg",
+	connection: {
+		host: process.env.POSTGRES_HOST || "localhost",
+		port: 5432,
+		user: 'postgres',
+        password: 'postgres',
+        database: 'postgres'
+	},
+	pool: {
+		min: 2,
+		max: 10
+	},
+	migrations: {
+		tableName: "migrations"
+	}
+}
 
-pgclient.connect();
+async function setup() {
+	const db = knex( knexConfig )
+	app.set( "db", db )
 
-const table = 'CREATE TABLE student(id SERIAL PRIMARY KEY, firstName VARCHAR(40) NOT NULL, lastName VARCHAR(40) NOT NULL, age INT, address VARCHAR(80), email VARCHAR(40))'
-const text = 'INSERT INTO student(firstname, lastname, age, address, email) VALUES($1, $2, $3, $4, $5) RETURNING *'
-const values = ['Mona the', 'Octocat', 9, '88 Colin P Kelly Jr St, San Francisco, CA 94107, United States', 'octocat@github.com']
+	// Migrate Database on Startup
+	const version = await db.migrate.currentVersion()
+	//console.log( "Database Migration Version: " + version )
+	if ( version == "none" ) {
+		console.log( "Database Empty - Migrating and Seeding" )
+		await db.migrate.latest()
+		await db.seed.run()
+		console.log( "Done" )
+	} else {
+		console.log( "Database Exists - Migrating" )
+		await db.migrate.latest()
+		console.log( "Migrations Complete!" )
+	}
+}
 
-pgclient.query(table, (err, res) => {
-    if (err) throw err
-});
+async function startServer() {
+	await setup()
+	// Start listening for requests on port 9000
+	app.listen( 9000, () => console.log( "Listening on port 9000" ) )
+}
 
-pgclient.query(text, values, (err, res) => {
-    if (err) throw err
-});
+startServer()
 
-pgclient.query('SELECT * FROM student', (err, res) => {
-    if (err) throw err
-    console.log(err, res.rows) // Print the data in student table
-    pgclient.end()
-});
+module.exports = app

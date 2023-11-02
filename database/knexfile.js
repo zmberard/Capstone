@@ -9,8 +9,8 @@ module.exports = {
     client: 'postgresql',
     connection: {
       database: 'my_db',
-      host: "localhost",
-      port: 5432,
+      host:      "localhost",
+      port:      5432,
       user:     'username',
       password: 'password'
     }
@@ -20,8 +20,8 @@ module.exports = {
     client: 'postgresql',
     connection: {
       database: 'my_db',
-      host: "localhost",
-      port: 5432,
+      host:     "localhost",
+      port:     5432,
       user:     'username',
       password: 'password'
     }
@@ -31,8 +31,8 @@ module.exports = {
     client: 'postgresql',
     connection: {
       database: 'my_db',
-      host: "localhost",
-      port: 5432,
+      host:     "localhost",
+      port:     5432,
       user:     'username',
       password: 'password'
     },
@@ -49,8 +49,8 @@ module.exports = {
     client: 'postgresql',
     connection: {
       database: 'my_db',
-      host: "localhost",
-      port: 5432,
+      host:     "localhost",
+      port:     5432,
       user:     'username',
       password: 'password'
     },
