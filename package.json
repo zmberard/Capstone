@@ -1,4 +1,5 @@
 {
+  "scripts": {},
   "dependencies": {
     "express": "^4.18.2",
     "knex": "^2.5.1",
