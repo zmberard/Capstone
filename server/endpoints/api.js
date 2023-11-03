@@ -4,24 +4,26 @@ const router = express.Router();
 
 // Load Middleware
 // var token = require('../../..')
-// const requestLogger = require('../../..')
+const requestLogger = require('../middleware/request-logger')
 
 // Load Routers
-const applyRouter = require('./apply')
-const emailRouter = require('./api/email')
-const profileRouter = require('./api/profile')
-const loginRouter = require('./api/login')
+const applyRouter = require('../endpoints/apply')
+const emailRouter = require('../endpoints/email')
+const profileRouter = require('../endpoints/profile')
+const loginRouter = require('../endpoints/login')
+const disableRouter = require('../endpoints/disabled')
 
 // Load Token or Cookie Middleware
 // route.use(token or cookie)
 
 // Configure Logging (after token)
-// router.use(requestLogger)
+router.use(requestLogger)
 
 router.use('/apply', applyRouter)
 router.use('/email', emailRouter)
 router.use('/profile', profileRouter)
 router.use('/login', loginRouter)
+router.use('/disabled', disableRouter)
 
 // GET API Version and User Details
 // May need to be changed to fit our project, taken from Russ' officehours-node in routes/api.js
