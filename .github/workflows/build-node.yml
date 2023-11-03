@@ -1,0 +1,47 @@
+# Build Node Workflow
+#
+# Based on workflows here
+# https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+# https://github.com/russfeld/officehours-node/blob/main/.github/workflows/build-node.yml
+
+# Copyright 2023 under MIT License
+
+name: Build Node
+
+run-name: ${{ github.actor }} is building/testing node
+
+
+# Runs on pushes and pulls from main
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+        # Check out repo
+        - uses: actions/checkout@v3
+
+        # Setup node
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v3
+          with:
+            node-version: ${{ matrix.node-version }}
+            cache: 'npm' # Cache NPM dependencies
+
+        # Install dependencies
+        - name: Install Dependencies
+          run: npm ci
