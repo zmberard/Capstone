@@ -1,5 +1,5 @@
 function sendEmail(req, res){
-    return res.Send('Hello send email')
+    return res.send('Hello send email')
 }
 
 module.exports = sendEmail

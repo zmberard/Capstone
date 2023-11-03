@@ -1,5 +1,5 @@
 function showLogin(req, res){
-    return res.Send('Hello show login')
+    return res.send('Hello show login')
 }
 
-module.exports = login
+module.exports = showLogin
