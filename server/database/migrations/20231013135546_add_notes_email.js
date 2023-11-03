@@ -19,14 +19,14 @@ exports.up = function(knex) {
             table.text("to").collate("utf8mb4_unicode_ci");
             table.text("cc").collate("utf8mb4_unicode_ci");
             table.text("bcc").collate("utf8mb4_unicode_ci");
-            table.string("sent_by").collate("utf8mb4_unicode_ci").nullable().useNullAsDefault();
-            table.timestamp("created_at").nullable().useNullAsDefault();
-            table.timestamp("updated_at").nullable().useNullAsDefault();
-            table.foreign("user_id").references("users").inTable("id");
+            table.string("sent_by").collate("utf8mb4_unicode_ci").nullable().defaultTo(null);
+            table.timestamp("created_at").nullable().defaultTo(null);
+            table.timestamp("updated_at").nullable().defaultTo(null);
+            table.foreign("user_id").references("id").inTable("users");
         })
         .alterTable("applications", function(table){
             table.text("notes").collate("utf8mb4_unicode_ci");
-            table.string("semester").collate("utf8mb4_unicode_ci").useNullAsDefault();
+            table.string("semester").collate("utf8mb4_unicode_ci").defaultTo(null);
         });
 };
 

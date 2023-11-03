@@ -8,11 +8,11 @@ module.exports = {
   development: {
     client: 'postgresql',
     connection: {
-      database: 'my_db',
-      host:      "localhost",
+      database: 'postgres',
+      host:      "db",
       port:      5432,
-      user:     'username',
-      password: 'password'
+      user:     'postgres',
+      password: 'postgres'
     }
   },
 

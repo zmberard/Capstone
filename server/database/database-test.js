@@ -8,31 +8,22 @@
 */
 
 // Create the app
-const app = require( "./app" )
 const knex = require( "knex" )
 
 // Custom knexConfig for the test database
 const knexConfig = {
-	client: "pg",
+	client: "postgresql",
 	connection: {
 		host: process.env.POSTGRES_HOST || "localhost",
-		port: 5432,
+		port: process.env.POSTGRES_PORT || 5432,
 		user: 'postgres',
         password: 'postgres',
         database: 'postgres'
 	},
-	pool: {
-		min: 2,
-		max: 10
-	},
-	migrations: {
-		tableName: "migrations"
-	}
 }
 
 async function setup() {
 	const db = knex( knexConfig )
-	app.set( "db", db )
 
 	// Migrate Database on Startup
 	const version = await db.migrate.currentVersion()
@@ -49,12 +40,4 @@ async function setup() {
 	}
 }
 
-async function startServer() {
-	await setup()
-	// Start listening for requests on port 9000
-	app.listen( 9000, () => console.log( "Listening on port 9000" ) )
-}
-
-startServer()
-
-module.exports = app
+setup()

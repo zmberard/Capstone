@@ -14,8 +14,8 @@ exports.up = function(knex) {
         table.increments("id", { primaryKey: true }).unsigned().notNullable();
         table.string("name").collate("utf8mb4_unicode_ci").notNullable();
         table.text("content").collate("utf8mb4_unicode_ci").notNullable();
-        table.timestamp("created_at").nullable().useNullAsDefault();
-        table.timestamp("updated_at").nullable().useNullAsDefault();
+        table.timestamp("created_at").nullable().defaultTo(null);
+        table.timestamp("updated_at").nullable().defaultTo(null);
     });
 };
 
