@@ -3,7 +3,7 @@
 // that apply to the ones in the file
 
 function processApplication(req, res){
-    return res.Send('Hello process application')
+    return res.send('Hello process application')
 }
 
 module.exports = processApplication
