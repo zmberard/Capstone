@@ -82,7 +82,33 @@ class User extends Model {
       return roles.some((r) => r.name === 'admin')
     }
 
+    static async getToken(id) {
+      //const refresh_token = await User.updateRefreshToken(id)
+      let user = await User.query().findById(id)
+      const refresh_token = await user.updateRefreshToken()
+      const is_admin = await user.is_admin()
+      const token = jwt.sign(
+        {
+          user_id: id,
+          eid: user.eid,
+          is_admin: is_admin,
+          refresh_token: refresh_token,
+        },
+        process.env.TOKEN_SECRET,
+        {
+          expiresIn: '30m',
+        }
+      )
+      return token
+    }
+  
+    static async clearRefreshToken(id) {
+      await User.query().findById(id).patch({
+        refresh_token: null,
+      })
+    }
 
+    
 }
 
 module.exports = User
