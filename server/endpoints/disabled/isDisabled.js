@@ -1,5 +1,5 @@
 function isDisabled(req, res){
-    return res.Send('Hello isDisabled')
+    return res.send('Hello isDisabled')
 }
 
 module.exports = isDisabled
