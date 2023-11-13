@@ -4,7 +4,7 @@ const crypto = ('crypto')
 const jwt = require('jsonwebtoken')
 const logger = require('../configs/logger')
 const axios = require('axios')
-// const { parseStringPromise } = require('xml2js')
+const { parseStringPromise } = require('xml2js')
 const util = require('node:util')
 
 class User extends Model {
@@ -49,5 +49,40 @@ class User extends Model {
         return user[0]
     }
 
-    
+    static async findByRefreshToken(token) {
+      let user = await User.query().where('refresh_token', token).limit(1)
+      if (user.length === 0) {
+        return null
+      }
+      return user[0]
+    }
+
+    async updateRefreshToken() {
+      var token = this.refresh_token
+      if (!token) {
+        token = crypto.randomBytes(32).toString('hex')
+        await this.$query().patch({
+          refresh_token: token,
+        })
+      }
+      const refresh_token = jwt.sign(
+        {
+          refresh_token: token,
+        },
+        process.env.TOKEN_SECRET,
+        {
+          expiresIn: '6h',
+        }
+      )
+      return refresh_token
+    }
+
+    async is_admin(){
+      const roles = await this.$relatedQuery('roles').for(this.id).select('name')
+      return roles.some((r) => r.name === 'admin')
+    }
+
+
 }
+
+module.exports = User
