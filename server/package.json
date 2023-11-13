@@ -1,11 +1,19 @@
 {
   "scripts": {
-    "migrate": "knex migrate: latest"
+    "migrate": "knex migrate: latest",
+    "test": "find ./tests -name '*.test.js' | xargs mocha -R spec"
   },
   "dependencies": {
     "express": "^4.18.2",
     "knex": "^2.5.1",
     "nodemon": "^3.0.1",
-    "pg": "^8.11.3"
+    "pg": "^8.11.3",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-scripts": "4.0.3"
+  },
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0"
   }
 }
