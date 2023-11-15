@@ -25,14 +25,14 @@ console.log(`Running on http://${HOST}:${PORT}`);
 
 
 
-app.get('/apply', require('./endpoints/showApplication'))
-app.post('/apply', require('./endpoints/processApplication'))
+app.get('/apply', require('./endpoints/apply/show-application.js'))
+app.post('/apply', require('./endpoints/apply/process-application.js'))
   
-app.get('/email', require('./endpoints/sendEmail'))
-app.post('/email', require('./endpoints/processEmail'))
+app.get('/email', require('./endpoints/email/send-email.js'))
+app.post('/email', require('./endpoints/email/process-email.js'))
 
-app.get('/login', require('./endpoints/showLogin'))
-app.post('/login', require('./endpoints/processLogin'))
+app.get('/login', require('./endpoints/login/show-login.js'))
+app.post('/login', require('./endpoints/login/process-login.js'))
 
-app.get('/profile', require('./endpoints/studentProfile'))
-app.post('/profile', require('./endpoints/processProfile'))
+app.get('/profile', require('./endpoints/profile/student-profile.js'))
+app.post('/profile', require('./endpoints/profile/process-profile.js'))
