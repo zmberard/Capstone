@@ -4,15 +4,17 @@
 
 
 
-.App-header {
-  background-color: white;
-  min-height: 100vh;
+.app-header {
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-align: center;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: #e4e4e7;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  color: #fff;
+  background-color: #4f2d7f;
 }
 
 .App-banner{
@@ -104,6 +106,15 @@ li {
 
 .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
     float: left;
+}
+
+.application-form {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 
