@@ -3,6 +3,8 @@
 // that apply to the ones in the file
 
 function processApplication(req, res){
+    res.body
+
     return res.Send('Hello process application')
 }
 
