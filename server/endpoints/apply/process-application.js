@@ -3,7 +3,9 @@
 // that apply to the ones in the file
 
 function processApplication(req, res){
-    return res.send('Hello process application')
+    res.body
+
+    return res.Send('Hello process application')
 }
 
 module.exports = processApplication
