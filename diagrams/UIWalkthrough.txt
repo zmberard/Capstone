@@ -1,0 +1,15 @@
+Home Page Test
+
+Note: The Home Page is the only current functioning page you can navigate to with buttons
+
+1.) Open Home page, link to be later updated
+
+You should see:
+- A purple banner on top, containing two options
+	- CS Applications
+	- Apply
+- A central title banner, slightly gray
+	- It will mention that it is the CS Applications site
+- A white section below the above, containing
+	- A section detailing the requirements
+	- A section telling the user to apply with a (currently nonfunctional) button
