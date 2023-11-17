@@ -1,4 +1,4 @@
-/*
+
 const Model = require('objection').Model
 Model.knex(db)
 
@@ -17,4 +17,3 @@ class BaseModel extends Model {
 }
 
 module.exports = BaseModel
-*/
