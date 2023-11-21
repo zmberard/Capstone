@@ -1,6 +1,6 @@
 //https://github.com/russfeld/officehours-node/blob/main/models/user.js
-//const Model = require('./base')
-const crypto = ('crypto')
+const Model = require('./base')
+const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
 const logger = require('../configs/logger')
 const axios = require('axios')
@@ -108,6 +108,19 @@ class User extends Model {
       })
     }
 
+    static get jsonSchema() {
+      return {
+        type: 'object',
+        required: ['eid', 'name'],
+  
+        properties: {
+          eid: { type: 'string', minLength: 3, maxLength: 20 },
+          name: { type: 'string', minLength: 1, maxLength: 255 },
+        },
+      }
+    }
+
+    
     
 }
 
