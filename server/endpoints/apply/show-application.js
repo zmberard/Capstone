@@ -1,3 +1,10 @@
+// This route should show the courses the student has 
+// already taken within the preprofessional program,
+// along with the cumulative GPA of those courses.
+
+const express = require('express');
+const router = express.Router();
+
 // load Models
 const Course = require('../models/courseHistory');
 
