@@ -41,6 +41,7 @@ function calculateGPA(courses) {
         return 0; // default GPA for when no courses are added
     }
 
+    // TODO: add logic for multiple attempts within one class
     const totalPoints = courses.reduce((sum, course) => sum + (course.grade * course.hours), 0);
     const totalHours = courses.reduce((sum, course) => sum + course.hours, 0);
 
