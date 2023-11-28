@@ -27,6 +27,8 @@ async function authenticateToken(req, res, next){
         // req.user_id = user.user_id
         // req.user_eid = user.eid
         // req.is_admin = user.is_admin
+
+        next()
     })
 }
 

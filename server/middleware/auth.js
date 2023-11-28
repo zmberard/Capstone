@@ -9,7 +9,7 @@ var cas = require('../configs/cas')
 const requestLogger = require('../middlewares/request-logger')
 
 // Load Models
-// const User = require('../models/user')
+const User = require('../models/user')
 
 // Configure Logging
 router.use(requestLogger)
@@ -116,4 +116,3 @@ router.get('/logout', async function(req, res, next){
 })
 
 module.exports = router
-
