@@ -1,5 +1,46 @@
-function processEmail(req, res){
-    return res.send('Hello process email')
+const express = require('express');
+const Template = require('./models/Template');
+const { auth, admin } = require('./middleware');
+
+const app = express();
+const port = 8080;
+
+app.use(auth);
+app.use(admin);
+
+// helper function to get the templates
+async function getTemplates() {
+    try{
+        const templates = await Template.find().sort('name');
+
+        return templates;
+    } catch (error) {
+        // handle any errorst that might occur during the process
+        console.error('Error fetching templates:', error);
+        throw new Error('Failed to fetch templates');
+    }
 }
 
-module.exports = processEmail
+app.get('/templates', async (req, res) => {
+    try {
+        const templates = await getTemplates();
+
+        // transform the templates
+        const transformedTemplates = templates.map(template => ({
+            id: template.id,
+            name: template.name,
+            content: JSON.parse(template.content),
+        }));
+
+        return res.status(200).json(transformedTemplates);
+    }
+    catch (error) {
+        // Handle errors that might occur during template retrieval
+        console.error('Error fetching email templates:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+})
+
+app.listen(port, () => {
+    console.log('Server is running on http://localhost:${port}');
+});

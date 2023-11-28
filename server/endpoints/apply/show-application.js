@@ -41,10 +41,9 @@ function calculateGPA(courses) {
         return 0; // default GPA for when no courses are added
     }
 
-    // Need to add the GPA for when a student takes a course for two or three times. 
+    // TODO: add the GPA for when a student takes a course for two or three times. 
     // the score is kept on the second try, but the third and second are averaged when
     // the student takes the class for a third time
-    // TODO: add logic for multiple attempts within one class
     const totalPoints = courses.reduce((sum, course) => sum + (course.grade * course.hours), 0);
     const totalHours = courses.reduce((sum, course) => sum + course.hours, 0);
 
