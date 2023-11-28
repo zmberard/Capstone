@@ -3,7 +3,7 @@ const express = require("express")
 const router = express.Router();
 
 // Load Middleware
-// var token = require('../../..')
+var token = require('../middleware/token')
 const requestLogger = require('../middleware/request-logger')
 
 // Load Routers
@@ -13,7 +13,7 @@ const profileRouter = require('../endpoints/profile')
 const loginRouter = require('../endpoints/login')
 const disableRouter = require('../endpoints/disabled')
 
-// Load Token Middleware
+// Load Token
 route.use(token)
 
 // Configure Logging (after token)
