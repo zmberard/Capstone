@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(auth);
 app.use(admin);
 
-// function to send the emails
+// Function to send the emails
 async function sendEmail(subject, to, cc, bcc, text, html, sentBy){
     try{
         const transporter = nodemailer.createTransport({
@@ -47,7 +47,7 @@ async function sendEmail(subject, to, cc, bcc, text, html, sentBy){
             sentBy,
         });
 
-        // getch the user based on the email address
+        // Fetch the user based on the email address
         const userApp = await User.findOrCreate({ email: to });
 
         if(userApp){
@@ -63,7 +63,7 @@ async function sendEmail(subject, to, cc, bcc, text, html, sentBy){
     }
 }
 
-// post route to send an email
+// Post route to send an email
 app.post('/send-email', async (req, res) => {
     try{
         const user = req.user;
@@ -77,7 +77,7 @@ app.post('/send-email', async (req, res) => {
                 text,
                 html,
             } = req.body;
-            // send the email
+            // Send the email
             await sendEmail(subject, to, cc, bcc, text, html, user.eid);
 
             return res.status(200).json({ message: 'Email sent successfull'});
