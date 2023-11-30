@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+// Schema for the course's information
 const courseSchema = new mongoose.Schema({
     name:{
         type: String,
@@ -23,6 +24,7 @@ const courseSchema = new mongoose.Schema({
     },
 });
 
+// Schema for the application information
 const applicationSchema = new mongoose.Schema({
     eid:{
         type: String,

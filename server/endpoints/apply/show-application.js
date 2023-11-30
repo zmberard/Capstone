@@ -10,13 +10,13 @@ const Course = require('../models/courseHistory');
 
 async function showApplication(req, res){
     try{
-        // step 1 fetch course data from db
+        // Fetch course data from db
         const courses = await Course.find({ userId: req.user.id });
 
-        // step 2 calculate the pre-professional GPA
+        // Clculate the pre-professional GPA
         const preprofessionalGPA = calculateGPA(courses);
 
-        // step 3 populate an application object
+        // Populate an application object
         var form = {
             eid: req.users.eid,
             preprofessionalGPA,
@@ -26,16 +26,17 @@ async function showApplication(req, res){
                 hours: coursehistory.hours
             }))
         };
-        // step 4 send the application object to the client
+        // Send the application object to the client
         res.json(form);
     }
+    // Error message
     catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
 }
 
-// helper function to calculate GPA
+// Helper function to calculate GPA
 function calculateGPA(courses) {
     if (courses.length === 0) {
         return 0; // default GPA for when no courses are added
