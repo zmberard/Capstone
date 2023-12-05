@@ -7,21 +7,7 @@ function HomePage() {
   return (
     <div>
       
-    </div>
-  );
-}
-
-function App() {
-  return (
-    <div className="App">
-      <Router>
-        <Routes>
-          <Route path="/Home" element={<HomePage />} />
-          <Route path="/Apply" element={<ApplicationForm />} />
-          <Route path="/Profile" element={<ProfilesForm />} />
-        </Routes>
-
-        <ul>
+      <ul>
           <li><Link to="/Home">CS Applications</Link></li>
           <li><Link to="/Apply">Apply</Link></li>
           <li><Link to="/Profile">Profile</Link></li>
@@ -51,7 +37,29 @@ function App() {
             </div>
           </div>
         </div>
-      </Router>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/Home" element={<HomePage />} />
+          <Route path="/Apply" element={<ApplicationForm />} />
+          <Route path="/Profile" element={<ProfilesForm />} />
+        </Routes>
+      
+        
+        
+      <ul>
+        <li><Link to="/Home">CS Applications</Link></li>
+        <li><Link to="/Apply">Apply</Link></li>
+        <li><Link to="/Profile">Profile</Link></li>
+      </ul>
+    </Router>
+        
     </div>
   );
 }
