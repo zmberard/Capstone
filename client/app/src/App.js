@@ -5,7 +5,7 @@ import ApplicationForm from '/workspaces/Capstone/client/app/src/ApplicationForm
 function HomePage() {
   return (
     <div>
-
+      
     </div>
   );
 }

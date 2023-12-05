@@ -1,7 +1,10 @@
 import "./App.css";
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+// Import your components
+// import HomePage from '/workspaces/Capstone/client/app/src/HomePage.js';
 import HomePage from '/workspaces/Capstone/client/app/src/HomePage.js';
+//import ApplicationForm from '/workspaces/Capstone/client/app/src/ApplicationForm.js';
 
 function ApplicationForm() {
     return (
@@ -26,10 +29,7 @@ function ApplicationForm() {
                             "Computer Science Apps"
                             <br /><small>Professional Program Application</small>
                         </h1>
-                        <p>
-                            "Logged in as"
-                            "testcas"
-                        </p>
+                        
                     </header>
                     <div class="application-form">
                         <div class="status-message pending">
@@ -161,7 +161,8 @@ function ApplicationForm() {
                                         <option value="2">C</option>
                                     </select>
                                 </td>
-                                <tr>
+                            </tr>
+                            <tr>
                                 <td>CIS 301</td>
                                 <td>
                                 <select name="cis301">
@@ -240,7 +241,6 @@ function ApplicationForm() {
                                         <option value="2">C</option>
                                     </select>
                                 </td>
-                            </tr>
                             </tr>
 
                         </tbody>
