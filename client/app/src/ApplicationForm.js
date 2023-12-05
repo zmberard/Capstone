@@ -1,4 +1,7 @@
 import "./App.css";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import HomePage from '/workspaces/Capstone/client/app/src/HomePage.js';
 
 function ApplicationForm() {
     return (
@@ -6,35 +9,11 @@ function ApplicationForm() {
         
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed"
-                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                    aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand"> CS Applications</a>
-
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active">
-                            <a>Apply</a>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a>testcas</a>
-                        </li>
-                        <li>
-                            <p class="navbar-btn">
-                                <a class="bts btn-success">Logout</a>
-                            </p>
-                        </li>
-                    </ul>
-                </div>
+                <ul>
+                <li><Link to="/Home">CS Applications</Link></li>
+                <li><Link to="/Apply">Apply</Link></li>
+                </ul>
+                
             </div>
         </nav>
         <div class="container" role="main">
@@ -42,9 +21,10 @@ function ApplicationForm() {
             <div id="root">
                 <div class="app">
                     <header class="app-header">
+                        
                         <h1>
                             "Computer Science Apps"
-                            <br><small>Professional Program Application</small></br>
+                            <br /><small>Professional Program Application</small>
                         </h1>
                         <p>
                             "Logged in as"
@@ -272,7 +252,7 @@ function ApplicationForm() {
                         <div>
                             <div class="info">
                                 <p>"Please use this space to add any comments that should be made regarding these classes. "</p>
-                                <p style="display: none;">
+                                <p>
                                     "If you requested a waiver for any of these classes, please explain in detail the reasons you are requesting a waiver for meeting all of the requirements for entrance into the Computer Science Professional Program. You may also be required to meet with the curriculum committee to evaluate the waiver request."
                                 </p>
 
@@ -301,4 +281,7 @@ function ApplicationForm() {
 
 
     );
+    
 }
+
+export default ApplicationForm;
