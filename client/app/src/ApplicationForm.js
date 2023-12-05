@@ -15,6 +15,7 @@ function ApplicationForm() {
                 <ul>
                 <li><Link to="/Home">CS Applications</Link></li>
                 <li><Link to="/Apply">Apply</Link></li>
+                <li><Link to="/Profile">Profile</Link></li>
                 </ul>
                 
             </div>

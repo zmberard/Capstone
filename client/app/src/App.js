@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import ApplicationForm from '/workspaces/Capstone/client/app/src/ApplicationForm.js';
+import ProfilesForm from '/workspaces/Capstone/client/app/src/ProfilesForm.js';
 
 function HomePage() {
   return (
@@ -17,11 +18,13 @@ function App() {
         <Routes>
           <Route path="/Home" element={<HomePage />} />
           <Route path="/Apply" element={<ApplicationForm />} />
+          <Route path="/Profile" element={<ProfilesForm />} />
         </Routes>
 
         <ul>
           <li><Link to="/Home">CS Applications</Link></li>
           <li><Link to="/Apply">Apply</Link></li>
+          <li><Link to="/Profile">Profile</Link></li>
         </ul>
 
         <div className="container">
