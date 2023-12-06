@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+// Load config
 const config = require('../configs/default')
 
 router.get('/database-status', (req, res) => {

@@ -1,5 +1,6 @@
 const express = require('express');
 const Template = require('./models/Template');
+// Load middleware
 const { auth, admin } = require('./middleware');
 
 const app = express();
@@ -15,7 +16,7 @@ async function getTemplates() {
 
         return templates;
     } catch (error) {
-        // handle any errorst that might occur during the process
+        // handle any errors that might occur during the process
         console.error('Error fetching templates:', error);
         throw new Error('Failed to fetch templates');
     }
@@ -25,7 +26,7 @@ app.get('/templates', async (req, res) => {
     try {
         const templates = await getTemplates();
 
-        // transform the templates
+        // Transform the templates
         const transformedTemplates = templates.map(template => ({
             id: template.id,
             name: template.name,
