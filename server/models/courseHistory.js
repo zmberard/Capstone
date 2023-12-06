@@ -1,5 +1,8 @@
+// Load model
 const Model = require('./base')
 
+// A little different syntax than the other models
+// does the same thing within the db
 class CourseHistory extends Model{
     static get tableName(){
         return 'coursehistory'

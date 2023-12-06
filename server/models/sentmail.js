@@ -1,5 +1,7 @@
+// Load library
 const mongoose = require('mongoose');
 
+// Specific content of the sent mail
 const sentmailSchema = new mongoose.Schema({
     subject: {
         type: String,
