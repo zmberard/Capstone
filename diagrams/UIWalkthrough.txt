@@ -1,15 +1,51 @@
 Home Page Test
 
-Note: The Home Page is the only current functioning page you can navigate to with buttons
-
 1.) Open Home page, link to be later updated
 
 You should see:
-- A purple banner on top, containing two options
+- A purple banner on top, containing three options as buttons
 	- CS Applications
 	- Apply
-- A central title banner, slightly gray
+	- Profile
+- A central title banner, white with black text
 	- It will mention that it is the CS Applications site
 - A white section below the above, containing
 	- A section detailing the requirements
-	- A section telling the user to apply with a (currently nonfunctional) button
+	- A section telling the user to apply with a link
+
+2.) Click the Apply button at the top
+3.) Click the CS Applications button at the top
+4.) Click the Apply link on the home page
+
+You should see:
+- The pages switch between the application page and the home page
+- The purple banner with the three options from before
+- Below that, a banner stating that this is the professional program application, also purple
+- A section containing the form for the applicant's information, white with black text
+	- A time of application submitted (static but soon dynamic)
+	- A section for name, eid, WID, and advisor (incorrect advisors right now)
+	- A section detailing requirements for the program and how to fill out the form
+- A section containing the spots to fill out the application
+	- A series of course names, along with their status (chosen in dropdowns) and grade (dropdown)
+	- Currently contains CIS 015, 115, 200, 300, 301, ECE 241, MATH 220, 221
+	- Will be updated to include 018 for production
+	- The student's GPA (static now, but input later)
+	- A section for the student to input extra notes with their app
+	- An explanation of what students should put in the notes section
+- A button to submit the application
+- The contact info of resources for troubleshooting the application
+
+5.) Click Profile
+
+You should see:
+- Note: this page may soon become vestigial
+- A section telling you that this page is for updating your profile
+- Spots to fill in your new first and last name
+- A button to update your profile with the new information
+- A section displaying your wid and email
+- Contact info of troubleshooting resources
+
+6.) Click the buttons to swap pages from each page
+
+You should see:
+- Every button on every page for swapping should work
