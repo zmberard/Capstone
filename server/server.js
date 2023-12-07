@@ -6,6 +6,7 @@
 'use strict';
 
 const express = require('express');
+const bodyParser = require('body-parser');
 
 // default environment
 process.env.NODE_ENV = process.env.NODE_ENV || 'development'
@@ -23,7 +24,7 @@ app.get('/', (req, res) => {
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);
 
-
+app.use(bodyParser.json());
 
 app.get('/apply', require('./endpoints/apply/show-application.js'))
 app.post('/apply', require('./endpoints/apply/process-application.js'))
