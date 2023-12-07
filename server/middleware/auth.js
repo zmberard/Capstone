@@ -9,7 +9,7 @@ var cas = require('../configs/cas')
 const requestLogger = require('../middlewares/request-logger')
 
 // Load Models
-// const User = require('../models/user')
+const User = require('../models/user')
 
 // Configure Logging
 router.use(requestLogger)
@@ -104,9 +104,9 @@ router.post('/token', async function (req, res, next) {
 // Handle logout
 router.get('/logout', async function(req, res, next){
     // not sure if needed depending on if we use cookies or tokens
-    //if(req.session.user_id){
-    //    await User.clearRefreshToken(req.session.user_id)
-    //}
+    if(req.session.user_id){
+        await User.clearRefreshToken(req.session.user_id)
+    }
     if(req.session[cas.session_name]){
         cas.logout(req,res,next)
     } else{
@@ -116,4 +116,3 @@ router.get('/logout', async function(req, res, next){
 })
 
 module.exports = router
-
