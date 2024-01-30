@@ -1,3 +1,6 @@
+## running the app 
+cd client/app && npm start 
+
 The CIS Department Student App will be a one-stop shop web app for CIS student needs relating to the department. It will keep track of an individual student’s pre-professional and professional program GPA and the status of the student’s professional program application. It will have information about the student’s advisor, how far along they are in their degree program, and allow the student to fill out the professional program application automatically. 
 
 Optionally, we may integrate information on students’ CIS accounts and Beocat account. Also in consideration is a calendar for 018/015 events that are coming up along with tracking of 018/015 credit. 
