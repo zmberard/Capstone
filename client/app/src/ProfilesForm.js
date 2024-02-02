@@ -1,22 +1,9 @@
 import "./App.css";
-import React from 'react';
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
-import ApplicationForm from '/workspaces/Capstone/client/app/src/ApplicationForm.js';
+import React from 'react'; 
 
 function ProfilesForm() {
     return (
-        <div className="ProfilesForm">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <ul>
-                <li><Link to="/Home">CS Applications</Link></li>
-                <li><Link to="/Apply">Apply</Link></li>
-                <li><Link to="/Profile">Profile</Link></li>
-                </ul>
-                
-            </div>
-        </nav>
-            
+        <div className="ProfilesForm"> 
         <div class="container" role="main">
             <div id="message"> </div>
             <h3 class="top-header">Update your user profile:</h3>

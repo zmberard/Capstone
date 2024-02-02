@@ -1,25 +1,47 @@
 import "./App.css";
-import React from 'react';
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
-// Import your components
-// import HomePage from '/workspaces/Capstone/client/app/src/HomePage.js';
-import HomePage from '/workspaces/Capstone/client/app/src/HomePage.js';
-//import ApplicationForm from '/workspaces/Capstone/client/app/src/ApplicationForm.js';
+import React, {useState }from 'react';  
 
 function ApplicationForm() {
+    const [formData, setFormData] = useState({
+        name: '',
+        eid: '',
+        wid: '',
+        advisor: 'test',
+        // Add other form fields here such as list of courses
+      });
+    
+      const handleChange = (event) => {
+        const { name, value } = event.target;
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          [name]: value
+        }));
+      };
+    
+      const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+          const response = await fetch('/api/submit-application', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+          });
+    
+          if (response.ok) {
+            console.log('Application submitted successfully'); 
+          } else {
+            console.log('Failed to submit application'); 
+          }
+        } catch (error) {
+          console.error('Error submitting form:', error);
+        }
+      };
+    
     return (
+        //<form onSubmit={handleSubmit}>
         <div className="ApplicationForm">
-        
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <ul>
-                <li><Link to="/Home">CS Applications</Link></li>
-                <li><Link to="/Apply">Apply</Link></li>
-                <li><Link to="/Profile">Profile</Link></li>
-                </ul>
-                
-            </div>
-        </nav>
         <div class="container" role="main">
             <div id="message"></div>
             <div id="root">
@@ -42,19 +64,14 @@ function ApplicationForm() {
                             <input type="text" value="Test User"></input>
                         </div>
                         <div class="input-group">
-                            <label>EID:</label>
+                            <label>ID:</label>
                             <input type="text" value="Test User"></input>
                         </div>
-                        <div class="input-group">
-                            <label>Wildcat ID:</label>
-                            <input type="text" value="Test User"></input>
-                        </div>
+ 
                         <div class="input-group">
                             <label>Advisor:</label>
                             <select name="advisor">
-                                <option value="Kelly Beikmann">Kelly Beikmann</option>
-                                <option value="Sheryl Cornell">Sheryl Cornell</option>
-                                <option value="Josh Wease">Josh Wease</option>
+                                <option value="test">test</option> 
                             </select>
                         </div>
                         <div class="info">
@@ -275,7 +292,7 @@ function ApplicationForm() {
         </div>
         <footer class="footer">
             <div class="container">
-                <p class="text-muted">CS Applications - Contact webmaster@cs.ksu.edu for help</p>
+                <p class="text-muted">CS Applications - Contact   for help</p>
             </div>
         </footer>
         </div>

@@ -1,15 +1,20 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import ApplicationForm from '/workspaces/Capstone/client/app/src/ApplicationForm.js';
-import ProfilesForm from '/workspaces/Capstone/client/app/src/ProfilesForm.js';
+import ApplicationForm from './ApplicationForm.js';
+import ProfilesForm from './ProfilesForm.js';
 import Header from './Header';  
-import Footer from './Footer';
+import Footer from './Footer'; 
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Header/>
+        <Routes>
+          {/* not sure why home is not needed here*/}
+          <Route path="/Apply" element={<ApplicationForm />} />
+          <Route path="/Profile" element={<ProfilesForm />} />
+        </Routes>
           <div className="container">
             <div className="jumbotron">
               <h1>CS Applications</h1>

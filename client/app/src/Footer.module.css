@@ -13,7 +13,6 @@
     position: absolute;
     top: 75%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    /* Ensures the text is centered over the image */
+    transform: translate(-50%, -50%); 
   }
   
