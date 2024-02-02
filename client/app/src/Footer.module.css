@@ -1,0 +1,18 @@
+.footer {
+    position: relative;
+    text-align: center;
+    color: white;
+  }
+  
+  .footerImg {
+    width: 100%;  
+    height: auto;  
+  }
+  
+  .footerContent {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+  }
+  
