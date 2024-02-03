@@ -1,4 +1,4 @@
-import "./App.css";
+import "./AppForm.css";
 import React from 'react';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 // Import your components
@@ -11,7 +11,7 @@ function ApplicationForm() {
         <div className="ApplicationForm">
         
         <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
+            <div class="header">
                 <ul>
                 <li><Link to="/Home">CS Applications</Link></li>
                 <li><Link to="/Apply">Apply</Link></li>
@@ -27,8 +27,8 @@ function ApplicationForm() {
                     <header class="app-header">
                         
                         <h1>
-                            "Computer Science Apps"
-                            <br /><small>Professional Program Application</small>
+                            Computer Science Apps
+                            <br/><small>Professional Program Application</small>
                         </h1>
                         
                     </header>
@@ -39,7 +39,7 @@ function ApplicationForm() {
                         <h1>Application Form</h1>
                         <div class="input-group">
                             <label>Name:</label>
-                            <input type="text" value="Test User"></input>
+                            <input type="text" value="Test User" wid></input>
                         </div>
                         <div class="input-group">
                             <label>EID:</label>
@@ -59,19 +59,18 @@ function ApplicationForm() {
                         </div>
                         <div class="info">
                             <p>
-                                "To be accepted to the Computer Science Professional Program, you must complete the following Pre-Professional Courses"
-                                <i> with a grade of C or better</i>
-                                " and"
+                                To be accepted to the Computer Science Professional Program, you must complete the following Pre-Professional Courses
+                                <i> with a grade of C or better </i>
+                                  and
                                 <i> with a 2.3 cumulative GPA</i>
-                                <strong> within these courses</strong>
-                                "."
+                                <strong> within these courses.</strong>
                             </p>
                             <p>
-                                "Any courses you are currently taking can be marked as "
+                                Any courses you are currently taking can be marked as 
                                 <i> In Progress</i>
-                                ".  Any courses that you do not plan on taking need to be marked"
-                                <i> Waiver Requested</i>
-                                " and the reasons you are asking for the waiver must be explained below."
+                                .  Any courses that you do not plan on taking need to be marked"
+                                <i> Waiver Requested </i>
+                                 and the reasons you are asking for the waiver must be explained below.
                             </p>
                         </div>
                         <table class="table">
@@ -247,14 +246,14 @@ function ApplicationForm() {
                         </tbody>
                         </table>
                         <p>
-                            "Cumulative Pre-Professional GPA:"
+                            Cumulative Pre-Professional GPA:
                             <strong>4</strong>
                         </p>
                         <div>
                             <div class="info">
-                                <p>"Please use this space to add any comments that should be made regarding these classes. "</p>
+                                <p>Please use this space to add any comments that should be made regarding these classes. </p>
                                 <p>
-                                    "If you requested a waiver for any of these classes, please explain in detail the reasons you are requesting a waiver for meeting all of the requirements for entrance into the Computer Science Professional Program. You may also be required to meet with the curriculum committee to evaluate the waiver request."
+                                    If you requested a waiver for any of these classes, please explain in detail the reasons you are requesting a waiver for meeting all of the requirements for entrance into the Computer Science Professional Program. You may also be required to meet with the curriculum committee to evaluate the waiver request.
                                 </p>
 
                             </div>
