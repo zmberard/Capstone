@@ -1,16 +1,10 @@
 import React from 'react';
 import "./App.css";
-import { BrowserRouter as Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function HomePage() {
 return (  
-    <div>
-
-    <ul>
-      <li><Link to="/Home">CS Applications</Link></li>
-      <li><Link to="/Apply">Apply</Link></li>
-    </ul>
-
+   <div className="HomePage">
     <div className="container">
       <div className="jumbotron">
         <h1>CS Applications</h1>
@@ -34,9 +28,8 @@ return (
           <Link to="/Apply" className="button">Apply!</Link>
         </div>
       </div>
-    </div>
-  
-</div>
+    </div> 
+   </div>
   );
 }
 
