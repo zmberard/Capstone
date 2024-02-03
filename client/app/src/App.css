@@ -191,6 +191,16 @@ textarea {
   white-space: pre-wrap;
 }
 
+.application-form{
+  position: relative;
+  display: table;
+  border-collapse: separate;
+}
+
+.status-message{
+  text-align: left;
+}
+
 .App-link {
   color: gray;
 }
