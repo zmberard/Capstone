@@ -5,6 +5,7 @@ import ProfilesForm from './ProfilesForm.js';
 import HomePage from './HomePage.js';
 import Header from './Header';  
 import Footer from './Footer'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
