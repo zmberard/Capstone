@@ -30,6 +30,18 @@
     color: #512888;
     font-size: 1.5rem;
   }
+  .dividerNav {
+    position: relative;
+    border-left: 1.4px solid #ffffff; /* Adjust color as needed */
+    height: 1.5rem;
+  }
+  
+  .navItemContainer {
+    display: flex;
+    align-items: center;
+    padding: 7px 8px; /* Adjust padding as needed */
+    width: 100%; /* Ensure it takes full width */
+  }
   
   .headerTitle {
     color: #482277;
@@ -52,12 +64,12 @@
   
   .navItem {
     color: white;
-    text-align: center;
-    padding: 14px 16px;
+    flex-grow: 1;
     text-decoration: none;
   }
   
   .navItem:hover {
     background-color: #e4e4e7;
     color: #41206c;
+    cursor: pointer;
   }
