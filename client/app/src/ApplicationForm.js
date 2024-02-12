@@ -1,11 +1,6 @@
 import "./AppForm.css";
 import React, {useState }from 'react';  
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
-// Import your components
-// import HomePage from '/workspaces/Capstone/client/app/src/HomePage.js';
-import HomePage from '/workspaces/Capstone/client/app/src/HomePage.js';
-//import ApplicationForm from '/workspaces/Capstone/client/app/src/ApplicationForm.js';
-
+import Button from 'react-bootstrap/Button'; 
 
 function ApplicationForm() {
     const [formData, setFormData] = useState({
@@ -282,9 +277,8 @@ function ApplicationForm() {
                             </div>
                             <textarea name="waiverText"></textarea>
 
-                        </div>
-                        <button class="apply-btn">Submit Application</button>
-
+                        </div> 
+                        <Button variant="success">Submit Application</Button>
                         
                         
                     </div>
