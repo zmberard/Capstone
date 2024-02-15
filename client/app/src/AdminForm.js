@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Form, Button, Panel } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import styles from './AdminForm.module.css';
 import Table from 'react-bootstrap/Table';
 
@@ -44,7 +44,7 @@ function AdminForm(){
                         <tr>
                             <td>
                                 <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck2" checked/>
+                                    <input type="checkbox" class="custom-control-input" id="customCheck2" false/>
                                 </div>
                             </td>
                             <td>Test</td>
@@ -56,11 +56,12 @@ function AdminForm(){
                             <td>Fall</td>
                             <td>No?</td>
                             <td>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div class="dropdown show">
+                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Change?
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    </a>
+                                    
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <a class="dropdown-item" href="#">Accepted</a>
                                         <a class="dropdown-item" href="#">Declined</a>
                                         <a class="dropdown-item" href="#">Pending</a>
@@ -82,4 +83,8 @@ function AdminForm(){
             
         </div>
     );
+
+    
 }
+
+export default AdminForm;
