@@ -3,17 +3,19 @@
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
-module.exports = {
-
+module.exports = { 
   development: {
-    client: 'postgresql',
+    client: 'pg',
     connection: {
-      database: 'postgres',
-      host:      "db",
-      port:      5432,
-      user:     'postgres',
-      password: 'postgres'
-    }
+      host: '',  
+      port:  5432,
+      user: 'codespace_devuser', //
+      password: '', //
+      database: 'DARS_TEST',
+      ssl: {
+        rejectUnauthorized: false, 
+      }
+    },
   },
 
   testing: {
