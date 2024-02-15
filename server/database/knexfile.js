@@ -1,5 +1,4 @@
-// Update with your config settings.
-
+require('dotenv').config();
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
@@ -8,10 +7,10 @@ module.exports = {
     client: 'pg',
     connection: {
       host: '',  
-      port:  5432,
-      user: 'codespace_devuser', //
+      port: '',
+      user: '', //
       password: '', //
-      database: 'DARS_TEST',
+      database: '',
       ssl: {
         rejectUnauthorized: false, 
       }

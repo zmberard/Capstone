@@ -1,39 +1,32 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-
-'use strict';
-
 const express = require('express');
-const bodyParser = require('body-parser');
+const { serverConfig } = require('./configs/config');
+const cors = require('cors');
 
-// default environment
-process.env.NODE_ENV = process.env.NODE_ENV || 'development'
+const { knexConfig } = require('./configs/config');
+const knex = require('knex')(knexConfig.development);
 
-// Constants
-const PORT = 3000;
-const HOST = '0.0.0.0';
-
-// App
 const app = express();
-app.get('/', (req, res) => {
-	res.send('Hello remote world!\n');
-});
+const PORT = serverConfig.port || 3001;
 
-app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
+app.use(express.json()); // Middleware to parse JSON bodies
+app.use(cors({
+	origin: 'https://ominous-chainsaw-q57p5pjvvvr29vxj-3000.app.github.dev'
+  }));
+//replace '*' with specific origin
 
-app.use(bodyParser.json());
+app.listen(PORT, () => {
+	console.log(`Server running on port ${PORT}`);
+});  
 
-app.get('/apply', require('./endpoints/apply/show-application.js'))
-app.post('/apply', require('./endpoints/apply/process-application.js'))
+app.get('/api/profile', async (req, res) => {
+	console.log('Profile endpoint hit');
+	try {
+	  const data = await knex.select('*').from('dars_data');
+	  console.log(data);
+	  res.json(data);
+	} catch (err) {
+	  console.error('Error fetching data:', err);
+	  res.status(500).send('Server error');
+	}
+  });
   
-app.get('/email', require('./endpoints/email/send-email.js'))
-app.post('/email', require('./endpoints/email/process-email.js'))
-
-app.get('/login', require('./endpoints/login/show-login.js'))
-app.post('/login', require('./endpoints/login/process-login.js'))
-
-app.get('/profile', require('./endpoints/profile/student-profile.js'))
-app.post('/profile', require('./endpoints/profile/process-profile.js'))

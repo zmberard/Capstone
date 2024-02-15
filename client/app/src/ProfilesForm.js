@@ -1,10 +1,40 @@
-import React from 'react';
-import { Container, Row, Col, Form, Button, Panel } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import styles from './ProfileForm.module.css'; 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3002';
 
 function ProfilesForm() {
+    const [data, setData] = useState([]);
+
+    useEffect(() => { 
+        //fetch(`${API_BASE_URL}/api/profile`)
+        fetch(`https://ominous-chainsaw-q57p5pjvvvr29vxj-3002.app.github.dev/api/profile`)
+          .then(response => response.json())
+          .then(data => setData(data))
+          .catch(error => console.error('Failed to fetch data:', error));
+      }, []);
+
+      
     return (
+
         <div className={styles.ProfilesForm}>
+            <div>
+                <h2>Data from Database</h2>
+                <table>
+                    <thead>
+                    <tr>
+                        {data.length > 0 && Object.keys(data[0]).map((key) => <th key={key}>{key}</th>)}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {data.map((row, index) => (
+                        <tr key={index}>
+                        {Object.values(row).map((val, i) => <td key={i}>{val}</td>)}
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
             <Container role="main">
                 <Row className="mb-4">
                     <Col xs={12}>
