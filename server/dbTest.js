@@ -1,4 +1,5 @@
-const knex = require('knex')(require('./database/knexfile').development);
+const { knexConfig } = require('./configs/config');
+const knex = require('knex')(knexConfig.development);
 
 // Example query: Select all rows from a table
 knex.select('*').from('dars_data')
