@@ -9,10 +9,12 @@ const app = express();
 const PORT = serverConfig.port || 3001;
 
 app.use(express.json()); // Middleware to parse JSON bodies
-app.use(cors({
-	origin: 'https://ominous-chainsaw-q57p5pjvvvr29vxj-3000.app.github.dev'
-  }));
-//replace '*' with specific origin
+app.use(cors({//cors was added because I was having trouble with connecting to client 
+			  //But the problem was not cors rather port visibility
+			  //this should be implemented for prod 
+	//origin: 'https://ominous-chainsaw-q57p5pjvvvr29vxj-3002.app.github.dev'
+		   //https://ominous-chainsaw-q57p5pjvvvr29vxj-3000.app.github.dev/
+  }));  
 
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
