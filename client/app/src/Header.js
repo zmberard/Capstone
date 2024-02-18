@@ -28,6 +28,10 @@ const Header = () => {
               <Link to="/Profile" className={styles.navItem}>Profile</Link>
               <div className={styles.dividerNav}></div>
             </li>
+            <li className={styles.navItemContainer}>
+              <Link to="/AdminPage" className={styles.navItem}>Admin</Link>
+              <div className={styles.dividerNav}></div>
+            </li>
             {/*Add more items as needed, header css will auto adjust for the new item*/}
           </ul> 
         </nav>
