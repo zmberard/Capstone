@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ApplicationForm from './ApplicationForm.js';
 import ProfilesForm from './ProfilesForm.js';
 import HomePage from './HomePage.js';
+import AdminForm from './AdminForm.js';
 import Header from './Header';  
 import Footer from './Footer'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,7 +22,7 @@ function App() {
             <Route path="/Profile" element={<ProfilesForm />} />
           </Routes>
             
-            <Footer/>
+          <Footer/>
         </div>
       </Router>
     </UserProvider> 
