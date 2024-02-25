@@ -6,7 +6,8 @@ import { useUser } from './UserContext';
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3002';
 //need dotenv and .env file to implement API_BASE_URL? 
 //TODO: Fix API_BASE_URL not working, have to hard code address
-
+//TODO: Instead of fetch, using only userContext unless we want to fetch data on each load. 
+//TODO: impletemnt update button to update userContext 
 function ProfilesForm() { 
     const { WId } = useUser();
     const [userData, setUserData] = useState({ wid: '', firstName: '', lastName: '' });
