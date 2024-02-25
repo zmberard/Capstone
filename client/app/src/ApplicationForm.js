@@ -3,7 +3,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useUser } from './UserContext'; 
 import { Container, Row, Col, Form, Table, Button, Alert } from 'react-bootstrap';
 //TODO: how to determin status? 
-
+//TODO: vars needs that needs further consideration: name, GPA, status, advisor, [REC, LEC, QUIZ] classes
+ 
 function ApplicationForm() {
     const { WId } = useUser();
     const [courses, setCourses] = useState([]); // State to hold dynamic course data
