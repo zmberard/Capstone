@@ -1,3 +1,4 @@
+//TODO: add vars such as name, email, advisor, after login
 import React, { createContext, useContext, useState } from 'react';
 
 const UserContext = createContext();
