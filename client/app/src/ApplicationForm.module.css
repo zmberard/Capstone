@@ -1,0 +1,9 @@
+.appHeader {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;  
+  justify-content: center;  
+  color: #fff;
+  background-color: #4f2d7f;
+  padding: 20px 0;  
+}
