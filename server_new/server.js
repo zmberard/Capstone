@@ -28,9 +28,10 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
+//TODO: Get first and last name and email for profile
 app.get('/api/profile', async (req, res) => {
     console.log('Profile endpoint hit');
-    console.log(req.query.id);
+    console.log('QUERY ID: ' + req.query.id);
     const id = req.query.id; 
     if (!id) {
         console.log('No WID provided!');
@@ -38,7 +39,8 @@ app.get('/api/profile', async (req, res) => {
     }
     try {
       const data = await knex('dars_data').distinct('wid').where('wid', id);
-      //const data = await knex('dars_data').select('wid', 'firstName', 'lastName').where('wid', id);
+      const query = knex('dars_data').distinct('wid').where('wid', id).toString();
+      console.log(query);  
       console.log(data);
       res.json(data);
     } catch (err) {
