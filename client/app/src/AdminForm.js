@@ -9,12 +9,21 @@ function AdminForm(){
             <Container role="main">
                 <Row className="review">
                     <Col xs={12}>
-                        <h3 className={styles.topHeader}>Review Applications</h3>
+                        <h2 className={styles.topHeader}>Review Applications</h2>
                     </Col>
                 </Row>
                 <Row className="total">
-                    <Col xs={12}>
+                    <Col xs={40}>
+                        <p></p>
                         <h3 className={styles.topHeader}>Total Applications: x</h3>
+                        <p></p>
+                        <Button type="button" class="btn btn-space">Disable Applications</Button>
+                        <input id="disable_application" class="btn btn-space" type="button"/>
+                        <Button type="button" class="btn btn-space">Download Selected</Button>
+                        <input id="download_selected" class="btn btn-space" type="button"/>
+                        <Button type="button" class="btn btn-space">Email Selected</Button>
+                        <input id="email_selected" class="btn btn-space" type="button"/>
+                        <p></p>
                     </Col>
                 </Row>
                 <Row>
