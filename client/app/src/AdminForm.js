@@ -16,23 +16,11 @@ function AdminForm(){
                 <Row className="review">
                     <Col xs={12}>
                         <h3 className={styles.topHeader}>Review Applications</h3>
-                        <p></p>
                     </Col>
                 </Row>
                 <Row className="total">
                     <Col xs={12}>
-                        <div class="text-right"> 
-                            
-                            <Button onClick={onClick} type="button">Disable Applications</Button> 
-                            
-                            <Button onClick={onClick} type="button">Downlaod Selected</Button> 
-                            
-                            <Button onClick={onClick} type="button">Email Selected</Button> 
-                            
-                    
-                            
-                            
-                        </div> 
+                        <h3 className={styles.topHeader}>Total Applications: x</h3>
                     </Col>
                 </Row>
                 <Row>
