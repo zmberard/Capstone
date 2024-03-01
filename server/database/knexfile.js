@@ -1,19 +1,20 @@
-// Update with your config settings.
-
+require('dotenv').config();
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
-module.exports = {
-
+module.exports = { 
   development: {
-    client: 'postgresql',
+    client: 'pg',
     connection: {
-      database: 'postgres',
-      host:      "db",
-      port:      5432,
-      user:     'postgres',
-      password: 'postgres'
-    }
+      host: '',  
+      port: '',
+      user: '', //
+      password: '', //
+      database: '',
+      ssl: {
+        rejectUnauthorized: false, 
+      }
+    },
   },
 
   testing: {
