@@ -7,7 +7,13 @@
     text-align: center;
 }
 
-.btn {
-    background-color: #800080;
+.otherHeader {
+    margin: 20;
+    text-align: left;
 }
 
+.btn-space {
+    margin-right: 5px;
+    margin: 20;
+    text-align: right;
+}
