@@ -16,10 +16,24 @@ const Header = () => {
         </div>
         <nav className={styles.navSection}>
           <ul className={styles.navList}>
-            <li><Link to="/Home" className={styles.navItem}>CS Applications</Link></li>
-            <li><Link to="/Apply" className={styles.navItem}>Apply</Link></li>
-            <li><Link to="/Profile" className={styles.navItem}>Profile</Link></li>
-          </ul>
+            <li className={styles.navItemContainer}>
+              <Link to="/Home" className={styles.navItem}>CS Applications</Link>
+              <div className={styles.dividerNav}></div>
+            </li>
+            <li className={styles.navItemContainer}>
+              <Link to="/Apply" className={styles.navItem}>Apply</Link>
+              <div className={styles.dividerNav}></div>
+            </li>
+            <li className={styles.navItemContainer}>
+              <Link to="/Profile" className={styles.navItem}>Profile</Link>
+              <div className={styles.dividerNav}></div>
+            </li>
+            <li className={styles.navItemContainer}>
+              <Link to="/AdminPage" className={styles.navItem}>Admin</Link>
+              <div className={styles.dividerNav}></div>
+            </li>
+            {/*Add more items as needed, header css will auto adjust for the new item*/}
+          </ul> 
         </nav>
       </header>
     ); 

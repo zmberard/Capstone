@@ -1,0 +1,15 @@
+  
+  .jumbotron .h1, .jumbotron h1 {
+    font-size: 63px;
+  }
+  
+  .jumbotron{
+    background-color: #eee;
+    padding-top: 48px;
+    padding-bottom: 48px;
+    margin-bottom: 30px;
+    box-sizing: border-box;
+  }
+  .customList {
+    padding-left: 20px;  
+  }
