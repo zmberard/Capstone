@@ -14,12 +14,11 @@ function AdminForm(){
             <Container role="main">
                 <Row className="review">
                     <Col xs={12}>
-                        <h2 className={styles.topHeader}>Review Applications</h2>
+                        <h3 className={styles.topHeader}>Review Applications</h3>
                     </Col>
                 </Row>
                 <Row className="total">
-                    <Col xs={40}>
-                        <p></p>
+                    <Col xs={12}>
                         <h3 className={styles.topHeader}>Total Applications: x</h3>
                         <p></p>
                         <Button onClick={onClick} type="button" class="btn btn-space">Disable Applications</Button>
@@ -106,6 +105,25 @@ function AdminForm(){
                             </tr>
                         </tbody>
                     </Table>
+                    <nav aria-label="TableFooter">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </Row>
                 
             </Container>
