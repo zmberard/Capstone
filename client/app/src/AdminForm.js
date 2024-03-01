@@ -3,6 +3,11 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import styles from './AdminForm.module.css';
 import Table from 'react-bootstrap/Table';
 
+function onClick(){
+    alert("Button clicked");
+}
+
+
 function AdminForm(){
     return(
         <div className={styles.AdminForm}>
@@ -17,11 +22,11 @@ function AdminForm(){
                         <p></p>
                         <h3 className={styles.topHeader}>Total Applications: x</h3>
                         <p></p>
-                        <Button type="button" class="btn btn-space">Disable Applications</Button>
+                        <Button onClick={onClick} type="button" class="btn btn-space">Disable Applications</Button>
                         <input id="disable_application" class="btn btn-space" type="button"/>
-                        <Button type="button" class="btn btn-space">Download Selected</Button>
+                        <Button onClick={onClick} type="button" class="btn btn-space">Download Selected</Button>
                         <input id="download_selected" class="btn btn-space" type="button"/>
-                        <Button type="button" class="btn btn-space">Email Selected</Button>
+                        <Button onClick={onClick} type="button" class="btn btn-space">Email Selected</Button>
                         <input id="email_selected" class="btn btn-space" type="button"/>
                         <p></p>
                     </Col>
