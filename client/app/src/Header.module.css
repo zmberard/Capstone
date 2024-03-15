@@ -51,7 +51,7 @@
   
   .navSection {
     width: 100%; 
-    background-color: #482277; 
+    background-color: #482277;
   }
   
   .navList {
@@ -66,6 +66,9 @@
     color: white;
     flex-grow: 1;
     text-decoration: none;
+    text-align: center; 
+    font-weight: bold; 
+    padding: 15px 0;
   }
   
   .navItem:hover {

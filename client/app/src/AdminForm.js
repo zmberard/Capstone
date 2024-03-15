@@ -64,14 +64,14 @@ function AdminForm(){
                                 <td>Test</td>
                                 <td>User</td>
                                 <td>testcas</td>
-                                <td>testcas@ksu.edu</td>
+                                <td>testcas@asd.edu</td>
                                 <td>123456789</td>
                                 <td>Sheryll Cornell</td>
                                 <td>Fall</td>
                                 <td>No?</td>
                                 <td>
                                    <select>
-                                    <option value="accepted">Accepted</option>
+                                    <option value="Accepted">Accepted</option>
                                     <option value="Pending">Pending</option>
                                     <option value="Pending/Exception">Pending/Exception</option>
                                     <option value="Pending/Dismissed">Pending/Dismissed</option>
