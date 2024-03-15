@@ -6,26 +6,26 @@ import { Container, Row, Col, Form, Table, Button, Alert } from 'react-bootstrap
 //TODO: vars needs that needs further consideration: name, GPA, status, advisor, [REC, LEC, QUIZ] classes
  
 function ApplicationForm() {
-    const { WId } = useUser();
+    const { userData } = useUser();
     const [courses, setCourses] = useState([]); // State to hold dynamic course data
-    const name = "Wille Wildcat";
+    const name = userData.first_name + " " + userData.last_name;
     const hardcodedGPA = "3.5";
 
     // Fetch courses dynamically from the database
     useEffect(() => {
-        if (WId) {
+        if (userData.wid) {
             const fetchCourses = async () => {
                 try {
-                    const response = await fetch(`https://ominous-chainsaw-q57p5pjvvvr29vxj-3002.app.github.dev/api/courses?id=${WId}`);
-                    const data = await response.json();
-                    setCourses(data);
+                    const response = await fetch(`https://ominous-chainsaw-q57p5pjvvvr29vxj-3002.app.github.dev/api/courses?id=${userData.wid}`);
+                    const { courses } = await response.json();
+                    setCourses(courses); 
                 } catch (error) {
                     console.error('Failed to fetch courses:', error);
                 }
             };
             fetchCourses();
         }
-    }, [WId]);
+    }, [userData.wid]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -33,8 +33,8 @@ function ApplicationForm() {
     };
     
     const statusOptions = [
-        { value: "complete", label: "Complete" },
-        { value: "in-progress", label: "In Progress" },
+        { value: "Complete", label: "Complete" },
+        { value: "In-Progress", label: "In Progress" }, //value need to match response from api
         { value: "transferred", label: "Transferred" },
         { value: "retaking", label: "Retaking" },
         { value: "waiver-requested", label: "Waiver Requested" },
@@ -57,27 +57,28 @@ function ApplicationForm() {
             <div className={styles.appHeader}>
                 <h1>Computer Science Apps</h1>
                 <h2>Professional Program Application</h2>
-            </div>
-
+            </div> 
             <Form onSubmit={handleSubmit}>
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm={2}>Name:</Form.Label>
                     <Col sm={10}>
-                        <Form.Control type="text" defaultValue={name} readOnly />
+                        <Form.Control type="text" value={name} readOnly />
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm={2}>ID:</Form.Label>
                     <Col sm={10}>
-                        <Form.Control type="text" defaultValue={WId} readOnly />
+                        <Form.Control type="text" value={userData.wid} readOnly />
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm={2}>Advisor:</Form.Label>
                     <Col sm={10}>
-                        <Form.Select defaultValue="test">
+                        <Form.Select value={userData.advisor}>
                             <option value="test">test</option>
-                            {/* Additional advisor options can be added here */}
+                            <option value="Sheryl Cornell">Sheryl Cornell</option>
+                            <option value="DI">David Invergo</option>
+                            {/* Additional advisor options can be added here */} 
                         </Form.Select>
                     </Col>
                 </Form.Group>
@@ -98,22 +99,22 @@ function ApplicationForm() {
                     <tbody>
                         {courses.map((course, index) => (
                             <tr key={index}>
-                                <td>{course.class_descr}</td>
-                                <td>{`${course.class_subject} ${course.class_catalog}`}</td>
-                                <td>
-                                    <Form.Select name={`${course.class_subject}${course.class_catalog}-status`}>
-                                    {statusOptions.map(option => (
-                                        <option key={option.value} value={option.value}>{option.label}</option>
-                                    ))}
-                                    </Form.Select>
-                                </td>
-                                <td>
-                                    <Form.Select name={`${course.class_subject}${course.class_catalog}-grade`} defaultValue={course.grade || 'n/a'}>
-                                    {gradeOptions.map(option => (
-                                        <option key={option.value} value={option.value}>{option.label}</option>
-                                    ))}
-                                    </Form.Select>
-                                </td>
+                            <td className="align-middle">{course.class_descr}</td>
+                            <td className="align-middle">{`${course.class_subject} ${course.class_catalog}`}</td>
+                            <td className="align-middle">
+                                <Form.Select name={`${course.class_subject}${course.class_catalog}-status`} value={course.status}>
+                                {statusOptions.map(option => (
+                                    <option key={option.value} value={option.value}>{option.label}</option>
+                                ))}
+                                </Form.Select>
+                            </td>
+                            <td className="align-middle">
+                                <Form.Select name={`${course.class_subject}${course.class_catalog}-grade`} value={course.grade}>
+                                {gradeOptions.map(option => (
+                                    <option key={option.value} value={option.value}>{option.label}</option>
+                                ))}
+                                </Form.Select>
+                            </td>
                             </tr>
                         ))}
                     </tbody>
@@ -122,7 +123,7 @@ function ApplicationForm() {
                     <Form.Label>Additional Information:</Form.Label>
                     <Form.Control as="textarea" rows={3} placeholder="Add comments or additional information here" />
                 </Form.Group>
-                <Button variant="success" type="submit">Submit Application</Button>
+                <Button className="btn-submit" variant="success" type="submit">Submit Application</Button>  
             </Form>
         </Container>
     );
