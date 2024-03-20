@@ -5,8 +5,8 @@ const axios = require('axios');
 // The serviceHost (our server) and casHost (the CAS server)
 // hostnames, we nee to build urls.  Since we pass our serviceHost
 // as a url component in the search string, we need to url-encode it.
-var serviceHost = encodeURIComponent('http://localhost:3000/api/');
-var casHost = 'http://localhost:4050/'//'https://signin.k-state.edu/WebISO/';
+var serviceHost = encodeURIComponent('https://scaling-pancake-wqrgqgprw57hv47w-3000.app.github.dev/api/');
+var casHost = 'https://signin.k-state.edu/WebISO/'//'https://signin.k-state.edu/WebISO/';
 
 
 // Create an express router to handle requests

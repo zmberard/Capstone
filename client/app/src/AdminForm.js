@@ -30,7 +30,7 @@ function AdminForm() {
                 </Row>
                 <Row className="total">
                     <Col xs={12}>
-                        <h3 className={styles.topHeader}>Total Applications: x</h3>
+                        <h3 className={styles.topHeader}>Total Applications: {applications.length}</h3>
                         <p></p>
                         <Button onClick={onClick} type="button" class="btn btn-space">Disable Applications</Button>
                         <input id="disable_application" class="btn btn-space" type="button"/>
