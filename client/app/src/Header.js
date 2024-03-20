@@ -5,7 +5,7 @@ import { useUser } from './UserContext';
 import {Button } from 'react-bootstrap';
 
 const Header = () => {  
-    const { WId, login, logout } = useUser();
+    const { user, login, logout } = useUser();
 
     return (
       <header className={styles.headerContainer}>
@@ -18,11 +18,11 @@ const Header = () => {
             <h1 className={styles.headerTitle}>Computer Science</h1>
           </a> 
           <Button
-            onClick={WId ? logout : login}
-            variant={WId ? 'danger' : 'success'} // Red for logout, green for login
+            onClick={user ? logout : login}
+            variant={user ? 'danger' : 'success'} // Red for logout, green for login
             style={{ marginLeft: 'auto' }}
           >
-            {WId ? 'Logout' : 'Login'}
+            {user ? 'Logout' : 'Login'}
           </Button>
         </div>
         <nav className={styles.navSection}>
