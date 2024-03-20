@@ -16,7 +16,8 @@ function ApplicationForm() {
         if (userData.wid) {
             const fetchCourses = async () => {
                 try {
-                    const response = await fetch(`https://scaling-pancake-wqrgqgprw57hv47w-3002.app.github.dev/api/courses?id=${userData.wid}`);
+
+                    const response = await fetch(`https://ominous-chainsaw-q57p5pjvvvr29vxj-3002.app.github.dev/api/courses?id=${userData.wid}`);
                     const { courses } = await response.json();
                     setCourses(courses); 
                 } catch (error) {
