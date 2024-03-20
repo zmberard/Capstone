@@ -12,7 +12,7 @@ function AdminForm() {
   
     useEffect(() => {
       const fetchApplications = async () => {
-        const response = await fetch('https://ominous-chainsaw-q57p5pjvvvr29vxj-3002.app.github.dev/api/applications');
+        const response = await fetch('https://scaling-pancake-wqrgqgprw57hv47w-3002.app.github.dev/api/applications');
         const data = await response.json();
         setApplications(data);
       };
