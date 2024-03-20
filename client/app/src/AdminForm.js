@@ -1,14 +1,25 @@
-import React from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Container, Row, Col, Button, Table } from 'react-bootstrap';
 import styles from './AdminForm.module.css';
-import Table from 'react-bootstrap/Table';
 
 function onClick(){
     alert("Button clicked");
 }
 
 
-function AdminForm(){
+function AdminForm() {
+    const [applications, setApplications] = useState([]);
+  
+    useEffect(() => {
+      const fetchApplications = async () => {
+        const response = await fetch('https://ominous-chainsaw-q57p5pjvvvr29vxj-3002.app.github.dev/api/applications');
+        const data = await response.json();
+        setApplications(data);
+      };
+  
+      fetchApplications();
+    }, []);
+  
     return(
         <div className={styles.AdminForm}>
             <Container role="main">
@@ -55,54 +66,25 @@ function AdminForm(){
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck2" false/>
-                                    </div>
-                                </td>
-                                <td>Test</td>
-                                <td>User</td>
-                                <td>testcas</td>
-                                <td>testcas@asd.edu</td>
-                                <td>123456789</td>
-                                <td>Sheryll Cornell</td>
-                                <td>Fall</td>
-                                <td>No?</td>
-                                <td>
-                                   <select>
-                                    <option value="Accepted">Accepted</option>
-                                    <option value="Pending">Pending</option>
-                                    <option value="Pending/Exception">Pending/Exception</option>
-                                    <option value="Pending/Dismissed">Pending/Dismissed</option>
-                                    <option value="Pending/Reinstated">Pending/Reinstated</option>
-                                    <option value="Pending(All)">Pending(All)</option>
-                                    <option value="Declined">Declined</option>
-                                    <option value="Declined/Exception">Declined/Exception</option>
-                                    <option value="Withdrawn">Withdrawn</option>
-                                   </select>
-                                   
-                                    {/* <div class="dropdown show">
-                                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Change?
-                                        </a>
-                                        
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item" href="#">Accepted</a>
-                                            <a class="dropdown-item" href="#">Declined</a>
-                                            <a class="dropdown-item" href="#">Pending</a>
-                                        </div>
-                                    </div> */}
-                                </td>
-                                <td>
-                                    <Button type="button" class="btn btn-review">review</Button>
-                                </td>
-                                <td>
-                                    <Button type="button" class="btn btn-edit">edit</Button>
-                                </td>
-                                <td>Notes Test</td>
-                                <td>???</td>
+                        {applications.map((app, index) => (
+                            <tr key={index}>
+                            {/* Render application details */}
+                            <td><input type="checkbox" /></td>
+                            <td>{app.first_name}</td>
+                            <td>{app.last_name}</td>
+                            <td>{app.eid}</td>
+                            <td>{app.email}</td>
+                            <td>{app.wid}</td>
+                            <td>{app.advisor}</td>
+                            <td>{app.semester}</td>
+                            <td>{app.Eid}</td>
+                            <td>{app.status}</td>
+                            <td>{app.Eid}</td>
+                            <td>{app.Eid}</td>
+                            <td>{app.notes}</td>
+                            {/* Add other fields as needed */}
                             </tr>
+                        ))}
                         </tbody>
                     </Table>
                     <nav aria-label="TableFooter">
