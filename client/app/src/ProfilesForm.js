@@ -9,34 +9,14 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:300
 //TODO: Instead of fetch, using only userContext unless we want to fetch data on each load. 
 //TODO: impletemnt update button to update userContext 
 function ProfilesForm() { 
-    const { WId } = useUser();
-    const [userData, setUserData] = useState({ wid: '', firstName: '', lastName: '' });
-    
-    useEffect(() => {
-        if (WId) {
-            fetch(`https://ominous-chainsaw-q57p5pjvvvr29vxj-3002.app.github.dev/api/profile?id=${WId}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log('Data fetched:', data);
-                const profileData = data[0]; // Access the first item of the array
-                setUserData({ 
-                    wid: profileData.wid || "000000000", 
-                    firstName: profileData.firstName || "Could not fetch first name", // Provide default values
-                    lastName: profileData.lastName || "Could not fetch last name" 
-                });
-            })
-            .catch(error => console.error('Failed to fetch data:', error));
-        }
-    }, [WId]);
+    const { userData } = useUser(); 
 
-    console.log("USER DATA: " + userData.wid);
-      
     return (
         <div className={styles.ProfilesForm}>
-            {WId ? (
+            {userData.wid ? (
                 <div>
-                    <p>Profile information for WId: {WId}</p>
-                    <input type="hidden" value={WId}></input>
+                    <p>Profile information for WId: {userData.wid}</p>
+                    <input type="hidden" value={userData.wid}></input>
                     
                     <Container role="main">
                         
@@ -50,14 +30,14 @@ function ProfilesForm() {
                             <Form.Group as={Row} className="mb-3" controlId="first_name">
                                 <Form.Label column sm={2}>First Name</Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control type="text" defaultValue={userData.firstName} />
+                                    <Form.Control type="text" defaultValue={userData.first_name} />
                                 </Col>
                             </Form.Group>
 
                             <Form.Group as={Row} className="mb-3" controlId="last_name">
                                 <Form.Label column sm={2}>Last Name</Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control type="text" defaultValue={userData.lastName} />
+                                    <Form.Control type="text" defaultValue={userData.last_name} />
                                 </Col>
                             </Form.Group>
 
@@ -76,14 +56,14 @@ function ProfilesForm() {
                             <Form.Group as={Row} className="mb-3" controlId="email">
                                 <Form.Label column sm={2}>Email Address</Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control type="text" disabled defaultValue="WillieWild@ksu.edu" />
+                                    <Form.Control type="text" disabled defaultValue={userData.email} />
                                 </Col>
                             </Form.Group>
 
                             <Form.Group as={Row} controlId="wid">
                                 <Form.Label column sm={2}>Wildcat ID</Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control type="text" disabled value={userData.wid} /> 
+                                    <Form.Control type="text" disabled defaultValue={userData.wid} /> 
                                 </Col>
                             </Form.Group>
                         </Form>

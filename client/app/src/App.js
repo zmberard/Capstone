@@ -20,6 +20,7 @@ function App() {
             <Route path="/Home" element={<HomePage />} />
             <Route path="/Apply" element={<ApplicationForm />} />
             <Route path="/Profile" element={<ProfilesForm />} />
+            <Route path="/AdminPage" element={<AdminForm/>}/>
           </Routes>
             
           <Footer/>
