@@ -37,19 +37,19 @@ export const UserProvider = ({ children }) => {
   };
 
   const login = () => {
-    // const mockUserId = 8888888;
-    // localStorage.setItem('WId', JSON.stringify(mockUserId));
-    // setWId(mockUserId);
-    // // Trigger fetching user details upon login
-    // fetchUserDetails(mockUserId);
-    window.location.href = 'https://scaling-pancake-wqrgqgprw57hv47w-3002.app.github.dev/api/login';
+    const mockUserId = 8888888;
+    localStorage.setItem('WId', JSON.stringify(mockUserId));
+    setWId(mockUserId);
+    // Trigger fetching user details upon login
+    fetchUserDetails(mockUserId);
+    //window.location.href = 'https://scaling-pancake-wqrgqgprw57hv47w-3002.app.github.dev/api/login';
   };
 
   const logout = () => {
     localStorage.removeItem('WId');
     setWId(null);
     setUserData({ wid: '', first_name: '', last_name: '', email: '' });
-    window.location.href = '/api/logout'
+    //window.location.href = '/api/logout'
   };
 
   return (
