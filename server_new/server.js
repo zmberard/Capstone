@@ -4,6 +4,10 @@ const { serverConfig } = require('./configs/config');
 const { knexConfig } = require('./configs/config');
 const knex = require('knex')(knexConfig.development);
 
+// Likely changed to include all endpoints and such later but this is for testing
+const auth = require('./endpoints/auth');
+const loginRequired = require('./middleware/login-required');
+
 const app = express();
 const PORT = serverConfig.port || 3001;
 
@@ -31,6 +35,8 @@ app.listen(PORT, () => {
 //The plan as of now is to fetch all the userData when user first login then use userContext to populate fields
 //The current implementation is fetching data on every page load. The implementation should be updated after login implementation
 
+// Use CAS-based authentication to log users in
+router.use(auth);
 
 //TODO: The end point should be changed to something like 'login' then use userContext to populate profile and application page
 app.get('/api/getUserDetail', async (req, res) => {
@@ -52,6 +58,7 @@ app.get('/api/getUserDetail', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
+
 
 
 //This endpoint can be removed, it was used for profileForm 
