@@ -33,6 +33,19 @@ app.use('/api', router);
 // Use CAS-based authentication to log users in
 router.use(auth);
 
+
+// Serve info about the logged-in user.  Since only 
+// logged-in users should see this page, use the loginRequired
+// middleware to return a permission denied error if the user
+// is not authenticated.
+router.get('/whoami', loginRequired, (req, res) => {
+  // Serve the logged-in user's information.  This 
+  // can be expanded to offer more information.
+  res.json({
+    username: req.session.username
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
