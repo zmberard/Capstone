@@ -12,9 +12,7 @@ function AdminForm() {
   
     useEffect(() => {
       const fetchApplications = async () => {
-
-        const response = await fetch('https://ominous-chainsaw-q57p5pjvvvr29vxj-3002.app.github.dev/api/applications');
-
+        const response = await fetch('http://localhost:3002/api/applications');
         const data = await response.json();
         setApplications(data);
       };
@@ -71,8 +69,7 @@ function AdminForm() {
                         </thead>
                         <tbody>
                         {applications.map((app, index) => (
-                            <tr key={index}>
-                            {/* Render application details */}
+                            <tr key={index}> 
                             <td><input type="checkbox" /></td>
                             <td>{app.first_name}</td>
                             <td>{app.last_name}</td>

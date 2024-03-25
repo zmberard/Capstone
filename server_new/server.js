@@ -1,7 +1,9 @@
+//TODO: Update all http to https address, local env was not set up correctly. 
+require('dotenv').config();
 const express = require('express');
+const session = require('express-session');
 const cors = require('cors');
-const { serverConfig } = require('./configs/config');
-const { knexConfig } = require('./configs/config');
+const { serverConfig, knexConfig } = require('./configs/config');
 const knex = require('knex')(knexConfig.development);
 
 const app = express();
@@ -9,6 +11,25 @@ const PORT = serverConfig.port || 3001;
 
 app.use(express.json());
 
+app.use(session({
+  // We want a unique session secret for the application, 
+  // ideally stored as an environment variable.
+  secret: process.env.SESSION_SECRET || 'keyboard cat',
+  // resave forces the session to be written back to the 
+  // session store when no changes have been made
+  resave: false,
+  // saveUninitialized allows new and unmodified sessions
+  // to be saved to the session store.  Since we're using 
+  // the username to determine login status, `true` is fine.
+  saveUninitialized: true,
+  // Cookie-specific settings
+  cookie: { 
+    // secure requires the client to be using https
+    secure: false
+  }
+}));
+
+// Middleware
 const corsConfig = require('./middleware/corsConfig');
 app.use(corsConfig);
 
@@ -17,169 +38,30 @@ const userRoutes = require('./routes/userRoutes');
 const courseRoutes = require('./routes/courseRoutes');
 const applicationRoutes = require('./routes/applicationRoutes');
 const dataRoutes = require('./routes/dataRoutes');
-const auth = require('./routes/auth');
+const authRoutes = require('./routes/auth'); // Renamed for clarity
 
+// Use routes
 app.use('/api', userRoutes);
 app.use('/api', courseRoutes);
 app.use('/api', applicationRoutes);
 app.use('/api', dataRoutes);
+app.use('/api', authRoutes);
 
-// Since all our rotes are served with the `/api` prefix,
-// we might as well set up a subrouter using it:
-const router = express.Router();
-app.use('/api', router);
-
-// Use CAS-based authentication to log users in
-router.use(auth);
-
-const loginRequired = require('./middleware/login-required');
+//const loginRequired = require('./middleware/login-required');
 // Serve info about the logged-in user.  Since only 
 // logged-in users should see this page, use the loginRequired
 // middleware to return a permission denied error if the user
 // is not authenticated.
-router.get('/whoami', loginRequired, (req, res) => {
-  // Serve the logged-in user's information.  This 
-  // can be expanded to offer more information.
-  res.json({
-    username: req.session.username
-  });
-});
+
+//TODO: Understand and implement 
+// app.get('/whoami', loginRequired, (req, res) => {
+//   // Serve the logged-in user's information.  This 
+//   // can be expanded to offer more information.
+//   res.json({
+//     username: req.session.username
+//   });
+// });
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-});
-=======
-//TODO: implement Dynamic CORS origin handling
-const allowedOrigins = ['https://ominous-chainsaw-q57p5pjvvvr29vxj-3000.app.github.dev'];
-//cors was added because I was having trouble with connecting to client 
-//But the problem was not cors rather port visibility
-//this should be implemented for prod  
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
-}));
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
-//The plan as of now is to fetch all the userData when user first login then use userContext to populate fields
-//The current implementation is fetching data on every page load. The implementation should be updated after login implementation
-
-
-//TODO: The end point should be changed to something like 'login' then use userContext to populate profile and application page
-app.get('/api/getUserDetail', async (req, res) => {
-  console.log('Profile endpoint hit');
-  console.log('QUERY ID: ' + req.query.id);
-  const id = req.query.id; 
-  if (!id) {
-      console.log('No WID provided!');
-      return res.status(400).send('WID is required');
-  }
-  try {
-    const data = await knex('users').select('wid', 'first_name', 'last_name', 'email', 'advisor').where('wid', id);
-    const query = knex('users').select('wid', 'first_name', 'last_name', 'email', 'advisor').where('wid', id).toString();
-    console.log(query);  
-    console.log(data);
-    res.json(data);
-  } catch (err) {
-    console.error('Error fetching data:', err);
-    res.status(500).send('Server error');
-  }
-});
-
-
-//This endpoint can be removed, it was used for profileForm 
-app.get('/api/profile', async (req, res) => {
-    console.log('Profile endpoint hit');
-    console.log('QUERY ID: ' + req.query.id);
-    const id = req.query.id; 
-    if (!id) {
-        console.log('No WID provided!');
-        return res.status(400).send('WID is required');
-    }
-    try {
-      const data = await knex('users').select('wid', 'first_name', 'last_name', 'email').where('wid', id);
-      const query = knex('users').select('wid', 'first_name', 'last_name', 'email').where('wid', id).toString();
-      console.log(query);  
-      console.log(data);
-      res.json(data);
-    } catch (err) {
-      console.error('Error fetching data:', err);
-      res.status(500).send('Server error');
-    }
-  });
-
-app.get('/api/courses', async (req, res) => { 
-  console.log('Courses endpoint hit');
-  const id = req.query.id; 
-  if (!id) {
-    console.log('No WID provided!');
-    return res.status(400).send('WID is required');
-  }
-  try {
-    
-    let courses = await knex('report')
-      .select("class_subject", "class_catalog", "class_descr", "grade")
-      .where('wid', id);
-    
-    // Set default status based on grade
-    courses = courses.map(course => ({
-      ...course,
-      status: (course.grade && course.grade !== 'N/A') ? 'Complete' : 'In-Progress',   // might need status column in db table 
-      grade: course.grade || 'N/A',
-    }));
-
-    const response = { 
-      courses,
-    };
-
-    console.log(response);
-    res.json(response);
-  } catch (err) {
-    console.error('Error fetching courses:', err);
-    res.status(500).send('Server error');
-  }
-});
-
-app.get('/api/applications', async (req, res) => {
-  try {
-    const applications = await knex('applications')
-      .join('users', 'applications.wid', '=', 'users.wid')
-      .select(
-        'applications.record_id',
-        'applications.wid',
-        'applications.advisor',
-        'applications.semester',
-        'applications.status',
-        'applications.notes',
-        'applications.waiver',
-        'applications.d_update',
-        'users.first_name',
-        'users.last_name',
-        'users.email',
-        'users.eid', 
-      );
-    console.log(applications);
-    res.json(applications);
-  } catch (err) {
-    console.error('Error fetching applications:', err);
-    res.status(500).send('Server error');
-  }
-});
-
-app.get('/api/GETEVERYTHING', async (req, res) => { 
-  try {
-    const data = await knex.select('*').from('dars_data');
-    console.log(data);
-    res.json(data);
-  } catch (err) {
-    console.error('Error fetching data:', err);
-    res.status(500).send('Server error');
-  }
 });
