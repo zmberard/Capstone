@@ -1,0 +1,8 @@
+clean up repo
+2 or 3 package.json
+no -lock.json and node module commits
+login state loading page
+general error page
+login button state 
+fetch user data state set? 
+client side improvements 

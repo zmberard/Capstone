@@ -1,21 +1,20 @@
 // Nabbed from https://github.com/zombiepaladin/react-cas-example
 const express = require('express');
-const axios = require('axios');
+const axios = require('axios'); 
+const router = express.Router();
 
 // The serviceHost (our server) and casHost (the CAS server)
 // hostnames, we nee to build urls.  Since we pass our serviceHost
-// as a url component in the search string, we need to url-encode it.
-var serviceHost = encodeURIComponent('https://scaling-pancake-wqrgqgprw57hv47w-3000.app.github.dev/api/');
+// as a url component in the search string, we need to url-encode it. 
+var serviceHost = encodeURIComponent(process.env.API_URL + '/api/');
 var casHost = 'https://signin.k-state.edu/WebISO/'//'https://signin.k-state.edu/WebISO/';
-
-
-// Create an express router to handle requests
-const router = express.Router();
-// And export it from this module
-module.exports = router;
-
+ 
 // Process incoming login request by sending the user to the CAS server
 router.get('/login', (req, res) => {
+  const returnUrl = req.query.returnUrl || '/';
+  console.log("User is logging in!");
+  req.session.returnUrl = returnUrl;
+  console.log("SessionID: " + req.sessionID);
   res.redirect(`${casHost}login?service=${serviceHost}ticket`)
 });
 
@@ -30,6 +29,7 @@ router.get('/logout', (req, res) => {
 // Validate redirected login requests coming from the CAS server
 router.get('/ticket', async (req, res) => {
   // get the ticket from the querystring
+  console.log("Server got ticket!");
   const ticket = req.query.ticket;
   // We need to verify this ticket with the CAS server,
   // by making a request against its serviceValidate url
@@ -50,8 +50,10 @@ router.get('/ticket', async (req, res) => {
       // The username should be the first capture group, so store it in our session
       req.session.username = match[1];
       // Then redirect them to the landing page 
-      console.log("Logged in successfully!")
-      res.redirect('/')
+      const returnUrl = req.session.returnUrl;
+      console.log("Current session data:", req.session); 
+      console.log("Logged in successfully, redirecting to: ", returnUrl);
+      res.json({success: true, redirectUrl: returnUrl, EId: req.session.username});
     } else {
       res.status(403).send('Authorization failed');
     }
