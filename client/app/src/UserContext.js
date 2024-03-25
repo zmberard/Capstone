@@ -21,7 +21,9 @@ export const UserProvider = ({ children }) => {
 
   const fetchUserDetails = async (wid) => {
     try {
+
       const response = await fetch(`https://ominous-chainsaw-q57p5pjvvvr29vxj-3002.app.github.dev/api/getUserDetail?id=${wid}`);
+
       const data = await response.json();
       const profileData = data[0]; //API returns an array
       setUserData({
@@ -42,12 +44,15 @@ export const UserProvider = ({ children }) => {
     setWId(mockUserId);
     // Trigger fetching user details upon login
     fetchUserDetails(mockUserId);
+    //window.location.href = 'https://scaling-pancake-wqrgqgprw57hv47w-3002.app.github.dev/api/login';
+
   };
 
   const logout = () => {
     localStorage.removeItem('WId');
     setWId(null);
     setUserData({ wid: '', first_name: '', last_name: '', email: '' });
+    //window.location.href = '/api/logout'
   };
 
   return (
