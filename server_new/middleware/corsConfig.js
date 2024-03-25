@@ -7,15 +7,13 @@
 
 const cors = require('cors');
 
-const corsOptionsDelegate = (req, callback) => {
-  const allowedOrigins = ['https://scaling-pancake-wqrgqgprw57hv47w-3000.app.github.dev'];
+const corsOptionsDelegate = (req, callback) => { 
+  const allowedOrigins = [process.env.API_URL];
   let corsOptions;
-  if (!req.header('Origin') || allowedOrigins.includes(req.header('Origin'))) {
-    console.log('CORS allowed for:', req.header('Origin'));
-    corsOptions = { origin: true };
+  if (allowedOrigins.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true, credentials: true };  
   } else {
-    console.log('CORS denied for:', req.header('Origin'));
-    corsOptions = { origin: false }; 
+    corsOptions = { origin: false };  
   }
   callback(null, corsOptions); 
 };

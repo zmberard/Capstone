@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import logo from './img/ksuLogo.png';
 import styles from './Header.module.css'
-import { useUser } from './UserContext';
+import { useUser  } from './UserContext';
 import {Button } from 'react-bootstrap';
 
 const Header = () => {  
-    const { user, login, logout } = useUser();
+    const { user, logout, login } = useUser();
 
     return (
       <header className={styles.headerContainer}>

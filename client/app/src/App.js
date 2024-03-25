@@ -8,6 +8,7 @@ import Header from './Header';
 import Footer from './Footer'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserProvider } from './UserContext'; 
+import TicketForwarder from './TicketForwarder';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/Apply" element={<ApplicationForm />} />
             <Route path="/Profile" element={<ProfilesForm />} />
             <Route path="/AdminPage" element={<AdminForm/>}/>
+            <Route path="/api/ticket" element={<TicketForwarder />} />
           </Routes>
             
           <Footer/>
