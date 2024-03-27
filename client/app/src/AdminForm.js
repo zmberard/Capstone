@@ -4,7 +4,17 @@ import styles from './AdminForm.module.css';
 import Table from 'react-bootstrap/Table';
 
 function onClick(){
-    alert("Button clicked");
+    <div>
+      <input type="checkbox" id="one" name="one" />
+      <label for="one">Checkbox 1</label>
+    </div>
+}
+
+function Download_Click(){
+    <div>
+      <input type="checkbox" id="one" name="one" />
+      <label for="one">Checkbox 1</label>
+    </div>
 }
 
 
@@ -23,7 +33,9 @@ function AdminForm(){
                         <p></p>
                         <Button onClick={onClick} type="button" class="btn btn-space">Disable Applications</Button>
                         <input id="disable_application" class="btn btn-space" type="button"/>
-                        <Button onClick={onClick} type="button" class="btn btn-space">Download Selected</Button>
+                        <a href="src/assets/files/Exam_Study_Sheet.pdf" download="Exam_Study_Sheet" target='.pdf'>
+                            <Button>Download Selected</Button>
+                        </a>
                         <input id="download_selected" class="btn btn-space" type="button"/>
                         <Button onClick={onClick} type="button" class="btn btn-space">Email Selected</Button>
                         <input id="email_selected" class="btn btn-space" type="button"/>
@@ -35,7 +47,7 @@ function AdminForm(){
                         <thead>
                             <tr>
                                 <th>
-                                    <div className="custom-control custom-checkbox">
+                                    <div name="one" id="one" className="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="customCheck1" checked/>
                                     </div>
                                 </th>
