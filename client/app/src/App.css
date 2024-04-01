@@ -1,0 +1,11 @@
+ 
+.appContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.contentBackground {
+    flex: 1;  
+    padding: 20px; 
+  }

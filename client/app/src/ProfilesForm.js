@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import styles from './ProfileForm.module.css'; 
 import { useUser } from './UserContext';
+import LoadingIndicator from './LoadingIndicator'; 
+
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3002';
 //need dotenv and .env file to implement API_BASE_URL? 
@@ -9,8 +11,10 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:300
 //TODO: Instead of fetch, using only userContext unless we want to fetch data on each load. 
 //TODO: impletemnt update button to update userContext 
 function ProfilesForm() { 
-    const { userData } = useUser(); 
-
+    const { userData, loading } = useUser(); 
+    if (loading) {
+        return <LoadingIndicator />; // Or replace with a spinner/loading icon
+      }
     return (
         <div className={styles.ProfilesForm}>
             {userData.wid ? (
