@@ -2,17 +2,19 @@
   position: relative;
   text-align: center;
   color: white;
-  padding: 20px 0; /* space around content */
+  padding: 20px 0; 
 }
 
 .footerImg {
   display: block;
   width: 100%;
-  height: auto;
+  height: 20vh; 
+  object-fit: cover;
+  object-position: center top;  
 }
 
 .footerImgSmall {
-  display: none; /* Hide the smaller image by default */
+  display: none;  
 }
 
 .footerContent {
@@ -20,8 +22,8 @@
   top: 50%;  
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%; /* Limit width and allow text to wrap */
-  max-width: 500px; /* Maximum width for larger screens */
+  width: 80%; 
+  max-width: 500px;  
 }
 
 @media (max-width: 768px) {
@@ -37,6 +39,8 @@
   .footerImgSmall {
     display: block; /* Show the smaller image */
     width: 100%;
-    height: auto;
+    height: 30vh;
+    object-fit: cover;
+    object-position: center bottom;
   }
 }

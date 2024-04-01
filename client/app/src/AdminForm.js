@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button, Table } from 'react-bootstrap';
 import styles from './AdminForm.module.css';
+import LoadingIndicator from './LoadingIndicator'; 
 
 function onClick(){
     alert("Button clicked");
@@ -9,19 +10,32 @@ function onClick(){
 
 function AdminForm() {
     const [applications, setApplications] = useState([]);
-  
+    const [loadingCourses, setLoadingCourses] = useState(false);
+
     useEffect(() => {
       const fetchApplications = async () => {
-        const response = await fetch('http://localhost:3002/api/applications');
-        const data = await response.json();
-        setApplications(data);
+        try {
+            setLoadingCourses(true);
+            const response = await fetch('http://localhost:3002/api/applications');
+            const data = await response.json();
+            setApplications(data);
+        } catch (error) {
+            console.log("Error fetching applications: ", error);
+        } finally {
+            setLoadingCourses(false);
+        }
+        
       };
   
       fetchApplications();
     }, []);
   
     return(
+        
         <div className={styles.AdminForm}>
+            {loadingCourses ? (
+                <LoadingIndicator />
+            ) : ( <> 
             <Container role="main">
                 <Row className="review">
                     <Col xs={12}>
@@ -110,8 +124,8 @@ function AdminForm() {
                 </Row>
                 
             </Container>
-            
-        </div>
+            </>  )}
+        </div>  
     );
 
     

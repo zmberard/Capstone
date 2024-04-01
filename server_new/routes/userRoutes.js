@@ -12,10 +12,10 @@ router.get('/getUserDetail', async (req, res) => {
     }
     try {
         const data = await knex('users')
-                            .select('wid', 'first_name', 'last_name', 'email', 'advisor')
+                            .select('wid', 'first_name', 'last_name', 'email', 'advisor', 'admin')
                             .whereRaw('lower(eid) = ?', [eid.toLowerCase()]);
         const query = knex('users')
-                            .select('wid', 'first_name', 'last_name', 'email', 'advisor')
+                            .select('wid', 'first_name', 'last_name', 'email', 'advisor', 'admin')
                             .whereRaw('lower(eid) = ?', [eid.toLowerCase()])
                             .toString();
         console.log(query);  
@@ -37,9 +37,9 @@ router.get('/profile', async (req, res) => {
     }
     try {
       const data = await knex('users')
-                        .select('wid', 'first_name', 'last_name', 'email')
+                        .select('wid', 'first_name', 'last_name', 'email', 'admin')
                         .whereRaw('lower(eid) = ?', [eid.toLowerCase()]);
-      const query = knex('users').select('wid', 'first_name', 'last_name', 'email').whereRaw('lower(eid) = ?', [eid.toLowerCase()]).toString();
+      const query = knex('users').select('wid', 'first_name', 'last_name', 'email', 'admin').whereRaw('lower(eid) = ?', [eid.toLowerCase()]).toString();
       console.log(query);  
       console.log(data);
       res.json(data);

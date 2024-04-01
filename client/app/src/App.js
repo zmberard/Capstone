@@ -9,22 +9,29 @@ import Footer from './Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserProvider } from './UserContext'; 
 import TicketForwarder from './TicketForwarder';
+import ProtectedAdminRoute from './ProtectedAdminRoute';
+import './App.css';
 
 function App() {
   return (
     <UserProvider>
       <Router>
-        <div className="App">
+        <div className="appContainer"> 
           <Header/>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/Home" element={<HomePage />} />
-            <Route path="/Apply" element={<ApplicationForm />} />
-            <Route path="/Profile" element={<ProfilesForm />} />
-            <Route path="/AdminPage" element={<AdminForm/>}/>
-            <Route path="/api/ticket" element={<TicketForwarder />} />
-          </Routes>
-            
+          <div className="contentBackground">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/Home" element={<HomePage />} />
+              <Route path="/Apply" element={<ApplicationForm />} />
+              <Route path="/Profile" element={<ProfilesForm />} />
+              <Route path="/AdminPage" element={
+                <ProtectedAdminRoute>
+                  <AdminForm />
+                </ProtectedAdminRoute>
+              } />
+              <Route path="/api/ticket" element={<TicketForwarder />} />
+            </Routes>
+          </div> 
           <Footer/>
         </div>
       </Router>
