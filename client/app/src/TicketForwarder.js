@@ -27,14 +27,14 @@ const TicketForwarder = () => {
             navigate(data.redirectUrl);
           } else { //TODO: Something is returning /ticketForwardMisc before data.redirectURL
             console.error('Authorization failed:', data.message);
-            navigate('/ticketForwardMisc');
+            navigate('/ticketForwarder-authorization-failed', { state: { message: data.message } });
           }
-        } catch (error) {
+        } catch (error) {  
           console.error('Error processing ticket:', error);
-          navigate('/ticketForwardMisc');
+          navigate('/ticketForwarder-bad-ticket', { state: { message: error } });
         }
       } else {
-        navigate('/'); // No ticket found, navigate to home or login page
+        navigate('/'); // No ticket found, navigate to home  
       }
     };
 

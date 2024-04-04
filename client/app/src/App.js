@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserProvider } from './UserContext'; 
 import TicketForwarder from './TicketForwarder';
 import ProtectedAdminRoute from './ProtectedAdminRoute';
+import ErrorPage from './ErrorPage.js';
 import './App.css';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
                 </ProtectedAdminRoute>
               } />
               <Route path="/api/ticket" element={<TicketForwarder />} />
+              <Route path="*" element={<ErrorPage />} />
             </Routes>
           </div> 
           <Footer/>

@@ -55,7 +55,7 @@ router.get('/ticket', async (req, res) => {
       console.log("Logged in successfully, redirecting to: ", returnUrl);
       res.json({success: true, redirectUrl: returnUrl, EId: req.session.username});
     } else {
-      res.status(403).send('Authorization failed');
+      res.json({success: false, message: 'Happy little accident'});
     }
   } catch (err) {
     // If we caught an error, log it to the console
