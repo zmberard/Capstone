@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button, Table } from 'react-bootstrap';
-import styles from './AdminForm.module.css';
 import LoadingIndicator from './LoadingIndicator'; 
+import styles from './AdminForm.module.css';
 
 function onClick(){
     alert("Button clicked");
@@ -68,7 +68,10 @@ function AdminForm() {
                     </Col>
                 </Row>
                 <Row>
-                    <Table striped>
+                    <div className={styles['custom-table-container']}>
+
+                    
+                    <table striped className={`${styles['custom-table']} ${styles['custom-table-striped']}`}>
                         <thead>
                             <tr>
                                 <th>
@@ -120,7 +123,8 @@ function AdminForm() {
                             </tr>
                         ))}
                         </tbody>
-                    </Table>
+                    </table>
+                    </div>
                     <nav aria-label="TableFooter">
                         <ul class="pagination">
                             <li class="page-item">
