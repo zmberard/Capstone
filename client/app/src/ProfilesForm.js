@@ -31,7 +31,7 @@ function ProfilesForm() {
         <div className={styles.ProfilesForm}>
             {userData.wid ? (
                 <div>
-                    <p>Profile information for WId: {userData.wid}</p>
+                    {/* <p>Profile information for WId: {userData.wid}</p> */}
                     <input type="hidden" value={userData.wid}></input>
                     
                     <Container role="main">

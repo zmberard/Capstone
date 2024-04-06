@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from './UserContext';
 import LoadingIndicator from './LoadingIndicator'; 
@@ -6,13 +6,15 @@ import LoadingIndicator from './LoadingIndicator';
 const TicketForwarder = () => {
   const navigate = useNavigate();
   const { fetchUserDetails } = useUser();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const hasProcessedTicket = useRef(false);
   useEffect(() => {
-    const processTicket = async () => {
-      if (isSubmitting) return;  
-      setIsSubmitting(true);
-
+    
+    if (hasProcessedTicket.current) {
+      return; // Exit if we've already processed the ticket
+    }
+    hasProcessedTicket.current = true;
+    const processTicket = async () => { 
+      
       const params = new URLSearchParams(window.location.search);
       const ticket = params.get('ticket');
       console.log("Ticket: ", encodeURIComponent(ticket));
@@ -36,8 +38,7 @@ const TicketForwarder = () => {
         } catch (error) {  
           console.error('Error processing ticket:', error);
           navigate('/ticketForwarder-bad-ticket', { state: { message: error } });
-        } finally {
-          setIsSubmitting(false);
+        } finally { 
         }
       } else {
         navigate('/'); // No ticket found, navigate to home  

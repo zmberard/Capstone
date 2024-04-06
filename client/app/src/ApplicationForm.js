@@ -138,7 +138,7 @@ function ApplicationForm() {
                     </div>
                 </Form>
             ) : (
-                <h1>Please log in to view profile information.</h1>
+                <h1>Please log in to view application information.</h1>
             )}
             </>
         )}
