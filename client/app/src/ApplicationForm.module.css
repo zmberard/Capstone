@@ -1,13 +1,51 @@
 .appHeader {
   display: flex;
-  flex-direction: column; 
-  align-items: center;  
-  justify-content: center;  
-  color: #fff;
-  background-color: #BF8CF7;
-  padding: 20px 0;  
-  margin-bottom: 30px; /* Add more space below the header */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+  margin-bottom: 30px;
 }
  
+.h1Style {
+  background-color: #512888;  
+  color: #a7a7a7;  
+  width: 100%;
+  text-align: center;
+  margin: 0;  
+  line-height: 1.2;  
+  padding: 10px 0;  
+}
 
+.h2Style {
+  background-color: #a7a7a7; 
+  color: #512888; 
+  width: 100%;
+  text-align: center;
+  margin: 0;  
+  line-height: 1.2; 
+  padding: 10px 0;  
+}
+ 
+.btn-submit {
+  background-color: #512888;  
+  color: white;  
+  border: none;
+  padding: 10px 20px;
+  margin: auto;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition: background-color 0.3s ease; 
+}
 
+.btn-submit:hover {
+  background-color: #BF8CF7;  
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

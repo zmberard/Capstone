@@ -12,10 +12,10 @@ router.get('/getUserDetail', async (req, res) => {
     }
     try {
         const data = await knex('users')
-                            .select('wid', 'first_name', 'last_name', 'email', 'advisor', 'admin')
+                            .select('wid', 'first_name', 'last_name', 'email', 'advisor', 'admin', 'eid')
                             .whereRaw('lower(eid) = ?', [eid.toLowerCase()]);
         const query = knex('users')
-                            .select('wid', 'first_name', 'last_name', 'email', 'advisor', 'admin')
+                            .select('wid', 'first_name', 'last_name', 'email', 'advisor', 'admin', 'eid')
                             .whereRaw('lower(eid) = ?', [eid.toLowerCase()])
                             .toString();
         console.log(query);  
@@ -27,25 +27,40 @@ router.get('/getUserDetail', async (req, res) => {
     }
 });
 
-//This endpoint can be removed, it was used for profileForm 
-router.get('/profile', async (req, res) => { 
-    console.log('Getting User Details for EID: ' + req.query.id);
-    const eid = req.query.id; 
+router.put('/updateUserName', async (req, res) => {
+    console.log('Updating User Name for EID: ' + req.query.eid);
+    const eid = req.query.eid;
+    const { firstName, lastName } = req.body; // Extract the new first and last names from the request body
+    console.log("First name: " + firstName);
+    console.log("Last name: " + lastName);
     if (!eid) {
-        console.log('No WID provided!');
-        return res.status(400).send('WID is required');
+        console.log('No EID provided!');
+        return res.status(400).send('EID is required');
     }
-    try {
-      const data = await knex('users')
-                        .select('wid', 'first_name', 'last_name', 'email', 'admin')
-                        .whereRaw('lower(eid) = ?', [eid.toLowerCase()]);
-      const query = knex('users').select('wid', 'first_name', 'last_name', 'email', 'admin').whereRaw('lower(eid) = ?', [eid.toLowerCase()]).toString();
-      console.log(query);  
-      console.log(data);
-      res.json(data);
+
+    if (!firstName || !lastName) {
+        console.log('First name and last name are required');
+        return res.status(400).send('First name and last name are required');
+    }
+
+    try { 
+        const update = await knex('users')
+                              .whereRaw('lower(eid) = ?', [eid.toLowerCase()])
+                              .update({
+                                  first_name: firstName,
+                                  last_name: lastName
+                              });
+
+        if (update) {
+            console.log(`User with EID: ${eid} updated successfully to ${firstName} ${lastName}.`);
+            res.send(`User with EID: ${eid} updated successfully to ${firstName} ${lastName}.`);
+        } else {
+            console.log(`User with EID: ${eid} not found.`);
+            res.status(404).send('User not found');
+        }
     } catch (err) {
-      console.error('Error fetching data:', err);
-      res.status(500).send('Server error');
+        console.error('Error updating user:', err);
+        res.status(500).send('Server error');
     }
 });
 

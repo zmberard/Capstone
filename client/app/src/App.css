@@ -9,3 +9,7 @@
     flex: 1;  
     padding: 20px; 
   }
+
+  body, html {
+    background-color: #d1d1d1;
+  }

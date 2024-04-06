@@ -1,7 +1,7 @@
 import styles from './ApplicationForm.module.css';
 import React, { useState, useEffect, useContext } from 'react';  
 import { useUser } from './UserContext'; 
-import { Container, Row, Col, Form, Table, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Form, Table, Alert } from 'react-bootstrap';
 import LoadingIndicator from './LoadingIndicator'; 
 
 //TODO: how to determin status? 
@@ -64,8 +64,8 @@ function ApplicationForm() {
                 Application Submitted Tue Oct 17 2023 18:15:41 GMT-0500 (Central Daylight Time)
             </Alert>
             <div className={styles.appHeader}>
-                <h1>Computer Science Apps</h1>
-                <h2>Professional Program Application</h2>
+                <h1 className={styles.h1Style}>Computer Science Apps</h1>
+                <h2 className={styles.h2Style}>Professional Program Application</h2>
             </div> 
             {userData.wid ? (
                 <Form onSubmit={handleSubmit}>
@@ -87,7 +87,7 @@ function ApplicationForm() {
                             <Form.Select value={userData.advisor}>
                                 <option value="test">test</option>
                                 <option value="Sheryl Cornell">Sheryl Cornell</option>
-                                <option value="DI">David Invergo</option>
+                                <option value="David Invergo">David Invergo</option>
                                 {/* Additional advisor options can be added here */} 
                             </Form.Select>
                         </Col>
@@ -127,13 +127,15 @@ function ApplicationForm() {
                                 </td>
                                 </tr>
                             ))}
-                        </tbody>
+                        </tbody> 
                     </Table>
                     <Form.Group className="mb-3">
                         <Form.Label>Additional Information:</Form.Label>
                         <Form.Control as="textarea" rows={3} placeholder="Add comments or additional information here" />
                     </Form.Group>
-                    <Button className="btn-submit" variant="success" type="submit">Submit Application</Button>  
+                    <div className={styles['button-container']}> {/*stlyes['name-name'] format due to - causing syntax error*/}
+                        <button className={styles['btn-submit']} type="submit">Submit Application</button>
+                    </div>
                 </Form>
             ) : (
                 <h1>Please log in to view profile information.</h1>

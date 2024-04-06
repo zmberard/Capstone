@@ -14,6 +14,7 @@ export const UserProvider = ({ children }) => {
       email: '',
       advisor: '',
       isAdmin: false,
+      eid: '',
     };
   });
   const [loading, setLoading] = useState(false); // New loading state
@@ -38,11 +39,37 @@ export const UserProvider = ({ children }) => {
         email: profileData.email || "No email",
         advisor: profileData.advisor || "No advisor",  
         isAdmin: profileData.admin || false,
+        eid: profileData.eid || "No EID Found",
       });
     } catch (error) {
       console.error('Failed to fetch user details:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleUpdateProfile = async (eid, firstName, lastName) => {
+    setLoading(true);
+    try {
+        const response = await fetch(`http://localhost:3002/api/updateUserName?eid=${eid}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ firstName, lastName }),
+        });
+  
+        if (!response.ok) {
+            throw new Error('Failed to update user profile');
+        }
+  
+        await fetchUserDetails(eid);  
+        alert('Profile updated successfully');
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        alert('Error updating profile');
+    } finally {
+        setLoading(false);
     }
   };
 
@@ -55,12 +82,12 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem('EId');
     setEId(null);
     localStorage.removeItem('userData');
-    setUserData({ wid: '', first_name: '', last_name: '', email: '', advisor: '', isAdmin: false });
+    setUserData({ wid: '', first_name: '', last_name: '', email: '', advisor: '', isAdmin: false, eid: '' });
     window.location.reload(); 
   };
 
   return (
-    <UserContext.Provider value={{ EId, userData, login, logout, fetchUserDetails, loading }}>
+    <UserContext.Provider value={{ EId, userData, login, logout, fetchUserDetails, loading, handleUpdateProfile }}>
       {children}
     </UserContext.Provider>
   );

@@ -11,10 +11,22 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:300
 //TODO: Instead of fetch, using only userContext unless we want to fetch data on each load. 
 //TODO: impletemnt update button to update userContext 
 function ProfilesForm() { 
-    const { userData, loading } = useUser(); 
+    const { userData, handleUpdateProfile, loading } = useUser(); 
+    const [firstName, setFirstName] = useState(userData.first_name || '');
+    const [lastName, setLastName] = useState(userData.last_name || '')
+
+    const updateProfileOnClick = (event) => {
+        console.log("Button hit"); 
+        event.preventDefault();
+        console.log(userData); 
+        handleUpdateProfile(userData.eid, firstName, lastName);
+    };
+
     if (loading) {
         return <LoadingIndicator />; // Or replace with a spinner/loading icon
-      }
+    }
+
+
     return (
         <div className={styles.ProfilesForm}>
             {userData.wid ? (
@@ -26,7 +38,7 @@ function ProfilesForm() {
                         
                         <Row className="mb-4">
                             <Col xs={12}>
-                                <h3 className={styles.topHeader}>Update your user profile:</h3>
+                                <h3 className={styles.h3Style}>Update your user profile:</h3>
                             </Col>
                         </Row>
 
@@ -34,20 +46,20 @@ function ProfilesForm() {
                             <Form.Group as={Row} className="mb-3" controlId="first_name">
                                 <Form.Label column sm={2}>First Name</Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control type="text" defaultValue={userData.first_name} />
+                                    <Form.Control type="text" defaultValue={userData.first_name} onChange={(e) => setFirstName(e.target.value)}/>
                                 </Col>
                             </Form.Group>
 
                             <Form.Group as={Row} className="mb-3" controlId="last_name">
                                 <Form.Label column sm={2}>Last Name</Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control type="text" defaultValue={userData.last_name} />
+                                    <Form.Control type="text" defaultValue={userData.last_name} onChange={(e) => setLastName(e.target.value)}/>
                                 </Col>
                             </Form.Group>
 
                             <Row className="mb-3">
-                                <Col xs={12}>
-                                    <Button variant="success">Update Profile</Button>
+                                <Col xs={12}> 
+                                    <button className={styles['btn-update']} onClick={updateProfileOnClick}>Update Profile</button>
                                 </Col>
                             </Row>
 

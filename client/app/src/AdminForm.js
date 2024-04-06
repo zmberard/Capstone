@@ -10,7 +10,20 @@ function onClick(){
 
 function AdminForm() {
     const [applications, setApplications] = useState([]);
-    const [loadingCourses, setLoadingCourses] = useState(false);
+    const [loadingCourses, setLoadingCourses] = useState(false); 
+    const [checkedStates, setCheckedStates] = useState({}); 
+
+    const handleCheckAllChange = (isChecked) => {  
+        const newCheckedStates = applications.reduce((acc, app) => {
+            acc[app.wid] = isChecked;  
+            return acc;
+        }, {});
+        setCheckedStates(newCheckedStates);
+    };
+
+    const handleCheckboxChange = (appId, isChecked) => {  
+        setCheckedStates(prevStates => ({ ...prevStates, [appId]: isChecked }));
+    };
 
     useEffect(() => {
       const fetchApplications = async () => {
@@ -48,12 +61,9 @@ function AdminForm() {
                         <h3 className={styles.topHeader}>Total Applications: {applications.length}</h3>
 
                         <p></p>
-                        <Button onClick={onClick} type="button" class="btn btn-space">Disable Applications</Button>
-                        <input id="disable_application" class="btn btn-space" type="button"/>
-                        <Button onClick={onClick} type="button" class="btn btn-space">Download Selected</Button>
-                        <input id="download_selected" class="btn btn-space" type="button"/>
-                        <Button onClick={onClick} type="button" class="btn btn-space">Email Selected</Button>
-                        <input id="email_selected" class="btn btn-space" type="button"/>
+                        <Button onClick={onClick} type="button" class="btn btn-space" id="disable_application" style={{ marginRight: '8px' }}>Disable Applications</Button> 
+                        <Button onClick={onClick} type="button" class="btn btn-space" id="download_selected" style={{ marginRight: '8px' }}>Download Selected</Button> 
+                        <Button onClick={onClick} type="button" class="btn btn-space" id="email_selected" style={{ marginRight: '8px' }}>Email Selected</Button> 
                         <p></p>
                     </Col>
                 </Row>
@@ -62,8 +72,13 @@ function AdminForm() {
                         <thead>
                             <tr>
                                 <th>
-                                    <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1" checked/>
+                                    <div className="custom-control custom-checkbox"> 
+                                        <input type="checkbox"
+                                            className="custom-control-input"
+                                            id="checkAll"
+                                            onChange={e => handleCheckAllChange(e.target.checked)}
+                                            checked={applications.length > 0 && applications.every(app => checkedStates[app.wid])}
+                                        />
                                     </div>
                                 </th>
                                 <th scope="Col">First Name</th>
@@ -84,7 +99,10 @@ function AdminForm() {
                         <tbody>
                         {applications.map((app, index) => (
                             <tr key={index}> 
-                            <td><input type="checkbox" /></td>
+                            <td><input id={app.wid + "_checked"} type="checkbox"
+                                checked={!!checkedStates[app.wid]}
+                                onChange={e => handleCheckboxChange(app.wid, e.target.checked)}
+                            /></td>
                             <td>{app.first_name}</td>
                             <td>{app.last_name}</td>
                             <td>{app.eid}</td>
@@ -94,9 +112,10 @@ function AdminForm() {
                             <td>{app.semester}</td>
                             <td>{app.Eid}</td>
                             <td>{app.status}</td>
-                            <td>{app.Eid}</td>
-                            <td>{app.Eid}</td>
+                            <td><Button onClick={onClick} type="button" class="btn btn-space" id={app.wid + "_review_btn"}>Review</Button> </td>
+                            <td><Button onClick={onClick} type="button" class="btn btn-space" id={app.wid + "_edit_btn"}>Edit</Button> </td> 
                             <td>{app.notes}</td>
+                            <td></td>
                             {/* Add other fields as needed */}
                             </tr>
                         ))}

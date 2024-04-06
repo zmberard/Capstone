@@ -1,11 +1,29 @@
-.ProfilesForm {
-     
+.h3Style {
+    background-color: #512888;  
+    color: #d1d1d1;  
+    width: 100%;
+    text-align: center;
+    margin: 0; 
+    line-height: 1.2; 
+    padding: 10px 0;  
 }
 
-.topHeader {
-    margin: 0 auto;  
+.btn-update {
+    background-color: #512888; 
+    color: white; 
+    border: none;
+    padding: 10px 20px; 
     text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition: background-color 0.3s ease;  
 }
+
+.btn-update:hover {
+    background-color: #BF8CF7;  
+}
+  
 
 .footer {
     margin-top: 20px;
