@@ -97,38 +97,40 @@ function ApplicationForm() {
                             <strong>GPA: </strong>{hardcodedGPA}
                         </Col>
                     </Row>
-                    <Table striped bordered hover>
-                        <thead>
-                            <tr>
-                                <th>Course</th>
-                                <th>Course ID</th>
-                                <th>Status</th>
-                                <th>Grade</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {courses.map((course, index) => (
-                                <tr key={index}>
-                                <td className="align-middle">{course.class_descr}</td>
-                                <td className="align-middle">{`${course.class_subject} ${course.class_catalog}`}</td>
-                                <td className="align-middle">
-                                    <Form.Select name={`${course.class_subject}${course.class_catalog}-status`} value={course.status}>
-                                    {statusOptions.map(option => (
-                                        <option key={option.value} value={option.value}>{option.label}</option>
-                                    ))}
-                                    </Form.Select>
-                                </td>
-                                <td className="align-middle">
-                                    <Form.Select name={`${course.class_subject}${course.class_catalog}-grade`} value={course.grade}>
-                                    {gradeOptions.map(option => (
-                                        <option key={option.value} value={option.value}>{option.label}</option>
-                                    ))}
-                                    </Form.Select>
-                                </td>
+                    <div className={styles['custom-table-container']}> 
+                        <table striped className={`${styles['custom-table']} ${styles['custom-table-striped']}`}>
+                            <thead>
+                                <tr>
+                                    <th>Course</th>
+                                    <th>Course ID</th>
+                                    <th>Status</th>
+                                    <th>Grade</th>
                                 </tr>
-                            ))}
-                        </tbody> 
-                    </Table>
+                            </thead>
+                            <tbody>
+                                {courses.map((course, index) => (
+                                    <tr key={index}>
+                                    <td className="align-middle">{course.class_descr}</td>
+                                    <td className="align-middle">{`${course.class_subject} ${course.class_catalog}`}</td>
+                                    <td className="align-middle">
+                                        <Form.Select name={`${course.class_subject}${course.class_catalog}-status`} value={course.status}>
+                                        {statusOptions.map(option => (
+                                            <option key={option.value} value={option.value}>{option.label}</option>
+                                        ))}
+                                        </Form.Select>
+                                    </td>
+                                    <td className="align-middle">
+                                        <Form.Select name={`${course.class_subject}${course.class_catalog}-grade`} value={course.grade}>
+                                        {gradeOptions.map(option => (
+                                            <option key={option.value} value={option.value}>{option.label}</option>
+                                        ))}
+                                        </Form.Select>
+                                    </td>
+                                    </tr>
+                                ))}
+                            </tbody> 
+                        </table>
+                    </div>
                     <Form.Group className="mb-3">
                         <Form.Label>Additional Information:</Form.Label>
                         <Form.Control as="textarea" rows={3} placeholder="Add comments or additional information here" />

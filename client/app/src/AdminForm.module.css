@@ -1,16 +1,22 @@
-.AdminForm {
-     
+.h3StyleTop {
+  background-color: #512888;  
+  color: #a7a7a7;  
+  width: 100%;
+  text-align: center;
+  margin: 0;  
+  line-height: 1.2;  
+  padding: 10px 0;  
 }
 
-.topHeader {
-    margin: 0 auto; /* may need to adjust, just dont know how to add to link bar for test */
-    text-align: center;
-}
-
-.otherHeader {
-    margin: 20;
-    text-align: left;
-}
+.h3StyleBot {
+  background-color: #a7a7a7; 
+  color: #512888; 
+  width: 100%;
+  text-align: center;
+  margin: 0;  
+  line-height: 1.2; 
+  padding: 10px 0;  
+} 
 
 .btn-space {
     margin-right: 5px;
@@ -19,53 +25,61 @@
 }
 
 .custom-table-container {
-    padding-left: 0;
-    padding-right: 0;
-  }
+  padding-left: 0;
+  padding-right: 0;
+}
 
 .custom-table {
-    width: 100%;
-    margin: 2rem auto;  
-    color: #212529;  
-    border-collapse: separate;  
-    border-spacing: 0;  
-    box-shadow: 5px 4px 8px #512888;  
-  }
+  width: 100%;
+  margin: 2rem auto;
+  color: #212529;
+  border-collapse: separate;
+  border-spacing: 0;
+  box-shadow: 5px 4px 8px #512888;
+}
 
 .custom-table th,
 .custom-table td {
   padding: 0.75rem;
   vertical-align: top;
-  border-bottom: 5px solid #BF8CF7;  
+  border-bottom: 5px solid #BF8CF7;
 }
 
 .custom-table thead th {
-    position: sticky;
-    top: 0;
-    z-index: 10;  
-    background-color: #512888;  
-    color: white; 
-    box-shadow: 0 2px 2px -1px rgba(0,0,0,0.4);  
-  }
-
-.custom-table thead th:not(:last-child) {
-  border-right: 2px solid white;  
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #512888;
+  color: white;
+  box-shadow: 0 2px 2px -1px rgba(0,0,0,0.4);
 }
 
+.custom-table thead th:first-child {
+  border-top-left-radius: 10px; /* Rounds the top-left corner */
+}
+
+.custom-table thead th:last-child {
+  border-top-right-radius: 10px; /* Rounds the top-right corner */
+}
+
+.custom-table thead th:not(:last-child) {
+  border-right: 2px solid white;
+} 
+
 .custom-table tbody tr:last-child td {
-  border-bottom: none;  
+  border-bottom: none;
 }
 
 .custom-table thead tr:first-child th {
-    border-bottom: none;
-}  
+  border-bottom: none;
+}
 
 .custom-table-striped tbody tr:nth-of-type(odd) {
-  background-color: white; 
+  background-color: white;
   color: black;
 }
 
 .custom-table-striped tbody tr:nth-of-type(even) {
-  background-color: #a7a7a7; 
+  background-color: #a7a7a7;
   color: black;
-}  
+}

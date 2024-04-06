@@ -52,13 +52,13 @@ function AdminForm() {
             <Container role="main">
                 <Row className="review">
                     <Col xs={12}>
-                        <h3 className={styles.topHeader}>Review Applications</h3>
+                        <h3 className={styles.h3StyleTop}>Review Applications</h3>
                     </Col>
                 </Row>
                 <Row className="total">
                     <Col xs={12}>
 
-                        <h3 className={styles.topHeader}>Total Applications: {applications.length}</h3>
+                        <h3 className={styles.h3StyleBot}>Total Applications: {applications.length}</h3>
 
                         <p></p>
                         <Button onClick={onClick} type="button" class="btn btn-space" id="disable_application" style={{ marginRight: '8px' }}>Disable Applications</Button> 
@@ -68,62 +68,60 @@ function AdminForm() {
                     </Col>
                 </Row>
                 <Row>
-                    <div className={styles['custom-table-container']}>
-
-                    
-                    <table striped className={`${styles['custom-table']} ${styles['custom-table-striped']}`}>
-                        <thead>
-                            <tr>
-                                <th>
-                                    <div className="custom-control custom-checkbox"> 
-                                        <input type="checkbox"
-                                            className="custom-control-input"
-                                            id="checkAll"
-                                            onChange={e => handleCheckAllChange(e.target.checked)}
-                                            checked={applications.length > 0 && applications.every(app => checkedStates[app.wid])}
-                                        />
-                                    </div>
-                                </th>
-                                <th scope="Col">First Name</th>
-                                <th scope="Col">Last Name</th>
-                                <th scope="Col">EID</th>
-                                <th scope="Col">Email</th>
-                                <th scope="Col">WID</th>
-                                <th scope="Col">Advisor</th>
-                                <th scope="Col">Semester</th>
-                                <th scope="Col">Waiver?</th>
-                                <th scope="Col">Status</th>
-                                <th scope="Col">Review</th>
-                                <th scope="Col">Edit</th>
-                                <th scope="Col">Admin Notes</th>
-                                <th scope="Col">DARS Update</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {applications.map((app, index) => (
-                            <tr key={index}> 
-                            <td><input id={app.wid + "_checked"} type="checkbox"
-                                checked={!!checkedStates[app.wid]}
-                                onChange={e => handleCheckboxChange(app.wid, e.target.checked)}
-                            /></td>
-                            <td>{app.first_name}</td>
-                            <td>{app.last_name}</td>
-                            <td>{app.eid}</td>
-                            <td>{app.email}</td>
-                            <td>{app.wid}</td>
-                            <td>{app.advisor}</td>
-                            <td>{app.semester}</td>
-                            <td>{app.Eid}</td>
-                            <td>{app.status}</td>
-                            <td><Button onClick={onClick} type="button" class="btn btn-space" id={app.wid + "_review_btn"}>Review</Button> </td>
-                            <td><Button onClick={onClick} type="button" class="btn btn-space" id={app.wid + "_edit_btn"}>Edit</Button> </td> 
-                            <td>{app.notes}</td>
-                            <td></td>
-                            {/* Add other fields as needed */}
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
+                    <div className={styles['custom-table-container']}> 
+                        <table striped className={`${styles['custom-table']} ${styles['custom-table-striped']}`}>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div className="custom-control custom-checkbox"> 
+                                            <input type="checkbox"
+                                                className="custom-control-input"
+                                                id="checkAll"
+                                                onChange={e => handleCheckAllChange(e.target.checked)}
+                                                checked={applications.length > 0 && applications.every(app => checkedStates[app.wid])}
+                                            />
+                                        </div>
+                                    </th>
+                                    <th scope="Col">First Name</th>
+                                    <th scope="Col">Last Name</th>
+                                    <th scope="Col">EID</th>
+                                    <th scope="Col">Email</th>
+                                    <th scope="Col">WID</th>
+                                    <th scope="Col">Advisor</th>
+                                    <th scope="Col">Semester</th>
+                                    <th scope="Col">Waiver?</th>
+                                    <th scope="Col">Status</th>
+                                    <th scope="Col">Review</th>
+                                    <th scope="Col">Edit</th>
+                                    <th scope="Col">Admin Notes</th>
+                                    <th scope="Col">DARS Update</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {applications.map((app, index) => (
+                                <tr key={index}> 
+                                <td><input id={app.wid + "_checked"} type="checkbox"
+                                    checked={!!checkedStates[app.wid]}
+                                    onChange={e => handleCheckboxChange(app.wid, e.target.checked)}
+                                /></td>
+                                <td>{app.first_name}</td>
+                                <td>{app.last_name}</td>
+                                <td>{app.eid}</td>
+                                <td>{app.email}</td>
+                                <td>{app.wid}</td>
+                                <td>{app.advisor}</td>
+                                <td>{app.semester}</td>
+                                <td>{app.Eid}</td>
+                                <td>{app.status}</td>
+                                <td><Button onClick={onClick} type="button" class="btn btn-space" id={app.wid + "_review_btn"}>Review</Button> </td>
+                                <td><Button onClick={onClick} type="button" class="btn btn-space" id={app.wid + "_edit_btn"}>Edit</Button> </td> 
+                                <td>{app.notes}</td>
+                                <td></td>
+                                {/* Add other fields as needed */}
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
                     </div>
                     <nav aria-label="TableFooter">
                         <ul class="pagination">
