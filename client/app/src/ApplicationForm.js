@@ -11,8 +11,19 @@ function ApplicationForm() {
     const { userData, loading } = useUser();
     const [courses, setCourses] = useState([]); // State to hold dynamic course data
     const name = userData.first_name + " " + userData.last_name;
-    const hardcodedGPA = "3.5";
+    const hardcodedGPA = "3.5"; 
+
+    const [courseUpdates, setCourseUpdates] = useState({});
+
     const [loadingCourses, setLoadingCourses] = useState(false);
+
+    const [statusMessage, setStatusMessage] = useState(''); 
+    const [alertStatus, setAlertStatus] = useState('info'); 
+    const [showAlert, setShowAlert] = useState(false);
+
+    const [submitting, setSubmitting] = useState(false);
+    const [additionalInfo, setAdditionalInfo] = useState('');
+
     // Fetch courses dynamically from the database
     useEffect(() => {
         if (userData.wid) {
@@ -22,6 +33,14 @@ function ApplicationForm() {
                     const response = await fetch(`http://localhost:3002/api/courses?id=${userData.wid}`);
                     const { courses } = await response.json();
                     setCourses(courses); 
+                    const updates = {};
+                    courses.forEach(course => {
+                        updates[`${course.class_subject}-${course.class_catalog}`] = {
+                            status: course.status,
+                            grade: course.grade
+                        };
+                    });
+                    setCourseUpdates(updates);
                 } catch (error) {
                     console.error('Failed to fetch courses:', error);
                 } finally {
@@ -32,9 +51,40 @@ function ApplicationForm() {
         }
     }, [userData.wid]);
 
+    const handleCourseChange = (courseKey, field, value) => {
+        setCourseUpdates(prev => ({
+            ...prev,
+            [courseKey]: { ...prev[courseKey], [field]: value }
+        }));
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // Implementation 
+        setSubmitting(true);
+        try {
+            const response = await fetch('http://localhost:3002/api/submitApplication', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userData, additionalInfo, courses: courseUpdates}),
+            });
+            const result = await response.json();
+            setStatusMessage(result.message);
+            setAlertStatus('warning');
+            setShowAlert(true);
+        } catch (error) {
+            console.error('Submission failed:', error);
+            setStatusMessage('Failed to submit application. Please try again.');
+            setAlertStatus('danger');
+            setShowAlert(true);
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    const handleAdditionalInfoChange = (event) => {
+        setAdditionalInfo(event.target.value);
     };
     
     const statusOptions = [
@@ -60,9 +110,11 @@ function ApplicationForm() {
                 <LoadingIndicator />
             ) : (
                 <>
-            <Alert variant="info">
-                Application Submitted Tue Oct 17 2023 18:15:41 GMT-0500 (Central Daylight Time)
-            </Alert>
+            {showAlert && (
+                <Alert variant={alertStatus} onClose={() => setShowAlert(false)} dismissible>
+                    {statusMessage}
+                </Alert>
+            )}
             <div className={styles.appHeader}>
                 <h1 className={styles.h1Style}>Computer Science Apps</h1>
                 <h2 className={styles.h2Style}>Professional Program Application</h2>
@@ -84,8 +136,7 @@ function ApplicationForm() {
                     <Form.Group as={Row} className="mb-3">
                         <Form.Label column sm={2}>Advisor:</Form.Label>
                         <Col sm={10}>
-                            <Form.Select value={userData.advisor}>
-                                <option value="test">test</option>
+                            <Form.Select value={userData.advisor}> 
                                 <option value="Sheryl Cornell">Sheryl Cornell</option>
                                 <option value="David Invergo">David Invergo</option>
                                 {/* Additional advisor options can be added here */} 
@@ -97,8 +148,16 @@ function ApplicationForm() {
                             <strong>GPA: </strong>{hardcodedGPA}
                         </Col>
                     </Row>
+                    <Row className='mb-3'>
+                        <Col>
+                            <div className={styles['custom-message-1']}>
+                            <p>To be accepted to the Computer Science Professional Program, you must complete the following Pre-Professional Courses <em>with a grade of C or better</em> and <em>with a 2.3 cumulative</em> GPA <strong>within these courses</strong>.</p>
+                            <p>Any courses you are currently taking can be marked as <em>In Progress</em>. Any courses that you do not plan on taking need to be marked <em>Waiver Requested</em> and the reasons you are asking for the waiver must be explained below.</p>
+                            </div>
+                        </Col>
+                    </Row>
                     <div className={styles['custom-table-container']}> 
-                        <table striped className={`${styles['custom-table']} ${styles['custom-table-striped']}`}>
+                        <table striped hover className={`${styles['custom-table']} ${styles['custom-table-striped']}`}>
                             <thead>
                                 <tr>
                                     <th>Course</th>
@@ -108,35 +167,59 @@ function ApplicationForm() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {courses.map((course, index) => (
-                                    <tr key={index}>
-                                    <td className="align-middle">{course.class_descr}</td>
-                                    <td className="align-middle">{`${course.class_subject} ${course.class_catalog}`}</td>
-                                    <td className="align-middle">
-                                        <Form.Select name={`${course.class_subject}${course.class_catalog}-status`} value={course.status}>
-                                        {statusOptions.map(option => (
-                                            <option key={option.value} value={option.value}>{option.label}</option>
-                                        ))}
-                                        </Form.Select>
-                                    </td>
-                                    <td className="align-middle">
-                                        <Form.Select name={`${course.class_subject}${course.class_catalog}-grade`} value={course.grade}>
-                                        {gradeOptions.map(option => (
-                                            <option key={option.value} value={option.value}>{option.label}</option>
-                                        ))}
-                                        </Form.Select>
-                                    </td>
-                                    </tr>
-                                ))}
+                                {courses.map((course, index) => {
+                                    const courseKey = `${course.class_subject}-${course.class_catalog}`;
+                                    const courseUpdate = courseUpdates[courseKey] || {};
+
+                                    return (
+                                        <tr key={index}>
+                                            <td className="align-middle">{course.class_descr}</td>
+                                            <td className="align-middle">{`${course.class_subject} ${course.class_catalog}`}</td>
+                                            <td className="align-middle">
+                                                <Form.Select
+                                                    name={`${courseKey}-status`}
+                                                    value={courseUpdate.status || ''}
+                                                    onChange={e => handleCourseChange(courseKey, 'status', e.target.value)}
+                                                >
+                                                    {statusOptions.map(option => (
+                                                        <option key={option.value} value={option.value}>{option.label}</option>
+                                                    ))}
+                                                </Form.Select>
+                                            </td>
+                                            <td className="align-middle">
+                                                <Form.Select
+                                                    name={`${courseKey}-grade`}
+                                                    value={courseUpdate.grade || ''}
+                                                    onChange={e => handleCourseChange(courseKey, 'grade', e.target.value)}
+                                                >
+                                                    {gradeOptions.map(option => (
+                                                        <option key={option.value} value={option.value}>{option.label}</option>
+                                                    ))}
+                                                </Form.Select>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
                             </tbody> 
                         </table>
                     </div>
                     <Form.Group className="mb-3">
-                        <Form.Label>Additional Information:</Form.Label>
-                        <Form.Control as="textarea" rows={3} placeholder="Add comments or additional information here" />
+                        <div className={styles['custom-message-1']}>
+                           <p> Please use this space to add any comments that should be made regarding these classes.</p>  
+                           <p> If you requested a waiver for any of these classes, please explain in detail the reasons you are requesting a waiver for meeting all of the requirements for entrance into the Computer Science Professional Program. 
+                            You may also be required to meet with the curriculum committee to evaluate the waiver request.</p> 
+                        </div>  
+                        <Form.Control 
+                            as="textarea" 
+                            rows={3} 
+                            placeholder="Add comments or additional information here" 
+                            value={additionalInfo}
+                            onChange={handleAdditionalInfoChange} />
                     </Form.Group>
-                    <div className={styles['button-container']}> {/*stlyes['name-name'] format due to - causing syntax error*/}
-                        <button className={styles['btn-submit']} type="submit">Submit Application</button>
+                    <div className={styles['button-container']}>
+                        <button className={styles['btn-submit']} type="submit" disabled={submitting}>
+                            {submitting ? 'Submitting...' : 'Submit Application'}
+                        </button>
                     </div>
                 </Form>
             ) : (
