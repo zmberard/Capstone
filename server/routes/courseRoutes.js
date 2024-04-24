@@ -34,27 +34,79 @@ router.get('/courses', async (req, res) => {
     }  
 });
 
+function getNthWeekdayFallSummer(year, month, weekday, n) {
+    let date = new Date(year, month - 1, 1); 
+    let count = 0; 
+    
+    if (date.getDay() > weekday) {
+      count++;
+    }
+    while (date.getDay() !== weekday) {
+        date.setDate(date.getDate() + 1);
+    }
+    while (true) {
+        count++;
+        if (count === n) {
+            return date.getDate();
+        }
+        date.setDate(date.getDate() + 7); 
+    }
+}
+
+function getNthWeekday(year, month, weekday, n) {
+    let count = 0;
+    let date = new Date(year, month - 1, 1);
+    while (true) {
+        if (date.getDay() === weekday) {
+            count++;
+            if (count === n) {
+                return date.getDate();
+            }
+        }
+        date.setDate(date.getDate() + 1);
+    }
+}
+
+function determineSemester(dateInput) {
+    const date = new Date(dateInput + 'Z');
+	console.log("Current Date1: " + date); 
+    const year = date.getFullYear();
+    const fallStart = new Date(year, 7, getNthWeekdayFallSummer(year, 8, 1, 4)); // August is month 7 in Date (0-indexed)
+    const springStart = new Date(year, 0, getNthWeekday(year, 1, 2, 3)); 
+    const summerStart = new Date(year, 4, getNthWeekdayFallSummer(year, 5, 1, 4));  
+    const nextSpringStart = new Date(year + 1, 1, getNthWeekday(year + 1, 1, 2, 3)); // Next year's August 
+
+    if ((date >= fallStart || date < springStart) && date < nextSpringStart) { 
+        return 'Fall ' + year;
+    }
+    if (date >= springStart && date < summerStart) { 
+        return 'Spring ' + year;
+    }
+    if (date >= summerStart && date < fallStart) { 
+        return 'Summer ' + year;
+    }  
+    return "Date does not fall within the academic calendar year."; // Default return for out of range dates. should not hit. 
+}
+
 router.post('/submitApplication', async (req, res) => {
     const { userData, additionalInfo, courses } = req.body;
     console.log('submitting application for wid: ' + userData.wid);  
     const now = new Date();  
     const formattedDateForDB = now.toISOString().slice(0, 19).replace('T', ' ');
     let message = 'Ope, nothing happened...';
-
+    const semester = determineSemester(now);
     try {
         const existingApplication = await knex('applications')
             .where({
-                wid: userData.wid,
-                semester: 'Spring' //TODO: Change semester value here 
+                wid: userData.wid
             })
-            .first(); //first matching or null
+            .first(); //first matching or null 
 
-       
         if (!existingApplication) { 
             await knex('applications').insert({
                 wid: userData.wid,
                 advisor: userData.advisor,
-                semester: 'Spring',
+                semester: semester,
                 status: "Pending",
                 notes: additionalInfo,
                 waiver: false,
@@ -62,13 +114,13 @@ router.post('/submitApplication', async (req, res) => {
             });
             message = `Application Submitted ${now.toDateString()} ${now.toTimeString()}`;
         } else { 
-            console.log('An application for this wid:', userData.wid, 'has already been submitted. Only updating notes and courses.'); 
+            console.log('An application for this wid:', userData.wid, 'has already been submitted. Updating notes and courses isntead.'); 
             await knex('applications')
-                .where({ wid: userData.wid, semester: 'Spring' })
+                .where({ wid: userData.wid})
                 .update({
                     notes: additionalInfo, 
                 });
-            message = `An application exists for wid: ${userData.wid}. Updated course statuses and grades! ${now.toDateString()} ${now.toTimeString()}`
+            message = `An application exists for wid: ${userData.wid}. Updating notes and courses isntead! ${now.toDateString()} ${now.toTimeString()}`
         }
 
         // Update courses in the report table

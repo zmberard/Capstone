@@ -1,3 +1,9 @@
+.container {
+  max-width: 1296px; 
+  margin-left: auto;
+  margin-right: auto;
+} 
+
 .h3StyleTop {
   background-color: #512888;  
   color: #a7a7a7;  
@@ -27,6 +33,8 @@
 .custom-table-container {
   padding-left: 0;
   padding-right: 0;
+  width: 100%;
+  overflow-x: auto;
 }
 
 .custom-table {
@@ -42,8 +50,8 @@
 .custom-table td {
   padding: 0.75rem;
   vertical-align: top;
-  border-bottom: 5px solid #BF8CF7;
-}
+  border-bottom: 5px solid #BF8CF7; 
+} 
 
 .custom-table thead th {
   position: sticky;
