@@ -39,6 +39,7 @@ const courseRoutes = require('./routes/courseRoutes');
 const applicationRoutes = require('./routes/applicationRoutes');
 const dataRoutes = require('./routes/dataRoutes');
 const authRoutes = require('./routes/auth'); // Renamed for clarity
+const adminRoutes = require('./routes/adminRoutes');
 
 // Use routes
 app.use('/api', userRoutes);
@@ -46,6 +47,7 @@ app.use('/api', courseRoutes);
 app.use('/api', applicationRoutes);
 app.use('/api', dataRoutes);
 app.use('/api', authRoutes);
+app.use('/api/', adminRoutes);
 
 //const loginRequired = require('./middleware/login-required');
 // Serve info about the logged-in user.  Since only 

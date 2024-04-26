@@ -1,8 +1,4 @@
-.container {
-  max-width: 1296px; 
-  margin-left: auto;
-  margin-right: auto;
-} 
+ 
 
 .h3StyleTop {
   background-color: #512888;  
@@ -24,32 +20,45 @@
   padding: 10px 0;  
 } 
 
-.btn-space {
-    margin-right: 5px;
-    margin: 20;
-    text-align: right;
-}
+.button-container { 
+  display: flex; 
+  width: 100%;
+  padding-top: 30px; 
+  flex-direction: row;
+  justify-content: space-between; 
+} 
 
 .custom-table-container {
+  display: flex;
+  justify-content: center;
   padding-left: 0;
   padding-right: 0;
-  width: 100%;
-  overflow-x: auto;
-}
-
+  width: 100%;  
+} 
 .custom-table {
-  width: 100%;
+  width: 100; 
   margin: 2rem auto;
   color: #212529;
-  border-collapse: separate;
+  border-collapse: collapse;
   border-spacing: 0;
   box-shadow: 5px 4px 8px #512888;
 }
 
-.custom-table th,
+.custom-table th {
+  vertical-align: middle;
+  padding: 0.5rem;
+  border-bottom: 5px solid #BF8CF7; 
+  vertical-align: middle;
+  text-align: center;
+} 
+
 .custom-table td {
-  padding: 0.75rem;
-  vertical-align: top;
+  white-space: nowrap; 
+  padding: 0.5rem;
+  vertical-align: middle;
+  text-align: left; 
+  overflow: hidden; 
+  text-overflow: ellipsis;  
   border-bottom: 5px solid #BF8CF7; 
 } 
 
@@ -91,3 +100,46 @@
   background-color: #a7a7a7;
   color: black;
 }
+
+.filter-input {
+  width: auto; 
+  max-width: 100px; /* Adjust as needed */
+  box-sizing: border-box;  
+}
+.filter-input-email {
+  width: auto; 
+  max-width: 170px; /* Adjust as needed */
+  box-sizing: border-box; 
+}
+
+.sortHeaderContainer {
+  display: flex;
+  flex-direction: column; /* Stack vertically */
+  width: 100%;  
+}
+
+.sortHeaderTop {
+  display: flex;
+  justify-content: space-between; /* Space between label and sort icon */
+  align-items: center; 
+}
+
+.sortHeader {
+  cursor: pointer;
+  user-select: none; /* Prevents text selection */
+}
+
+.sortHeader::after {
+  margin-left: 10px; 
+  content: '⇅';  
+}
+
+.sortHeader.sortAsc::after {
+  content: '▲';  
+}
+
+.sortHeader.sortDesc::after {
+  content: '▼';  
+}
+
+ 
