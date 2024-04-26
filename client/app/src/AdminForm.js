@@ -10,7 +10,7 @@ function AdminForm() {
     const [isLoading, setIsLoading] = useState(false);
     const [statusMessage, setStatusMessage] = useState('');
     const [alertStatus, setAlertStatus] = useState('info');
-    const [showAlert, setShowAlert] = useState(false);
+    const [showAlert, setShowAlert] = useState(false); 
 
     const handleCheckAllChange = (isChecked) => {  
         const newCheckedStates = applications.reduce((acc, app) => {
@@ -155,7 +155,104 @@ function AdminForm() {
     useEffect(() => { 
       fetchApplications();
     }, []);
-  
+
+    const advisorOptions = Array.from(new Set(applications.map(app => app.advisor)));
+    const semesterOptions = Array.from(new Set(applications.map(app => app.semester)));
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(10); 
+    const [filters, setFilters] = useState({
+        firstName: "",
+        lastName: "",
+        eid: "",
+        email: "",
+        wid: "",
+        advisor: "All",
+        semester: "All",
+        waiver: "Both",
+        status: "All"
+      });
+
+
+    
+    function substringSearch(fullString, searchTerm) {
+        if (typeof fullString === 'number') {
+          fullString = fullString.toString();
+        }
+        return fullString.toLowerCase().includes(searchTerm.toLowerCase());
+      }
+      
+      const filteredApplications = applications.filter(app => {
+        return (filters.firstName === "" || substringSearch(app.first_name, filters.firstName)) &&
+               (filters.lastName === "" || substringSearch(app.last_name, filters.lastName)) &&
+               (filters.eid === "" || substringSearch(app.eid, filters.eid)) &&
+               (filters.email === "" || substringSearch(app.email, filters.email)) &&
+               (filters.wid === "" || substringSearch(app.wid.toString(), filters.wid)) && // Ensure wid is a string
+               (filters.advisor === "All" || app.advisor === filters.advisor) &&
+               (filters.semester === "All" || app.semester === filters.semester) &&
+               (filters.waiver === "Both" || (filters.waiver === "Yes" ? app.waiver : !app.waiver)) &&
+               (filters.status === "All" || app.status === filters.status);
+      });
+
+    function handleChangeItemsPerPage(event) {
+        setItemsPerPage(Number(event.target.value));
+        setCurrentPage(1);  
+    }
+
+    function handlePageChange(pageNumber) {
+        setCurrentPage(pageNumber);
+    }
+
+    function handleFilterChange(e) {
+        const { name, value } = e.target;
+        setCurrentPage(1);
+        setFilters(prevFilters => ({
+          ...prevFilters,
+          [name]: value
+        })); 
+    } 
+
+    const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' }); 
+    function handleSort(key) {
+        let direction = 'ascending';
+        if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+          direction = 'descending';
+        }
+        setSortConfig({ key, direction });
+    }
+
+    const sortedApplications = React.useMemo(() => {
+        let sortableItems = [...filteredApplications];
+        if (sortConfig !== null) {
+          sortableItems.sort((a, b) => {
+            let itemA = a[sortConfig.key];
+            let itemB = b[sortConfig.key];
+
+             // Ensure all values are strings for consistent comparison
+             itemA = typeof itemA === 'string' ? itemA.toLowerCase() : itemA;
+             itemB = typeof itemB === 'string' ? itemB.toLowerCase() : itemB;
+ 
+             // Special handling for 'Admin Notes' and DARS_UPDATE
+ 
+             
+            if (itemA < itemB) {
+              return sortConfig.direction === 'ascending' ? -1 : 1;
+            }
+            if (itemA > itemB) {
+              return sortConfig.direction === 'ascending' ? 1 : -1;
+            }
+            return 0;
+          });
+        }
+        return sortableItems;
+      }, [filteredApplications, sortConfig]); 
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const totalPages = Math.ceil(filteredApplications.length / itemsPerPage); 
+    const currentItems = sortedApplications.slice(indexOfFirstItem, indexOfLastItem);
+    
+
     return(
         
         <div className={styles.AdminForm}>
@@ -179,48 +276,152 @@ function AdminForm() {
                     </Col>
                 </Row>   
                 <Row>
-                    <Col xs={12} className={styles['button-container']}>
+                    <Col xs={12} className={styles['button-container']}>  
+                        <Button variant="dark" onClick={() => setSortConfig({ key: null, direction: 'ascending' })}>
+                            Reset Sort
+                        </Button> 
+                        <div>
                             <Button onClick={handleDisable} type="button" id="disable_application" variant="danger" style={{ marginRight: '8px' }} disabled={Object.values(checkedStates).every(isChecked => !isChecked)}>
                                 Disable Application(s)
-                            </Button> 
+                            </Button>
                             <Button onClick={() => handleDownloadSelected(applications, checkedStates)} type="button" id="download_selected" variant="success" style={{ marginRight: '8px' }} disabled={Object.values(checkedStates).every(isChecked => !isChecked)}>
                                 Download Selected
-                            </Button> 
+                            </Button>
                             <Button onClick={handleEmailSelected} type="button" id="email_selected" variant="secondary" style={{ marginRight: '8px' }} disabled={Object.values(checkedStates).every(isChecked => !isChecked)}>
                                 Email Selected
                             </Button> 
+                        </div>
                     </Col>
-                </Row>
-                
+                </Row> 
                 <Row>
                     <div className={styles['custom-table-container']}> 
-                        <table striped className={`${styles['custom-table']} ${styles['custom-table-striped']}`}>
+                        <table className={`${styles['custom-table']} ${styles['custom-table-striped']}`}> 
                             <thead>
                                 <tr>
-                                    <th>
-                                        <input type="checkbox" 
-                                                    id="checkAll"
-                                                    onChange={e => handleCheckAllChange(e.target.checked)}
-                                                    checked={applications.length > 0 && applications.every(app => checkedStates[app.wid])}
-                                        /> 
-                                    </th>
-                                    <th scope="Col">First Name</th>
-                                    <th scope="Col">Last Name</th>
-                                    <th scope="Col">EID</th>
-                                    <th scope="Col">Email</th>
-                                    <th scope="Col">WID</th>
-                                    <th scope="Col">Advisor</th>
-                                    <th scope="Col">Semester</th>
-                                    <th scope="Col">Waiver?</th>
-                                    <th scope="Col">Status</th>
-                                    <th scope="Col">Review</th>
-                                    <th scope="Col">Edit</th>
-                                    <th scope="Col">Admin Notes</th>
-                                    <th scope="Col">DARS Update</th>
+                                <th><input className={styles['filter-input']} type="checkbox" id="checkAll" onChange={handleCheckAllChange} checked={filteredApplications.length > 0 && filteredApplications.every(app => checkedStates[app.wid])}/></th>
+                                <th>
+                                    <div className={styles.sortHeaderContainer}>
+                                    <div className={styles.sortHeaderTop}>
+                                        First Name
+                                        <div className={`${styles.sortHeader} ${ sortConfig.key === 'first_name' ? sortConfig.direction === 'ascending' ? styles.sortAsc : styles.sortDesc : '' }`}
+                                            onClick={() => handleSort('first_name')}
+                                        ></div>
+                                    </div>
+                                    <input className={styles['filter-input']} type="text" name="firstName" placeholder="First Name" onChange={handleFilterChange} value={filters.firstName} />
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div className={styles.sortHeaderContainer}>
+                                        <div className={styles.sortHeaderTop}>
+                                            Last Name
+                                            <div className={`${styles.sortHeader} ${ sortConfig.key === 'last_name' ? sortConfig.direction === 'ascending' ? styles.sortAsc : styles.sortDesc : '' }`}
+                                                onClick={() => handleSort('last_name')}
+                                            ></div>
+                                        </div>
+                                        <input className={styles['filter-input']} type="text" name="lastName" placeholder="Last Name" onChange={handleFilterChange} value={filters.lastName} />
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div className={styles.sortHeaderContainer}>
+                                        <div className={styles.sortHeaderTop}>
+                                            EID
+                                            <div className={`${styles.sortHeader} ${
+                                                sortConfig.key === 'eid' 
+                                                    ? sortConfig.direction === 'ascending' 
+                                                    ? styles.sortAsc 
+                                                    : styles.sortDesc 
+                                                    : ''  }`}  onClick={() => handleSort('eid')} ></div>
+                                        </div>
+                                        <input className={styles['filter-input']} type="text" name="eid" placeholder="EID" onChange={handleFilterChange} value={filters.eid} />
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div className={styles.sortHeaderContainer}>
+                                        <div className={styles.sortHeaderTop}>
+                                            Email
+                                            <div className={`${styles.sortHeader} ${
+                                                sortConfig.key === 'email' 
+                                                    ? sortConfig.direction === 'ascending' 
+                                                    ? styles.sortAsc 
+                                                    : styles.sortDesc 
+                                                    : '' }`} onClick={() => handleSort('email')} ></div>
+                                        </div>
+                                        <input className={styles['filter-input-email']} type="text" placeholder="Email" onChange={handleFilterChange} value={filters.email} />
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div className={styles.sortHeaderContainer}>
+                                        <div className={styles.sortHeaderTop}>
+                                            WID
+                                            <div className={`${styles.sortHeader} ${
+                                                sortConfig.key === 'wid' 
+                                                    ? sortConfig.direction === 'ascending' 
+                                                    ? styles.sortAsc 
+                                                    : styles.sortDesc 
+                                                    : ''
+                                                }`} onClick={() => handleSort('wid')} ></div>
+                                        </div>
+                                        <input className={styles['filter-input']} type="text" name="wid" placeholder="WID" onChange={handleFilterChange} value={filters.wid} />
+                                    </div>
+                                </th>
+                                
+                                <th>
+                                    Advisor
+                                    <select name="advisor" onChange={handleFilterChange} value={filters.advisor}>
+                                        <option value="All">All</option>
+                                        {advisorOptions.map((advisor, index) => (
+                                            <option key={index} value={advisor}>{advisor}</option>
+                                        ))}
+                                    </select>
+                                </th>
+                                <th>
+                                    Semester
+                                    <select name="semester" onChange={handleFilterChange} value={filters.semester}>
+                                        <option value="All">All</option>
+                                        {semesterOptions.map((semester, index) => (
+                                            <option key={index} value={semester}>{semester}</option>
+                                        ))}
+                                    </select>
+                                </th>
+                                <th>
+                                    Waiver
+                                    <select name="waiver" onChange={handleFilterChange} value={filters.waiver}>
+                                        <option value="Both">Both</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </th>
+                                <th>
+                                    Status
+                                    <select name="status" onChange={handleFilterChange} value={filters.status}>
+                                        <option value="All">All</option>
+                                        <option value="Accepted">Accepted</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Pending/Exception">Pending/Exception</option>
+                                        <option value="Pending/Dismissed">Pending/Dismissed</option>
+                                        <option value="Pending/Reinstated">Pending/Reinstated</option>
+                                        <option value="Pending(All)">Pending(All)</option>
+                                        <option value="Declined">Declined</option>
+                                        <option value="Declined/Exception">Declined/Exception</option>
+                                        <option value="Withdrawn">Withdrawn</option>
+                                    </select>
+                                </th>
+                                <th>Review</th>
+                                <th>Edit</th>
+                                <th>Admin Notes
+                                    <div className={`${styles.sortHeader} ${
+                                        sortConfig.key === 'admin_notes' ? sortConfig.direction === 'ascending' ? styles.sortAsc : styles.sortDesc : ''
+                                    }`} onClick={() => handleSort('admin_notes')}></div>
+                                </th>
+                                <th>DARS Update</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {applications.map((app, index) => (
+                                {currentItems.map((app, index) => (
                                     <tr key={index}> 
                                         <td><input id={app.wid + "_checked"} type="checkbox"
                                             checked={!!checkedStates[app.wid]}
@@ -237,13 +438,7 @@ function AdminForm() {
                                         <td>{app.status}</td>
                                         <td><Button onClick={() => handleReview(app.wid)} type="button" variant="primary" id={app.wid + "_review_btn"}>Review</Button> </td>
                                         <td><Button onClick={() => handleEdit(app.wid)} type="button" variant="warning" id={app.wid + "_edit_btn"}>Edit</Button> </td> 
-                                        <td>
-                                            {app.notes ? (
-                                                <Button onClick={() => handleViewNotes(app.wid)} type="button" variant="info" id={app.wid + "_notes_btn"}>View Notes</Button>
-                                            ) : (
-                                                ""
-                                            )}    
-                                        </td>
+                                        <td>{app.notes?(<Button onClick={() => handleViewNotes(app.wid)} type="button" variant="info" id={app.wid + "_notes_btn"}>View Notes</Button>):("")}</td>
                                         <td>{formatDate(app.d_update)}</td> 
                                     </tr>
                                 ))}
@@ -251,6 +446,29 @@ function AdminForm() {
                         </table>
                     </div> 
                 </Row>  
+                <Row>
+                    {/* Pagination Controls */}
+                    <Col xs={2}>
+                        <p >Applications Per Page: </p>
+                    </Col>
+                    <Col xs={1}> 
+                        <select value={itemsPerPage} onChange={handleChangeItemsPerPage} style={{ marginLeft: '-50px' }} >
+                            {[5, 10, 15, 20, 25, 50, 100].map(size => (
+                                <option key={size} value={size}>{size}</option>
+                            ))}
+                        </select>
+                    </Col>
+                    <Col xs={8}>
+                    <div>
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(number => (
+                        <button key={number} onClick={() => handlePageChange(number)} disabled={currentPage === number}>
+                            {number}
+                        </button>
+                        ))}
+                    </div>
+                    
+                    </Col>
+                </Row>
             </Container>
             </>  )}
         </div>  

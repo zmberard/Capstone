@@ -11,7 +11,7 @@ router.post('/disable-applications', async (req, res) => {
 
     try {
         const updateResponse = await knex('applications')
-            .whereIn('wid', ids) // Assuming the column is named 'id'
+            .whereIn('wid', ids)  
             .update({ status: 'denied' });
 
         if (updateResponse) {
