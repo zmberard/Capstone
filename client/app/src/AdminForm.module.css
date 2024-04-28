@@ -147,8 +147,7 @@
   overflow-y: auto; /* Ensure it's always scrollable vertically */ 
 }
  
-.notes-modal { 
-   /* Lighter text color for better contrast */ 
+.notes-modal {  
   max-width: '80vw';
 }
 
