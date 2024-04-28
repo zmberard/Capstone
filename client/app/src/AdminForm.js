@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Button, Modal, Alert } from 'react-bootstrap';
 import LoadingIndicator from './LoadingIndicator'; 
 import styles from './AdminForm.module.css';
 import { unparse } from 'papaparse';
+import ViewNotesModal from './ViewNotesModal';
+import ApplicationForm from './ApplicationForm';
  
 function AdminForm() {
     const [applications, setApplications] = useState([]);  
@@ -11,6 +13,22 @@ function AdminForm() {
     const [statusMessage, setStatusMessage] = useState('');
     const [alertStatus, setAlertStatus] = useState('info');
     const [showAlert, setShowAlert] = useState(false); 
+    const [currentAppId, setCurrentAppId] = useState(null); //AppId = Wid
+    const [currentEId, setCurrentEId] = useState(null);
+
+    const [showApplicationModal, setShowApplicationModal] = useState(false);
+    function handleEdit(Eid) {
+        setCurrentEId(Eid);
+        setShowApplicationModal(true); 
+    } 
+    function closeApplicationModal() {
+        setShowApplicationModal(false);
+        setCurrentAppId(null); 
+    }
+
+    const [showNotesModal, setShowNotesModal] = useState(false);
+    const [currentNotes, setCurrentNotes] = useState('');
+    
 
     const handleCheckAllChange = (isChecked) => {  
         const newCheckedStates = applications.reduce((acc, app) => {
@@ -26,7 +44,7 @@ function AdminForm() {
     function handleDisable() {
         const disabledIds = Object.entries(checkedStates).filter(([id, isChecked]) => isChecked).map(([id]) => id); 
         setIsLoading(true); // Start loading
-        fetch('http://localhost:3002/api/disable-applications', {
+        fetch('http://localhost:3002/api/disableApplications', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -93,7 +111,7 @@ function AdminForm() {
         const emailIds = Object.entries(checkedStates).filter(([id, isChecked]) => isChecked).map(([id]) => id);
     
         setIsLoading(true); // Start loading
-        fetch('http://localhost:3002/api/send-email', {
+        fetch('http://localhost:3002/api/sendEmail', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -121,13 +139,7 @@ function AdminForm() {
         alert(`Reviewing application ID: ${appId}`);
     }
     
-    function handleEdit(appId) {
-        alert(`Editing application ID: ${appId}`);
-    }
-    
-    function handleViewNotes(appId, notes) {
-        alert(`Notes for application ID: ${appId}: ${notes}`);
-    }
+
 
     function formatDate(dateString) {
         const date = new Date(dateString);
@@ -150,11 +162,15 @@ function AdminForm() {
             setIsLoading(false);
         }
         
-      };
+      }; 
 
     useEffect(() => { 
       fetchApplications();
     }, []);
+
+    const refreshApplications = () => {
+        fetchApplications();  
+    };
 
     const advisorOptions = Array.from(new Set(applications.map(app => app.advisor)));
     const semesterOptions = Array.from(new Set(applications.map(app => app.semester)));
@@ -212,7 +228,7 @@ function AdminForm() {
         })); 
     } 
 
-    const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' }); 
+    const [sortConfig, setSortConfig] = useState({ key: 'd_update', direction: 'descending' }); 
     function handleSort(key) {
         let direction = 'ascending';
         if (sortConfig.key === key && sortConfig.direction === 'ascending') {
@@ -226,20 +242,27 @@ function AdminForm() {
         if (sortConfig !== null) {
           sortableItems.sort((a, b) => {
             let itemA = a[sortConfig.key];
-            let itemB = b[sortConfig.key];
-
+            let itemB = b[sortConfig.key]; 
              // Ensure all values are strings for consistent comparison
              itemA = typeof itemA === 'string' ? itemA.toLowerCase() : itemA;
              itemB = typeof itemB === 'string' ? itemB.toLowerCase() : itemB;
  
              // Special handling for 'Admin Notes' and DARS_UPDATE
  
-             
+              // Check for null values and prioritize non-null items
+            if (itemA === null && itemB !== null) {
+                return sortConfig.direction === 'ascending' ? 1 : -1;
+            }
+            if (itemB === null && itemA !== null) {
+                return sortConfig.direction === 'ascending' ? -1 : 1;
+            }
+
+            // Normal comparison for non-null values
             if (itemA < itemB) {
-              return sortConfig.direction === 'ascending' ? -1 : 1;
+                return sortConfig.direction === 'ascending' ? -1 : 1;
             }
             if (itemA > itemB) {
-              return sortConfig.direction === 'ascending' ? 1 : -1;
+                return sortConfig.direction === 'ascending' ? 1 : -1;
             }
             return 0;
           });
@@ -251,11 +274,61 @@ function AdminForm() {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const totalPages = Math.ceil(filteredApplications.length / itemsPerPage); 
     const currentItems = sortedApplications.slice(indexOfFirstItem, indexOfLastItem);
-    
+
+    function handleViewNotes(appId, notes) {
+        setCurrentNotes(notes);
+        console.log(notes);
+        setCurrentAppId(appId);
+        setShowNotesModal(true);
+    }
+
+    function saveNotes(appId, notes) {
+        setIsLoading(true);
+        fetch(`http://localhost:3002/api/saveNotes?appId=${appId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ notes })
+        })
+        .then(response => response.json())
+        .then(data => {
+            fetchApplications();
+            setStatusMessage(`Notes saved for wid: ${appId} successfully.`);
+            setAlertStatus('success');
+            setShowAlert(true);
+        })
+        .catch(error => {
+            console.error(error);
+            setStatusMessage(`Failed to save notes for wid: ${appId}!`);
+            setAlertStatus('danger');
+            setShowAlert(true);
+        })
+        .finally(() => {
+            setIsLoading(false);
+        }); 
+    } 
 
     return(
         
         <div className={styles.AdminForm}>
+            <ViewNotesModal
+                show={showNotesModal}
+                onHide={() => setShowNotesModal(false)}
+                notes={currentNotes} 
+                onSave={(updatedNotes) => saveNotes(currentAppId, updatedNotes)}
+            />
+            <Modal show={showApplicationModal} onHide={closeApplicationModal} size="lg" centered onExited={refreshApplications}>
+                <Modal.Header closeButton className={styles['modal-header-color']}>
+                    <Modal.Title>Edit Application</Modal.Title>
+                </Modal.Header>
+                <Modal.Body className={styles['modal-body-edit-color']}>
+                    {currentEId && <ApplicationForm eid={currentEId} />}
+                </Modal.Body>
+                <Modal.Footer className={styles['modal-body-edit-color']}>
+                    <Button variant="secondary" onClick={closeApplicationModal}>Close</Button>
+                </Modal.Footer>
+            </Modal>
             {isLoading ? (
                 <LoadingIndicator />
             ) : ( <> 
@@ -414,10 +487,14 @@ function AdminForm() {
                                 <th>Edit</th>
                                 <th>Admin Notes
                                     <div className={`${styles.sortHeader} ${
-                                        sortConfig.key === 'admin_notes' ? sortConfig.direction === 'ascending' ? styles.sortAsc : styles.sortDesc : ''
-                                    }`} onClick={() => handleSort('admin_notes')}></div>
+                                        sortConfig.key === 'notes' ? sortConfig.direction === 'ascending' ? styles.sortAsc : styles.sortDesc : ''
+                                    }`} onClick={() => handleSort('notes')}></div>
                                 </th>
-                                <th>DARS Update</th>
+                                <th>DARS Update
+                                <div className={`${styles.sortHeader} ${
+                                        sortConfig.key === 'd_update' ? sortConfig.direction === 'ascending' ? styles.sortAsc : styles.sortDesc : ''
+                                    }`} onClick={() => handleSort('d_update')}></div>
+                                </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -437,8 +514,8 @@ function AdminForm() {
                                         <td>{app.waiver ? "Yes" : "No"}</td>
                                         <td>{app.status}</td>
                                         <td><Button onClick={() => handleReview(app.wid)} type="button" variant="primary" id={app.wid + "_review_btn"}>Review</Button> </td>
-                                        <td><Button onClick={() => handleEdit(app.wid)} type="button" variant="warning" id={app.wid + "_edit_btn"}>Edit</Button> </td> 
-                                        <td>{app.notes?(<Button onClick={() => handleViewNotes(app.wid)} type="button" variant="info" id={app.wid + "_notes_btn"}>View Notes</Button>):("")}</td>
+                                        <td><Button onClick={() => handleEdit(app.eid)} type="button" variant="warning" id={app.wid + "_edit_btn"}>Edit</Button> </td> 
+                                        <td>{app.notes?(<Button onClick={() => handleViewNotes(app.wid, app.notes)} type="button" variant="info" id={app.wid + "_notes_btn"}>View Notes</Button>):("")}</td>
                                         <td>{formatDate(app.d_update)}</td> 
                                     </tr>
                                 ))}

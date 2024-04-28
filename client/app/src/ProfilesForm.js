@@ -15,10 +15,8 @@ function ProfilesForm() {
     const [firstName, setFirstName] = useState(userData.first_name || '');
     const [lastName, setLastName] = useState(userData.last_name || '')
 
-    const updateProfileOnClick = (event) => {
-        console.log("Button hit"); 
-        event.preventDefault();
-        console.log(userData); 
+    const updateProfileOnClick = (event) => { 
+        event.preventDefault(); 
         handleUpdateProfile(userData.eid, firstName, lastName);
     };
 

@@ -64,7 +64,7 @@ export const UserProvider = ({ children }) => {
         }
   
         await fetchUserDetails(eid);  
-        alert('Profile updated successfully');
+        alert('Profile updated successfully'); //TODO: Remov alerts
     } catch (error) {
         console.error('Error updating profile:', error);
         alert('Error updating profile');
@@ -84,10 +84,17 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem('userData');
     setUserData({ wid: '', first_name: '', last_name: '', email: '', advisor: '', isAdmin: false, eid: '' });
     window.location.reload(); 
+  }; 
+
+  const [statusMessage, setStatusMessage] = useState('');
+  const [alertStatus, setAlertStatus] = useState('info'); 
+  const updateUserMessage = (message, status) => { 
+    setStatusMessage(message);
+    setAlertStatus(status);
   };
 
   return (
-    <UserContext.Provider value={{ EId, userData, login, logout, fetchUserDetails, loading, handleUpdateProfile }}>
+    <UserContext.Provider value={{ EId, userData, setUserData, login, logout, fetchUserDetails, loading, handleUpdateProfile, statusMessage, alertStatus, updateUserMessage }}>
       {children}
     </UserContext.Provider>
   );

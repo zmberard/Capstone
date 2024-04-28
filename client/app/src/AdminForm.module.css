@@ -142,4 +142,29 @@
   content: '▼';  
 }
 
+.textarea-notes {
+  height: 200px;
+  overflow-y: auto; /* Ensure it's always scrollable vertically */ 
+}
  
+.notes-modal { 
+   /* Lighter text color for better contrast */ 
+  max-width: '80vw';
+}
+
+.modal-header-color {
+  background-color: #512888;  
+  color: white;
+  border: none;
+
+}
+
+.modal-body-color {
+  background-color: #a7a7a7;  
+  border: none;
+}
+
+.modal-body-edit-color {
+  background-color: #ffffe0;  
+  border: none;
+}

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const knex = require('knex')(require('../configs/config').knexConfig.development);
 
-router.post('/disable-applications', async (req, res) => {
+router.post('/disableApplications', async (req, res) => {
     const { ids } = req.body; // Expect an array of IDs
 
     if (!ids || ids.length === 0) {
@@ -25,7 +25,7 @@ router.post('/disable-applications', async (req, res) => {
     }
 });
 
-router.post('/send-email', async (req, res) => {
+router.post('/sendEmail', async (req, res) => {
     const { ids } = req.body; // Expect an array of IDs
     if (!ids || ids.length === 0) {
         return res.status(400).json({ message: 'No application IDs provided' });
@@ -52,5 +52,29 @@ router.post('/send-email', async (req, res) => {
     }
 });
 
+router.post('/saveNotes', async (req, res) => {
+    const appId = req.query.appId; // Correctly access the appId from the query parameters
+    const { notes } = req.body;
+    const now = new Date();
+    const formattedDateForDB = now.toISOString().slice(0, 19).replace('T', ' ');
 
+    try {
+        const existingNotes = await knex('applications')
+            .where('wid', appId) // Correct the identifier key
+            .select('notes')
+            .first();
+
+        const updatedNotes = `${formattedDateForDB}\n${notes}`;
+
+        await knex('applications')
+            .where('wid', appId) // Use `where`, not `whereIn` for a single ID
+            .update({ notes: updatedNotes,
+                      d_update: formattedDateForDB });
+        console.log("notes saved!");
+        res.status(200).json({ message: `Notes updated successfully for wid: ${appId}.` });
+    } catch (err) {
+        console.error('Error updating notes:', err);
+        res.status(500).json({ message: `Failed to update notes for wid: ${appId}.` });
+    }
+});
 module.exports = router;

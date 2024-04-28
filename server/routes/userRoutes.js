@@ -62,6 +62,28 @@ router.put('/updateUserName', async (req, res) => {
         console.error('Error updating user:', err);
         res.status(500).send('Server error');
     }
+}); 
+
+router.post('/updateAdvisor', async (req, res) => {
+    const eid = req.query.eid;
+    const { newAdvisor } = req.body;
+    try { 
+        const update = await knex('users')
+                              .whereRaw('lower(eid) = ?', [eid.toLowerCase()])
+                              .update({
+                                  advisor: newAdvisor 
+                              });  
+        if (update) {
+            console.log(`User with EID: ${eid} advisor updated successfully to ${newAdvisor}.`);
+            res.json({ message: `User with EID: ${eid} advisor updated successfully to ${newAdvisor}.` });
+        } else {
+            console.log(`User with EID: ${eid} not found.`);
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (err) {
+        console.error('Error updating user:', err);
+        res.status(500).json({ error: 'Server error' });
+    }
 });
 
 module.exports = router;

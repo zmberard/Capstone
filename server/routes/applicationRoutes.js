@@ -9,7 +9,7 @@ router.get('/applications', async (req, res) => {
           .select(
             'applications.record_id',
             'applications.wid',
-            'applications.advisor',
+            'users.advisor',
             'applications.semester',
             'applications.status',
             'applications.notes',
