@@ -15,7 +15,7 @@ function HomePage() {
 
       <Container>
         <Row className="gx-2">
-          <Col md={5} className={styles.boxStyle} style={{ backgroundColor: '#a7a7a7'}}> {/* Bootstrap's is made up of Grid which contains Row and Col, each row have 12 cols,
+          <Col md={5} className={styles.boxStyle} style={{ backgroundColor: '#d1d1d1'}}> {/* Bootstrap's is made up of Grid which contains Row and Col, each row have 12 cols,
                                   md={6} means screen size >=768px will have Requirements and Apply side by side
                                   screen size < 768px will have Requirements and Apply vertically stacked
                                   This is because col default to 12 when the case is not specified, in this case
@@ -27,7 +27,7 @@ function HomePage() {
               <li>Achieved at least a 2.3 GPA on all pre-professional courses (including transfer courses)</li>
             </ol>
           </Col>  
-          <Col md={{ span: 5, offset: 2 }} className={styles.applyBoxStyle} style={{ backgroundColor: '#a7a7a7'}}>
+          <Col md={{ span: 5, offset: 2 }} className={styles.applyBoxStyle} style={{ backgroundColor: '#d1d1d1'}}>
             <h2 className={styles.h2Style}>Apply</h2>
             <p className={styles.pStyleApply}>When you are ready to apply, click the button below!</p>
             <br/> 

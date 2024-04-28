@@ -1,4 +1,4 @@
-import styles from './ApplicationForm.module.css';
+import styles from './ApplicationForm.module.css'; 
 import React, { useState, useEffect } from 'react';
 import { useUser } from './UserContext';   
 import { Container, Row, Col, Form, Alert } from 'react-bootstrap';
@@ -176,21 +176,21 @@ function ApplicationForm({ eid: propEid }) {
                 {studentData ? (
                     <Form onSubmit={handleSubmit}>
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={2}>Name:</Form.Label>
+                            <Form.Label column sm={2}> Name:</Form.Label>
                             <Col sm={10}>
-                                <Form.Control type="text" value={name} readOnly />
+                                <Form.Control type="text" value={name} readOnly style={{ backgroundColor: '#d1d1d1' }} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={2}>ID:</Form.Label>
+                            <Form.Label column sm={2}>WID:</Form.Label>
                             <Col sm={10}>
-                                <Form.Control type="text" value={studentData.wid} readOnly />
+                                <Form.Control type="text" value={studentData.wid} readOnly style={{ backgroundColor: '#d1d1d1' }} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3">
                             <Form.Label column sm={2}>Advisor:</Form.Label>
                             <Col sm={10}>
-                                <Form.Select value={selectedAdvisor} 
+                                <Form.Select value={selectedAdvisor} style={{ backgroundColor: '#d1d1d1' }} 
                                             onChange={handleSelectedAdvisorUpdate} >
                                     <option value="Sheryl Cornell">Sheryl Cornell</option>
                                     <option value="David Invergo">David Invergo</option>
@@ -260,9 +260,9 @@ function ApplicationForm({ eid: propEid }) {
                         </div>
                         <Form.Group className="mb-3">
                             <div className={styles['custom-message-1']}>
-                            <p> Please use this space to add any comments that should be made regarding these classes.</p>  
-                            <p> If you requested a waiver for any of these classes, please explain in detail the reasons you are requesting a waiver for meeting all of the requirements for entrance into the Computer Science Professional Program. 
-                                You may also be required to meet with the curriculum committee to evaluate the waiver request.</p> 
+                                <p> Please use this space to add any comments that should be made regarding these classes.</p>  
+                                <p> If you requested a waiver for any of these classes, please explain in detail the reasons you are requesting a waiver for meeting all of the requirements for entrance into the Computer Science Professional Program. 
+                                    You may also be required to meet with the curriculum committee to evaluate the waiver request.</p> 
                             </div>  
                             <Form.Control 
                                 as="textarea" 
