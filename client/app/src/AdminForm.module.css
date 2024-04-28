@@ -142,4 +142,78 @@
   content: '▼';  
 }
 
+.textarea-notes {
+  height: 200px;
+  overflow-y: auto; /* Ensure it's always scrollable vertically */ 
+}
  
+.notes-modal {  
+  max-width: '80vw';
+}
+
+.modal-header-color {
+  background-color: #512888;  
+  color: white;
+  border: none;
+
+}
+
+.modal-body-color {
+  background-color: #a7a7a7;  
+  border: none;
+}
+
+.modal-body-edit-color {
+  background-color: #d1d1d1;  
+  border: none;
+}
+
+.modal-footer-color {
+  background-color: #a7a7a7;  
+  border: none;
+} 
+
+.review-table-header {
+  background-color: #512888;  
+  color: white;
+}
+
+.notes-border-red {
+  border: 2px solid red;
+  background-color: red;  
+  color: white; 
+}
+ 
+.notes-textarea {
+  width: 100%;
+}
+
+.spacer {
+  height: 20px; 
+}
+
+.in-progress {
+  background-color: #f0ad4e;  
+}
+
+.waiver-requested {
+  background-color: #d9534f;  
+}
+
+.custom-review-table {
+  width: 100%;
+}
+.status-dars-container {
+  display: flex;
+  justify-content: space-between;  
+  align-items: flex-start;  
+}
+
+.status-group {
+  flex: 1;  
+  margin-right: 10px;  
+}
+
+.dars-group {
+  margin-left: auto; 
+}

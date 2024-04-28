@@ -15,10 +15,8 @@ function ProfilesForm() {
     const [firstName, setFirstName] = useState(userData.first_name || '');
     const [lastName, setLastName] = useState(userData.last_name || '')
 
-    const updateProfileOnClick = (event) => {
-        console.log("Button hit"); 
-        event.preventDefault();
-        console.log(userData); 
+    const updateProfileOnClick = (event) => { 
+        event.preventDefault(); 
         handleUpdateProfile(userData.eid, firstName, lastName);
     };
 
@@ -46,14 +44,14 @@ function ProfilesForm() {
                             <Form.Group as={Row} className="mb-3" controlId="first_name">
                                 <Form.Label column sm={2}>First Name</Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control type="text" defaultValue={userData.first_name} onChange={(e) => setFirstName(e.target.value)}/>
+                                    <Form.Control type="text" defaultValue={userData.first_name} onChange={(e) => setFirstName(e.target.value)} style={{ backgroundColor: '#d1d1d1' }} />
                                 </Col>
                             </Form.Group>
 
                             <Form.Group as={Row} className="mb-3" controlId="last_name">
                                 <Form.Label column sm={2}>Last Name</Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control type="text" defaultValue={userData.last_name} onChange={(e) => setLastName(e.target.value)}/>
+                                    <Form.Control type="text" defaultValue={userData.last_name} onChange={(e) => setLastName(e.target.value)} style={{ backgroundColor: '#d1d1d1' }} />
                                 </Col>
                             </Form.Group>
 
@@ -72,14 +70,14 @@ function ProfilesForm() {
                             <Form.Group as={Row} className="mb-3" controlId="email">
                                 <Form.Label column sm={2}>Email Address</Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control type="text" disabled defaultValue={userData.email} />
+                                    <Form.Control type="text" disabled defaultValue={userData.email} style={{ backgroundColor: '#d1d1d1' }} />
                                 </Col>
                             </Form.Group>
 
                             <Form.Group as={Row} controlId="wid">
                                 <Form.Label column sm={2}>Wildcat ID</Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control type="text" disabled defaultValue={userData.wid} /> 
+                                    <Form.Control type="text" disabled defaultValue={userData.wid} style={{ backgroundColor: '#d1d1d1' }} /> 
                                 </Col>
                             </Form.Group>
                         </Form>
