@@ -15,6 +15,7 @@ router.get('/applications', async (req, res) => {
             'applications.notes',
             'applications.waiver',
             'applications.d_update',
+            'applications.dars_updated_by',
             'users.first_name',
             'users.last_name',
             'users.email',

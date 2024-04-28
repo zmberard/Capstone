@@ -5,6 +5,7 @@ import styles from './AdminForm.module.css';
 import { unparse } from 'papaparse';
 import ViewNotesModal from './ViewNotesModal';
 import ApplicationForm from './ApplicationForm';
+import ReviewModal from './ReviewModal';
  
 function AdminForm() {
     const [applications, setApplications] = useState([]);  
@@ -14,7 +15,24 @@ function AdminForm() {
     const [alertStatus, setAlertStatus] = useState('info');
     const [showAlert, setShowAlert] = useState(false); 
     const [currentAppId, setCurrentAppId] = useState(null); //AppId = Wid
-    const [currentEId, setCurrentEId] = useState(null);
+    const [currentEId, setCurrentEId] = useState(null); 
+
+    const [courses, setCourses] = useState([]);  
+    const fetchCourses = async (wid) => {
+        if (!wid) {
+            console.error("WID is undefined, cannot fetch courses.");
+            return;
+        }
+        try {
+            const response = await fetch(`http://localhost:3002/api/courses?id=${wid}`);
+            const data = await response.json();
+            setCourses(data.courses); // Assuming the endpoint returns an object with a 'courses' array
+        } catch (error) {
+            console.error(`Failed to fetch courses: ${error.message}`);
+        } finally {
+             
+        }
+    };
 
     const [showApplicationModal, setShowApplicationModal] = useState(false);
     function handleEdit(Eid) {
@@ -24,6 +42,21 @@ function AdminForm() {
     function closeApplicationModal() {
         setShowApplicationModal(false);
         setCurrentAppId(null); 
+    }
+
+    const [showReviewModal, setShowReviewModal] = useState(false);
+    const [currentReviewApp, setCurrentReviewApp] = useState(null);
+    function handleReview(appId) {
+        const application = applications.find(app => app.wid === appId);
+        setCurrentReviewApp(application);
+        fetchCourses(appId);
+        setShowReviewModal(true);
+    }
+    
+    function closeReviewModal() {
+        setShowReviewModal(false);
+        refreshApplications();
+        setCurrentReviewApp(null);
     }
 
     const [showNotesModal, setShowNotesModal] = useState(false);
@@ -133,13 +166,7 @@ function AdminForm() {
         .finally(() => {
             setIsLoading(false);  
         });
-    } 
-
-    function handleReview(appId) {
-        alert(`Reviewing application ID: ${appId}`);
-    }
-    
-
+    }   
 
     function formatDate(dateString) {
         const date = new Date(dateString);
@@ -317,6 +344,13 @@ function AdminForm() {
                 onHide={() => setShowNotesModal(false)}
                 notes={currentNotes} 
                 onSave={(updatedNotes) => saveNotes(currentAppId, updatedNotes)}
+            />
+            <ReviewModal
+                show={showReviewModal}
+                onHide={closeReviewModal}
+                application={currentReviewApp}
+                courses={courses}
+                fetchCourses={fetchCourses} 
             />
             <Modal show={showApplicationModal} onHide={closeApplicationModal} size="lg" centered onExited={refreshApplications}>
                 <Modal.Header closeButton className={styles['modal-header-color']}>

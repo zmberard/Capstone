@@ -31,7 +31,7 @@ function ViewNotesModal({ show, onHide, notes, onSave }) {
                     onChange={(e) => setEditableNotes(e.target.value)} 
                 />
             </Modal.Body>
-            <Modal.Footer className={styles['modal-body-color']}>
+            <Modal.Footer className={styles['modal-footer-color']}>
                 <Button onClick={handleSave} variant="success">Save</Button>
                 <Button onClick={() => { onHide(); setEditableNotes(''); }}>Close</Button>
             </Modal.Footer>
