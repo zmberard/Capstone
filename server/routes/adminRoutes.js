@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const knex = require('knex')(require('../configs/config').knexConfig.development);
+//const isAdmin = require('../middleware/admin-required');
+//router.use(isAdmin);
 
 router.post('/disableApplications', async (req, res) => {
     const { ids } = req.body; // Expect an array of IDs

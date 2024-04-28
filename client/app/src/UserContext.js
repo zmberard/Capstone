@@ -19,7 +19,7 @@ export const UserProvider = ({ children }) => {
   });
   const [loading, setLoading] = useState(false); // New loading state
 
-  useEffect(() => {
+  useEffect(() => {  
     localStorage.setItem('userData', JSON.stringify(userData));
   }, [userData]);
 

@@ -2,6 +2,7 @@
 const express = require('express');
 const axios = require('axios'); 
 const router = express.Router();
+const knex = require('knex')(require('../configs/config').knexConfig.development);
 
 // The serviceHost (our server) and casHost (the CAS server)
 // hostnames, we nee to build urls.  Since we pass our serviceHost
@@ -52,8 +53,29 @@ router.get('/ticket', async (req, res) => {
       // Then redirect them to the landing page 
       const returnUrl = req.session.returnUrl;
       console.log("Current session data:", req.session); 
-      console.log("Logged in successfully, redirecting to: ", returnUrl);
       res.json({success: true, redirectUrl: returnUrl, EId: req.session.username});
+      // try {
+      //   const user = await knex('users')
+      //                       .select('wid', 'eid', 'admin')
+      //                       .whereRaw('lower(eid) = ?', [req.session.username.toLowerCase()])
+      //                       .first(); 
+      //   if (user) {
+      //         req.session.user = {
+      //             id: user.id,
+      //             username: user.username,
+      //             role: user.admin ? 'admin' : 'user'  // Set role based on the admin column
+      //         };
+      //         // Redirect to the landing page or send a success response
+      //         res.json({success: true, redirectUrl: returnUrl, EId: req.session.username});
+      //     } else {
+      //         // Handle error if user is not found
+      //         res.status(404).send("User not found");
+      //     }
+      // } catch(error) {
+      //   console.error('Error fetching user details:', error);
+      //   res.status(500).send('Server error');
+      // } 
+      console.log("Logged in successfully, redirecting to: ", returnUrl); 
     } else {
       res.json({success: false, message: 'Happy little accident' + match + '\n' + response.data});
     }
