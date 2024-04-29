@@ -41,7 +41,10 @@ function ReviewModal({ show, onHide, application, courses, fetchCourses }) {
 
     useEffect(() => {
         if (show && application) {
-            setEditableNotes(`\n${application.notes}`);
+            setEditableNotes('');
+            if (application.notes != null) {
+                setEditableNotes(`\n${application.notes}`);
+            } 
             setDarsUpdatedBy(application.dars_updated_by || '');
             setSelectedStatus(application.status);
             fetchCourses(application.wid);

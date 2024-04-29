@@ -9,7 +9,7 @@ import { fetchCourses, updateAdvisor, submitApplication, fetchUserDetailsForAppl
 //TODO: vars needs that needs further consideration: name, GPA, status, advisor, [REC, LEC, QUIZ] classes
  
 function ApplicationForm({ eid: propEid }) { 
-    const { userData, fetchUserDetails } = useUser();
+    const { userData } = useUser();
     const [studentData, setStudentData] = useState({}); 
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -34,6 +34,7 @@ function ApplicationForm({ eid: propEid }) {
             .then(profileData => {  
                 setStudentData(profileData);
                 setSelectedAdvisor(profileData.advisor);
+                propEid = null;
                 return fetchCourses(profileData.wid);
             })
             .then(coursesResponse  => { 

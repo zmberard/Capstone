@@ -5,7 +5,47 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:300
 //     if (!response.ok) throw new Error('Failed to fetch user details');
 //     return response.json();
 // }
+// async function fetchApplications() {
+//     const response = await fetch(`${API_BASE_URL}/api/applications`);
+//     if (!response.ok) throw new Error('Failed to fetch applications');
+//     return response.json();
+// }
 
+// async function disableApplications(ids) {
+//     const response = await fetch(`${API_BASE_URL}/api/disableApplications`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ ids })
+//     });
+//     if (!response.ok) throw new Error('Failed to disable applications');
+//     return response.json();
+// }
+
+// async function sendEmail(ids) {
+//     const response = await fetch(`${API_BASE_URL}/api/sendEmail`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ ids })
+//     });
+//     if (!response.ok) throw new Error('Failed to send emails');
+//     return response.json();
+// }
+
+// async function saveNotes(appId, notes) {
+//     const response = await fetch(`${API_BASE_URL}/api/saveNotes?appId=${appId}`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ notes })
+//     });
+//     if (!response.ok) throw new Error('Failed to save notes');
+//     return response.json();
+// }
 
 async function fetchUserDetailsForApplication (eid) { 
     const response = await fetch(`${API_BASE_URL}/api/getUserDetail?id=${eid}`);
@@ -45,7 +85,7 @@ async function submitApplication(studentData, additionalInfo, courses) {
     return response.json();
 }
 
-export { 
+export {  
     fetchUserDetailsForApplication,
     fetchCourses,
     updateAdvisor,
