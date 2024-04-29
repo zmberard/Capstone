@@ -1,23 +1,30 @@
- 
+/* body, html {
+  background-image: url("img/cloud2.svg");  
+  background-position: center;
+  background-size: cover; 
+} */
 
 .h3StyleTop {
   background-color: #512888;  
-  color: #a7a7a7;  
+  color: #fff;  
   width: 100%;
   text-align: center;
   margin: 0;  
   line-height: 1.2;  
   padding: 10px 0;  
+  border: 3px solid #757575;
 }
 
 .h3StyleBot {
-  background-color: #a7a7a7; 
+  background-color: #d1d1d1; 
   color: #512888; 
   width: 100%;
   text-align: center;
   margin: 0;  
   line-height: 1.2; 
   padding: 10px 0;  
+  border: 3px solid #757575;
+  border-top: transparent;
 } 
 
 .button-container { 
@@ -161,15 +168,9 @@
 .modal-body-color {
   background-color: #a7a7a7;  
   border: none;
-}
-
-.modal-body-edit-color {
-  background-color: #d1d1d1;  
-  border: none;
-}
-
+} 
 .modal-footer-color {
-  background-color: #a7a7a7;  
+  background-color: #000;  
   border: none;
 } 
 
@@ -183,7 +184,13 @@
   background-color: red;  
   color: white; 
 }
- 
+
+.notesLabel { 
+  font-weight: bold;
+  background-color: transparent;
+  border: none; 
+}
+
 .notes-textarea {
   width: 100%;
 }
@@ -217,3 +224,4 @@
 .dars-group {
   margin-left: auto; 
 }
+

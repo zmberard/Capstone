@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button, Modal, Alert } from 'react-bootstrap';
-import LoadingIndicator from './LoadingIndicator'; 
-import styles from './AdminForm.module.css';
+import LoadingIndicator from '../common/LoadingIndicator'; 
+import styles from '../../styles/AdminForm.module.css';
 import { unparse } from 'papaparse';
-import ViewNotesModal from './ViewNotesModal';
+import ViewNotesModal from './adminModals/ViewNotesModal';
 import ApplicationForm from './ApplicationForm';
-import ReviewModal from './ReviewModal';
+import ReviewModal from './adminModals/ReviewModal';
  
 function AdminForm() {
     const [applications, setApplications] = useState([]);  
@@ -26,7 +26,7 @@ function AdminForm() {
         try {
             const response = await fetch(`http://localhost:3002/api/courses?id=${wid}`);
             const data = await response.json();
-            setCourses(data.courses); // Assuming the endpoint returns an object with a 'courses' array
+            setCourses(data.courses);  
         } catch (error) {
             console.error(`Failed to fetch courses: ${error.message}`);
         } finally {
@@ -234,7 +234,8 @@ function AdminForm() {
                (filters.advisor === "All" || app.advisor === filters.advisor) &&
                (filters.semester === "All" || app.semester === filters.semester) &&
                (filters.waiver === "Both" || (filters.waiver === "Yes" ? app.waiver : !app.waiver)) &&
-               (filters.status === "All" || app.status === filters.status);
+               (filters.status === "All" || 
+               (filters.status === "Pending(All)" ? app.status.includes('Pending') : app.status === filters.status));
       });
 
     function handleChangeItemsPerPage(event) {
@@ -249,12 +250,13 @@ function AdminForm() {
     function handleFilterChange(e) {
         const { name, value } = e.target;
         setCurrentPage(1);
+        
         setFilters(prevFilters => ({
-          ...prevFilters,
-          [name]: value
-        })); 
-    } 
-
+            ...prevFilters,
+            [name]: value
+        }));  
+    }  
+    
     const [sortConfig, setSortConfig] = useState({ key: 'd_update', direction: 'descending' }); 
     function handleSort(key) {
         let direction = 'ascending';
@@ -356,10 +358,10 @@ function AdminForm() {
                 <Modal.Header closeButton className={styles['modal-header-color']}>
                     <Modal.Title>Edit Application</Modal.Title>
                 </Modal.Header>
-                <Modal.Body className={styles['modal-body-edit-color']}>
+                <Modal.Body className={styles['modal-body-color']}>
                     {currentEId && <ApplicationForm eid={currentEId} />}
                 </Modal.Body>
-                <Modal.Footer className={styles['modal-body-edit-color']}>
+                <Modal.Footer className={styles['modal-header-color']}>
                     <Button variant="secondary" onClick={closeApplicationModal}>Close</Button>
                 </Modal.Footer>
             </Modal>
@@ -456,7 +458,7 @@ function AdminForm() {
                                                     : styles.sortDesc 
                                                     : '' }`} onClick={() => handleSort('email')} ></div>
                                         </div>
-                                        <input className={styles['filter-input-email']} type="text" placeholder="Email" onChange={handleFilterChange} value={filters.email} />
+                                        <input className={styles['filter-input-email']} type="text" name='email' placeholder="Email" onChange={handleFilterChange} value={filters.email} />
                                     </div>
                                 </th>
 

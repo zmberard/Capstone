@@ -1,20 +1,29 @@
+/* form-label controls everything, need to find a style that fits all pages*/
+
 .appHeader {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 20px 0;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  margin-top: -50px;
+}
+
+.alertStyle {
+  margin-top: -50px;
+  margin-bottom: 50px;
 }
  
 .h1Style {
   background-color: #512888;  
-  color: #d1d1d1;  
+  color: #fff;  
   width: 100%;
   text-align: center;
   margin: 0;  
   line-height: 1.2;  
   padding: 10px 0;  
+  border: 3px solid #757575;
 }
 
 .h2Style {
@@ -25,6 +34,8 @@
   margin: 0;  
   line-height: 1.2; 
   padding: 10px 0;  
+  border: 3px solid #757575;
+  border-top: transparent;
 }
 
 .custom-message-1 { 

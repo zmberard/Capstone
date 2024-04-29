@@ -1,11 +1,13 @@
 .h3Style {
     background-color: #512888;  
-    color: #d1d1d1;  
+    color: #fff;  
     width: 100%;
     text-align: center;
     margin: 0; 
     line-height: 1.2; 
-    padding: 10px 0;  
+    padding: 20px;  
+    border: 3px solid #757575;
+    border-radius: 10px;
 }
 
 .btn-update {
@@ -31,4 +33,14 @@
     text-align: center;
     color: #fff;
     background-color: #BF8CF7;  
+}
+
+.profile-help-message {
+    text-align: center;
+    color: #fff;
+    background-color: #512888;   
+    font-weight: bold;
+    border: 3px solid white;
+    border-radius: 10px;
+    padding: 30px;
 }

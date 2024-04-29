@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import styles from './AdminForm.module.css';
+import styles from '../../../styles/AdminForm.module.css';
 
 function ViewNotesModal({ show, onHide, notes, onSave }) {
     const [editableNotes, setEditableNotes] = useState(notes); 
@@ -31,7 +31,7 @@ function ViewNotesModal({ show, onHide, notes, onSave }) {
                     onChange={(e) => setEditableNotes(e.target.value)} 
                 />
             </Modal.Body>
-            <Modal.Footer className={styles['modal-footer-color']}>
+            <Modal.Footer className={styles['modal-header-color']}>
                 <Button onClick={handleSave} variant="success">Save</Button>
                 <Button onClick={() => { onHide(); setEditableNotes(''); }}>Close</Button>
             </Modal.Footer>

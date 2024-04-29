@@ -15,6 +15,7 @@ export const UserProvider = ({ children }) => {
       advisor: '',
       isAdmin: false,
       eid: '',
+      isLoggedIn: false,
     };
   });
   const [loading, setLoading] = useState(false); // New loading state
@@ -33,14 +34,16 @@ export const UserProvider = ({ children }) => {
   
       const profileData = data[0]; //API returns an array
       setUserData({
+        ...userData,
         wid: profileData.wid || "000000000",
         first_name: profileData.first_name || "No first name",
         last_name: profileData.last_name || "No last name",
         email: profileData.email || "No email",
         advisor: profileData.advisor || "No advisor",  
         isAdmin: profileData.admin || false,
+        isLoggedIn: true,
         eid: profileData.eid || "No EID Found",
-      });
+      }); 
     } catch (error) {
       console.error('Failed to fetch user details:', error);
     } finally {
@@ -82,7 +85,7 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem('EId');
     setEId(null);
     localStorage.removeItem('userData');
-    setUserData({ wid: '', first_name: '', last_name: '', email: '', advisor: '', isAdmin: false, eid: '' });
+    setUserData({ wid: '', first_name: '', last_name: '', email: '', advisor: '', isAdmin: false, eid: '', isLoggedIn: false });
     window.location.reload(); 
   }; 
 
