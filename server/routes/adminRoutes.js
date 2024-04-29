@@ -67,9 +67,7 @@ const updateApplicationNotes = async (appId, notes) => {
 
 router.post('/saveNotes', async (req, res) => {
     const appId = req.query.appId; // Correctly access the appId from the query parameters
-    const { notes } = req.body;
-    const now = new Date();
-    const formattedDateForDB = now.toISOString().slice(0, 19).replace('T', ' ');
+    const { notes } = req.body; 
 
     try { 
         await updateApplicationNotes(appId, notes);

@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './Footer.module.css'; 
+import styles from '../../styles/Footer.module.css'; 
 import { Container, Row, Col } from 'react-bootstrap';
-import footerImage from './img/Footer2.jpg'; 
-import footerImageSmall from './img/Footer.jpg';
+import footerImage from '../../img/Footer2.jpg'; 
+import footerImageSmall from '../../img/Footer.jpg';
 
 const Footer = () => {
   return (

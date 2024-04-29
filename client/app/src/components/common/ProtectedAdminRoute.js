@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useUser } from './UserContext';  
+import { useUser } from '../../context/UserContext';  
 
 const ProtectedAdminRoute = ({ children }) => {
   const { userData } = useUser();

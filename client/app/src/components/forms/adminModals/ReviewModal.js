@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, Table } from 'react-bootstrap';
-import styles from './AdminForm.module.css';
+import styles from '../../../styles/AdminForm.module.css';
 
 function ReviewModal({ show, onHide, application, courses, fetchCourses }) {
     const [editableNotes, setEditableNotes] = useState(application ? application.notes : '');
@@ -86,7 +86,7 @@ function ReviewModal({ show, onHide, application, courses, fetchCourses }) {
                     </div> 
                     <div className={styles['spacer']}></div> 
                     <Form.Group className={notesBorder ? styles['notes-border-red'] : ''}>
-                        <Form.Label>Notes</Form.Label>
+                        <Form.Label className={styles.notesLabel}>Notes</Form.Label>
                         <Form.Control
                             as="textarea"
                             rows={3}
@@ -116,7 +116,7 @@ function ReviewModal({ show, onHide, application, courses, fetchCourses }) {
                     </table>
                 </Form>
             </Modal.Body>
-            <Modal.Footer className={styles['modal-body-color']}>
+            <Modal.Footer className={styles['modal-header-color']}>
                 <Button variant="secondary" onClick={onHide}>Close</Button>
                 <Button variant="primary" onClick={handleSaveChanges}>Save Changes</Button>
             </Modal.Footer>

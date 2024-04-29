@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button, Modal, Alert } from 'react-bootstrap';
-import LoadingIndicator from './LoadingIndicator'; 
-import styles from './AdminForm.module.css';
+import LoadingIndicator from '../common/LoadingIndicator'; 
+import styles from '../../styles/AdminForm.module.css';
 import { unparse } from 'papaparse';
-import ViewNotesModal from './ViewNotesModal';
+import ViewNotesModal from './adminModals/ViewNotesModal';
 import ApplicationForm from './ApplicationForm';
-import ReviewModal from './ReviewModal';
+import ReviewModal from './adminModals/ReviewModal';
  
 function AdminForm() {
     const [applications, setApplications] = useState([]);  
@@ -356,10 +356,10 @@ function AdminForm() {
                 <Modal.Header closeButton className={styles['modal-header-color']}>
                     <Modal.Title>Edit Application</Modal.Title>
                 </Modal.Header>
-                <Modal.Body className={styles['modal-body-edit-color']}>
+                <Modal.Body className={styles['modal-body-color']}>
                     {currentEId && <ApplicationForm eid={currentEId} />}
                 </Modal.Body>
-                <Modal.Footer className={styles['modal-body-edit-color']}>
+                <Modal.Footer className={styles['modal-header-color']}>
                     <Button variant="secondary" onClick={closeApplicationModal}>Close</Button>
                 </Modal.Footer>
             </Modal>
