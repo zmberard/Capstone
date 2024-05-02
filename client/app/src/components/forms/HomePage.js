@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import styles from '../../styles/HomePage.module.css'; 
+import { ApplyButton } from '../common/Button';
 
 function HomePage() { 
   return (
@@ -33,7 +34,7 @@ function HomePage() {
             <br/> 
             <Link to="/Apply" className={styles['link-no-decoration']}> 
               <div className={styles.buttonContainer}>
-                <button className={styles['btn-apply']} type="submit">Apply!</button>
+                <ApplyButton/> 
               </div>
             </Link>
           </Col>
