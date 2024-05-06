@@ -1,8 +1,8 @@
 CREATE TABLE Users (
-    Wid INT UNIQUE PRIMARY KEY,
+    wid INT UNIQUE PRIMARY KEY,
     first_name VARCHAR(255),
     last_name VARCHAR(255),
-    Eid VARCHAR(255) UNIQUE,
+    eid VARCHAR(255) UNIQUE,
     email VARCHAR(255) UNIQUE, 
     admin BOOLEAN,
     advisor VARCHAR(255),
@@ -11,18 +11,18 @@ CREATE TABLE Users (
 
 CREATE TABLE Applications (
     record_id SERIAL PRIMARY KEY,
-    Wid INT REFERENCES Users (Wid),
-    advisor VARCHAR(255),
+    wid INT REFERENCES Users (Wid), 
     semester VARCHAR(50),
     status VARCHAR(50),
     notes TEXT, 
     waiver BOOLEAN, 
-    d_update TIMESTAMP 
+    d_update TIMESTAMP,
+    dars_updated_by VARCHAR(30)
 );
 
 CREATE TABLE Report (
     record_id SERIAL PRIMARY KEY,
-    Wid INT REFERENCES Users (wid),
+    wid INT REFERENCES Users (wid),
     term VARCHAR(50),
     sub_plan VARCHAR(50),
     year VARCHAR(15), 
@@ -30,5 +30,7 @@ CREATE TABLE Report (
     class_catalog VARCHAR(50),
     class_descr TEXT,
     component VARCHAR(50),
-    grade VARCHAR(5)
+    grade VARCHAR(5),
+    class_status VARCHAR(100),
+    update_time TIMESTAMPWITHOUTTIMEZONE
 );
