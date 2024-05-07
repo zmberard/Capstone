@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, Table } from 'react-bootstrap';
+import he from 'he';
 import styles from '../../../styles/AdminForm.module.css';
 
 function ReviewModal({ show, onHide, application, courses, fetchCourses }) {
@@ -43,13 +44,19 @@ function ReviewModal({ show, onHide, application, courses, fetchCourses }) {
         if (show && application) {
             setEditableNotes('');
             if (application.notes != null) {
-                setEditableNotes(`\n${application.notes}`);
+                const decodedNotes = he.decode(application.notes);
+                setEditableNotes(`\n${decodedNotes}`);
             } 
             setDarsUpdatedBy(application.dars_updated_by || '');
             setSelectedStatus(application.status);
             fetchCourses(application.wid);
         }
     }, [show, application]);
+
+    const handleNotesChange = e => { 
+        const decodedInput = he.decode(e.target.value);
+        setEditableNotes(decodedInput);
+    };
 
     useEffect(() => { 
         const waiverRequested = courses.some(course => course.status === 'waiver-requested');
@@ -94,7 +101,7 @@ function ReviewModal({ show, onHide, application, courses, fetchCourses }) {
                             as="textarea"
                             rows={3}
                             value={`${editableNotes}`}
-                            onChange={e => setEditableNotes(e.target.value)}
+                            onChange={handleNotesChange}
                             className={`${styles['notes-textarea']} ${notesBorder ? styles['notes-textarea-red'] : ''}`}
                         />
                     </Form.Group>

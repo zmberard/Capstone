@@ -6,6 +6,7 @@ import { unparse } from 'papaparse';
 import ViewNotesModal from './adminModals/ViewNotesModal';
 import ApplicationForm from './ApplicationForm';
 import ReviewModal from './adminModals/ReviewModal';
+import {sanitizeForServer} from '../../services/api'
  
 function AdminForm() {
     const [applications, setApplications] = useState([]);  
@@ -315,12 +316,13 @@ function AdminForm() {
 
     function saveNotes(appId, notes) {
         setIsLoading(true);
+        const sanitizedInput = sanitizeForServer(notes);
         fetch(`http://localhost:3002/api/saveNotes?appId=${appId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ notes })
+          body: JSON.stringify({ notes: sanitizedInput })
         })
         .then(response => response.json())
         .then(data => {

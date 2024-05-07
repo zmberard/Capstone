@@ -74,20 +74,36 @@ async function updateAdvisor(eid, newAdvisor) {
 }
 
 async function submitApplication(studentData, additionalInfo, courses) {
+    const sanitizedAdditionalInfo = sanitizeForServer(additionalInfo);
     const response = await fetch(`${API_BASE_URL}/api/submitApplication`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ studentData, additionalInfo, courses })
+        body: JSON.stringify({ studentData, additionalInfo: sanitizedAdditionalInfo, courses })
     });
     if (!response.ok) throw new Error('Failed to submit application');
     return response.json();
 }
 
+function sanitizeForServer(input) {
+    const replacements = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#x27;',
+        "/": '&#x2F;'
+    };
+ 
+    return input.replace(/[&<>"'/]/g, match => replacements[match]);
+}
+
+
 export {  
     fetchUserDetailsForApplication,
     fetchCourses,
     updateAdvisor,
-    submitApplication
+    submitApplication,
+    sanitizeForServer
 };

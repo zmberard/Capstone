@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import he from 'he';
 import styles from '../../../styles/AdminForm.module.css';
 
 function ViewNotesModal({ show, onHide, notes, onSave }) {
@@ -7,7 +8,8 @@ function ViewNotesModal({ show, onHide, notes, onSave }) {
  
     useEffect(() => {
         if (show) { 
-          setEditableNotes(`\n${notes}`);
+          const decodedNotes = he.decode(notes);
+          setEditableNotes(`\n${decodedNotes}`);
         }
     }, [notes, show]);
 

@@ -71,10 +71,10 @@ function determineSemester(dateInput) {
     const date = new Date(dateInput + 'Z');
 	console.log("Current Date1: " + date); 
     const year = date.getFullYear();
-    const fallStart = new Date(year, 7, getNthWeekdayFallSummer(year, 8, 1, 4)); // August is month 7 in Date (0-indexed)
+    const fallStart = new Date(year, 7, getNthWeekdayFallSummer(year, 8, 1, 4));  
     const springStart = new Date(year, 0, getNthWeekday(year, 1, 2, 3)); 
     const summerStart = new Date(year, 4, getNthWeekdayFallSummer(year, 5, 1, 4));  
-    const nextSpringStart = new Date(year + 1, 1, getNthWeekday(year + 1, 1, 2, 3)); // Next year's August 
+    const nextSpringStart = new Date(year + 1, 1, getNthWeekday(year + 1, 1, 2, 3)); 
 
     if ((date >= fallStart || date < springStart) && date < nextSpringStart) { 
         return 'Fall ' + year;
