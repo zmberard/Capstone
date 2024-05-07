@@ -1,17 +1,56 @@
-## running the app 
-cd client/app && npm start 
+# CS Professional Applications System
+Welcome to the Professional Applications System, a capstone project developed by [Jake Houghton](https://github.com/J-Houghton), [Josh Munda](https://github.com/josh-munda), [Nathan York](https://github.com/nafemage), and [Zach Berard](https://github.com/zmberard).  
 
-The CIS Department Student App will be a one-stop shop web app for CIS student needs relating to the department. It will keep track of an individual student’s pre-professional and professional program GPA and the status of the student’s professional program application. It will have information about the student’s advisor, how far along they are in their degree program, and allow the student to fill out the professional program application automatically. 
+## Table of Contents
 
-Optionally, we may integrate information on students’ CIS accounts and Beocat account. Also in consideration is a calendar for 018/015 events that are coming up along with tracking of 018/015 credit. 
+* [Getting Started](#getting-started)
+* [Description](#description)
+* [Features](#features)
+* [Contributing](#contributing)
+* [License](#license)
 
-Our stakeholders are CIS students in the Pre-Professional and Professional programs, CIS department faculty and staff, and advisors to these students. Initially, we will be looking to redo the professional application backend to prepare the student webapp for use, since there has already been some work completed in that area. Once we have completed that, our next goal is to attach the existing code to the new application backend. We will then move to develop the front-facing experience.  
+## Getting Started
 
-After project completion, it will be maintained by CIS faculty and staff. 
+**Prerequisites** 
+* Software required
+    * Node.js (version 16/18 or higher)
 
-For the front end, we will be using React JS, as the previously built parts of the project already use that library. For the back end, we will be working with NodeJS and SQL (PostgreSQL) to interact with KSIS and organize the students’ data. 
+**Running the Project** 
+1. Client Side
+    * Install Client packages: ```cd client/app && npm install```
+    * Starting Client: ```npm start``` 
+2. Server Side
+    * Install Server packages: ```cd server && npm install```
+    * Update [.env](server/.env) file
+    * Start the Server: ```node server.js```
 
-For additional diagrams check the diagrams folder in the repo
+## Description
+ This applicaiton will keep track of an individual student’s pre-professional and professional program GPA and the status of the student’s professional program application. It will have information about the student’s advisor, how far along they are in their degree program, and allow the student to fill out the professional program application automatically. After project completion, it will be maintained by CIS faculty and staff. 
+
+ The Client side is built using React JS, in the backend the application is using Express and using Postgresql database. [Link to Database Tables](server/dbtables.txt)
+
+# Features
+## System Features
+  - Intergrated KSU Single Sign-On/Central Authencation System to ensure seamless intergration and enhanced security.  
+ - CORS Protection
+ - Page Authorization Protection 
+ - SQL Injection Protection 
+
+## Admin Features
+  - Customized tables for better readability and functionality: 
+    - Sortable Columns
+    - Filterable Columns
+    - Item per page
+    - Pagination
+  - Modal components with student specific data  
+  - Data export
+  - Email with template
+
+
+## Student Features 
+  - Auto Populating student data to mininze input
+  - Added Name update feature.  
+  - Animated background and loading page to enhance UX 
 
 ## Contributing
 
