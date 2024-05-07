@@ -63,11 +63,13 @@ function AdminForm() {
     const [currentNotes, setCurrentNotes] = useState('');
     
 
-    const handleCheckAllChange = (isChecked) => {  
+    const handleCheckAllChange = (event) => {  
+        const isChecked = event.target.checked;
         const newCheckedStates = applications.reduce((acc, app) => {
             acc[app.wid] = isChecked;  
             return acc;
         }, {});
+    
         setCheckedStates(newCheckedStates);
     };
 
